@@ -1,75 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple & Readable Page Layout</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>de-code | Democratizing coding with AI</title>
+  <style>
+    :root {
+      --lime: limegreen;
+      --dark: #222;
+      --light: #fff;
+      --soft: #f4f4f4;
+    }
 
-    <style>
-        /* Your provided CSS is embedded here */
-        html {
-            box-sizing: border-box;
-            max-width: 70ch; /* Limits content width for readability */
-            margin: auto; /* Centers the content column */
-            font-size: 1.25em; /* Larger base font for comfort */
-            color: #333; /* A soft, dark gray instead of pure black */
-            line-height: 1.4; /* Increases space between lines of text */
-        }
+    * { box-sizing: border-box; }
 
-        /* All elements will inherit the box-sizing rule */
-        * {
-            box-sizing: inherit;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      background: var(--light);
+      line-height: 1.6;
+    }
 
-        /* Headings use a clean, standard sans-serif font */
-        h1, h2, h3, h4, h5, h6 {
-            font-family: sans-serif;
-        }
+    header {
+      background: var(--dark);
+      color: var(--light);
+      padding: 1.5rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Makes images responsive: they will never be wider than their container */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--lime);
+    }
 
-        /* Links will not have an underline by default */
-        a:link {
-            text-decoration: none;
-        }
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
 
-        /* An underline will appear only when you hover over a link */
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .hero {
+      padding: 6rem 8%;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      background: var(--soft);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--lime);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 650px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.4rem;
+      background: var(--lime);
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+
+    .abstract {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .block {
+      min-height: 130px;
+      border-radius: 12px;
+    }
+
+    .lime { background: var(--lime); }
+    .dark { background: var(--dark); }
+    .white { background: var(--light); border: 3px solid var(--dark); }
+
+    section {
+      padding: 5rem 8%;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      padding: 2rem;
+      border-radius: 12px;
+      background: var(--dark);
+      color: var(--light);
+    }
+
+    .card h3 {
+      color: var(--lime);
+      margin-top: 0;
+    }
+
+    .band {
+      background: var(--lime);
+      color: var(--dark);
+      text-align: center;
+    }
+
+    .band p {
+      max-width: 760px;
+      margin: auto;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    footer {
+      padding: 2rem 8%;
+      background: var(--dark);
+      color: var(--light);
+      text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .hero,
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <div class="logo">de-code</div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#mission">Mission</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    <header>
-        <h1>A Clean & Readable Web Page</h1>
-    </header>
-
-    <main>
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Democratizing coding with <span>AI</span></h1>
         <p>
-            This is an example of a web page styled with simple, effective CSS. The entire content area is centered and has a maximum width, which makes long-form text much easier to read. The font is slightly larger and the line spacing is increased for comfort.
+          de-code helps people and organizations use natural language interfaces
+          to analyze data, generate synthetic datasets, and build useful apps —
+          without requiring traditional programming expertise.
         </p>
+        <a class="button" href="#services">Explore services</a>
+      </div>
 
-        <!-- This image will automatically scale to fit the content width
-        <img src="https://via.placeholder.com/800x300" alt="A gray placeholder image">
-	convert -size 800x300 canvas:#cccccc -gravity Center -pointsize 60 -fill black -draw "text 0,0 '800 x 300'" placeholder.png
-	-->
-        <img src="placeholder.png" alt="A gray placeholder image">
-        
-        <h2>Key Features of This Layout</h2>
-        
-        <p>
-            The styling for this page demonstrates several key principles. The main text block is constrained to a comfortable reading width, and all images are fluid, meaning they will scale down to fit the layout without overflowing.
-        </p>
-        
-        <p>
-            Notice the links. By default, <a href="#">this is a sample link</a> that has no underline. However, if you move your mouse over it, the underline will appear, providing clear visual feedback to the user. This is a common and user-friendly design pattern.
-        </p>
-    </main>
+      <div class="abstract">
+        <div class="block lime"></div>
+        <div class="block dark"></div>
+        <div class="block white"></div>
+        <div class="block dark"></div>
+        <div class="block lime"></div>
+        <div class="block white"></div>
+      </div>
+    </section>
 
+    <section id="services">
+      <h2 class="section-title">What we de-code</h2>
+
+      <div class="services">
+        <div class="card">
+          <h3>de-code data analysis</h3>
+          <p>
+            Turn questions into workflows for cleaning, analyzing, visualizing,
+            and reporting data using AI-assisted methods.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>de-code data generation</h3>
+          <p>
+            Generate realistic example datasets, simulations, test cases, and
+            teaching materials through natural language prompts.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>de-code app building</h3>
+          <p>
+            Build lightweight dashboards, prototypes, forms, and internal tools
+            using AI-supported low-code development.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mission" class="band">
+      <p>
+        Coding should not be limited to specialists. de-code makes computational
+        work more accessible, explainable, and useful for everyone.
+      </p>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Start with a question</h2>
+      <p>
+        Bring your data, idea, or workflow problem. We help translate it into
+        practical AI-assisted tools and methods.
+      </p>
+      <a class="button" href="mailto:hello@de-code.example">Contact de-code</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 de-code. AI-assisted coding for everyone.</p>
+  </footer>
 </body>
 </html>
