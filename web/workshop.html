@@ -1,0 +1,425 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>de-code Workshop | Democratizing Coding with AI</title>
+  <style>
+    :root {
+      --lime: limegreen;
+      --dark: #222;
+      --light: #fff;
+      --soft: #f4f4f4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      background: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--dark);
+      color: var(--light);
+      padding: 1.5rem 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--lime);
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin-left: 1.5rem;
+    }
+
+    .hero {
+      padding: 5rem 8%;
+      background: var(--dark);
+      color: var(--light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    .hero h1 span {
+      color: var(--lime);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 680px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--lime);
+      color: var(--dark);
+      font-weight: bold;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .tile {
+      min-height: 90px;
+      border-radius: 10px;
+    }
+
+    .lime { background: var(--lime); }
+    .dark { background: #111; }
+    .white { background: var(--light); }
+    .outline { border: 3px solid var(--lime); }
+
+    section {
+      padding: 5rem 8%;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      background: var(--soft);
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      margin: 0 0 1rem;
+    }
+
+    .summary-box {
+      background: var(--light);
+      border-left: 8px solid var(--lime);
+      padding: 2rem;
+      border-radius: 10px;
+    }
+
+    .days {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .day {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: var(--dark);
+      color: var(--light);
+    }
+
+    .day-number {
+      background: var(--lime);
+      color: var(--dark);
+      font-weight: bold;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 10px;
+      align-self: start;
+    }
+
+    .day h3 {
+      margin: 0 0 0.5rem;
+      color: var(--lime);
+    }
+
+    .day p {
+      margin: 0;
+    }
+
+    .outcomes {
+      background: var(--lime);
+      color: var(--dark);
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .outcome {
+      background: var(--light);
+      padding: 1.5rem;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .format {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .format-card {
+      background: var(--soft);
+      padding: 2rem;
+      border-radius: 12px;
+      border-top: 8px solid var(--lime);
+    }
+
+    .cta {
+      text-align: center;
+      background: var(--dark);
+      color: var(--light);
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.4rem;
+      background: var(--lime);
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+
+    footer {
+      padding: 2rem 8%;
+      background: #111;
+      color: var(--light);
+      text-align: center;
+    }
+
+    @media (max-width: 850px) {
+      .hero,
+      .intro,
+      .format {
+        grid-template-columns: 1fr;
+      }
+
+      .outcome-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .day {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .outcome-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">de-code</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#outcomes">Outcomes</a>
+      <a href="#format">Format</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge">5-Day Intensive Workshop</div>
+        <h1>Democratizing coding with <span>AI</span></h1>
+        <p>
+          Learn how to use AI and natural language interfaces to analyze data,
+          generate datasets, and build useful applications without traditional
+          coding barriers.
+        </p>
+        <a class="button" href="#schedule">View workshop schedule</a>
+      </div>
+
+      <div class="hero-grid" aria-hidden="true">
+        <div class="tile lime"></div>
+        <div class="tile white"></div>
+        <div class="tile outline"></div>
+        <div class="tile dark"></div>
+        <div class="tile dark"></div>
+        <div class="tile outline"></div>
+        <div class="tile lime"></div>
+        <div class="tile white"></div>
+        <div class="tile white"></div>
+        <div class="tile lime"></div>
+        <div class="tile dark"></div>
+        <div class="tile outline"></div>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div>
+        <h2 class="section-title">About the workshop</h2>
+      </div>
+
+      <div class="summary-box">
+        <p>
+          de-code is a practical workshop for people who want to use AI-assisted
+          workflows for computational work. Participants learn how to translate
+          questions into analysis, prompts into datasets, and ideas into
+          lightweight applications.
+        </p>
+        <p>
+          The workshop combines short lectures, guided exercises, and a practical
+          mini-project.
+        </p>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <h2 class="section-title">Five-day schedule</h2>
+
+      <div class="days">
+        <article class="day">
+          <div class="day-number">Day 1</div>
+          <div>
+            <h3>Foundations: Thinking in AI-assisted workflows</h3>
+            <p>
+              Introduction to AI-assisted coding, low-code paradigms, prompt-based
+              workflows, and turning questions into executable steps.
+            </p>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="day-number">Day 2</div>
+          <div>
+            <h3>de-code data analysis</h3>
+            <p>
+              Clean, structure, analyze, visualize, and report data using natural
+              language interfaces and AI-supported analytical workflows.
+            </p>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="day-number">Day 3</div>
+          <div>
+            <h3>de-code data generation</h3>
+            <p>
+              Generate synthetic datasets, simulations, test cases, and teaching
+              examples from structured descriptions and prompts.
+            </p>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="day-number">Day 4</div>
+          <div>
+            <h3>de-code app building</h3>
+            <p>
+              Build lightweight dashboards, prototypes, forms, and internal tools
+              by connecting data, logic, and user interaction.
+            </p>
+          </div>
+        </article>
+
+        <article class="day">
+          <div class="day-number">Day 5</div>
+          <div>
+            <h3>Integration and application</h3>
+            <p>
+              Combine analysis, generation, and app building into an end-to-end
+              AI-assisted workflow, followed by mini-project presentations.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="outcomes" class="outcomes">
+      <h2 class="section-title">Learning outcomes</h2>
+      <p>After the workshop, participants will be able to:</p>
+
+      <div class="outcome-grid">
+        <div class="outcome">Translate problems into AI-assisted workflows</div>
+        <div class="outcome">Analyze and visualize data using natural language</div>
+        <div class="outcome">Generate synthetic datasets for testing and teaching</div>
+        <div class="outcome">Build simple functional applications and prototypes</div>
+      </div>
+    </section>
+
+    <section id="format">
+      <h2 class="section-title">Workshop format</h2>
+
+      <div class="format">
+        <div class="format-card">
+          <h3>Short lectures</h3>
+          <p>
+            Compact conceptual introductions to AI-assisted coding, data analysis,
+            generation, and app building.
+          </p>
+        </div>
+
+        <div class="format-card">
+          <h3>Guided hands-on sessions</h3>
+          <p>
+            Step-by-step exercises where participants turn natural language
+            instructions into working computational outputs.
+          </p>
+        </div>
+
+        <div class="format-card">
+          <h3>Mini-project</h3>
+          <p>
+            A small applied project where participants design and present their
+            own de-code workflow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2 class="section-title">Start with a question</h2>
+      <p>
+        Bring your data, idea, or workflow problem. Leave with a practical
+        AI-assisted method for turning it into analysis, data, or an app.
+      </p>
+      <a class="button" href="mailto:hello@de-code.example">Contact de-code</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 de-code. AI-assisted coding for everyone.</p>
+  </footer>
+</body>
+</html>
+```
+
