@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>avatar gallery (256px)</title>
+<style>
+  body { margin: 0; padding: 2rem; background: #222; color: #ddd;
+         font-family: monospace; }
+  h1 { font-size: 1.2rem; font-weight: normal; text-align: center; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem; max-width: 60rem; margin: 0 auto; }
+  figure { margin: 0; text-align: center; }
+  figure img { width: 100%; height: auto; display: block;
+               /* checkerboard so transparent areas are visible */
+               background: repeating-conic-gradient(#999 0% 25%, #666 0% 50%)
+                           0 0 / 24px 24px; }
+  figcaption { padding: 0.5rem 0; font-size: 0.85rem; color: #aaa; }
+</style>
+</head>
+<body>
+<h1>avatar gallery (256px)</h1>
+<div class="grid">
+  <figure><img src="assets/avatar-256.png" alt="master raster from svg">
+    <figcaption>avatar-256.png — master raster (from svg)</figcaption></figure>
+  <figure><img src="assets/avatar-256.svg" alt="svg master">
+    <figcaption>avatar-256.svg — 1) master</figcaption></figure>
+  <figure><img src="assets/avatar-256-green-transparent.svg" alt="green bg, transparent chars">
+    <figcaption>avatar-256-green-transparent.svg — 2) green / transparent</figcaption></figure>
+  <figure><img src="assets/avatar-256-black-white.svg" alt="black bg, white chars">
+    <figcaption>avatar-256-black-white.svg — 3) black / white</figcaption></figure>
+  <figure><img src="assets/avatar-256-black-transparent.svg" alt="black bg, transparent chars">
+    <figcaption>avatar-256-black-transparent.svg — 4) black / transparent</figcaption></figure>
+  <figure><img src="assets/avatar-256-white-black.svg" alt="white bg, black chars">
+    <figcaption>avatar-256-white-black.svg — 5) white / black</figcaption></figure>
+  <figure><img src="assets/avatar-256-font.png" alt="legacy font-rendered png">
+    <figcaption>avatar-256-font.png — legacy font method</figcaption></figure>
+</div>
+</body>
+</html>
