@@ -19,7 +19,7 @@
 ---
 
 - [internal repo](https://github.com/nils-holmberg/de-code/)
-- [external website](https://nils-holmberg.github.io/de-code/)
+- [external website](https://de-code-ai.netlify.app)
 
 
 
