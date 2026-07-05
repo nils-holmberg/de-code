@@ -12,6 +12,8 @@
 - de-code agentic coding
 - de-code mcp and skills
 
+<img src="web/assets/avatar-256.svg" alt="de-code logo" width="128" height="128">
+
 ## natural language interfaces
 
 ---
