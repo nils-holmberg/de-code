@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>de-code | Democratizing coding with AI</title>
+  <link rel="icon" href="assets/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/svg+xml" href="assets/avatar-256.svg" />
+  <link rel="apple-touch-icon" href="assets/avatar-favicon-180.png" />
   <style>
     :root {
       --lime: limegreen;
@@ -32,9 +35,18 @@
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
       font-size: 1.6rem;
       font-weight: bold;
       color: var(--lime);
+    }
+
+    .logo img {
+      height: 2.2rem;
+      width: 2.2rem;
+      border-radius: 6px;
     }
 
     nav a {
@@ -159,7 +171,7 @@
 
 <body>
   <header>
-    <div class="logo">de-code</div>
+    <div class="logo"><img src="assets/avatar-256.svg" alt="de-code logo" />de-code</div>
     <nav>
       <a href="#services">Services</a>
       <a href="#mission">Mission</a>
