@@ -35,6 +35,7 @@
     }
 
     .logo {
+      text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.7rem;
@@ -103,7 +104,7 @@
 
     .lime { background: var(--lime); }
     .lime.brand {
-      background: var(--lime) url("assets/avatar-256.svg") center / contain no-repeat;
+      background: var(--lime) url("assets/avatar-256-transparent-white.svg") center / contain no-repeat;
     }
     .dark { background: var(--dark); }
     .white { background: var(--light); border: 3px solid var(--dark); }
@@ -183,7 +184,7 @@
 
 <body>
   <header>
-    <div class="logo"><img src="assets/avatar-256.svg" alt="de-code logo" />de-code</div>
+    <a class="logo" href="/"><img src="assets/avatar-256.svg" alt="de-code logo" />de-code</a>
     <nav>
       <a href="#services">Services</a>
       <a href="data-analysis.html">Data analysis</a>
