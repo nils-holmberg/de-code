@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Democratizing Coding with AI (5–9 October)",
+    "section": "",
+    "text": "Instructor: Nils Holmberg, Lund University, Department of Communication\nDates: 5–9 October (week 41), 09:00–12:00 (5–7 Oct.) and 13:00–16:00 (8–9 Oct.)\nTimeEdit schedule"
+  },
+  {
+    "objectID": "index.html#abstract",
+    "href": "index.html#abstract",
+    "title": "Democratizing Coding with AI (5–9 October)",
+    "section": "Abstract",
+    "text": "Abstract\nThis workshop is aimed at users who want to leverage AI and natural language interfaces to perform data analysis, generate data, and build applications — without traditional coding barriers. In the opening sessions, participants will explore AI-assisted workflows and low-code paradigms, learning how to structure analytical tasks as prompts and set up their working environment. Hands-on exercises guide attendees from asking questions to executing real analytical steps.\nThe workshop then deepens into practical application: cleaning and exploring data with AI, generating visualizations through natural language, and finally building lightweight apps and dashboards. By the end of the five days, participants will be able to translate problems into AI-assisted workflows, analyze and generate data using natural language, and build simple functional applications — while critically assessing the outputs AI produces."
+  },
+  {
+    "objectID": "index.html#sessions",
+    "href": "index.html#sessions",
+    "title": "Democratizing Coding with AI (5–9 October)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nDay\nSession\nMaterials\n\n\n\n\nMon 5 Oct\n1 · de-code data analysis\nslides\n\n\nTue 6 Oct\n2 · de-code data generation\nslides\n\n\nWed 7 Oct\n3 · de-code app building\nslides\n\n\nThu 8 Oct\n4 · de-code agentic coding\nslides\n\n\nFri 9 Oct\n5 · de-code mcp and skills\nslides"
+  },
+  {
+    "objectID": "index.html#about-the-instructor",
+    "href": "index.html#about-the-instructor",
+    "title": "Democratizing Coding with AI (5–9 October)",
+    "section": "About the instructor",
+    "text": "About the instructor\nNils Holmberg is a senior lecturer at the Department of Communication, Lund University. He holds a PhD in Media and Communication Science from Lund University (2016) and has a background in experimental research on digital advertising, including the use of eye-tracking to study visual attention and comprehension in online environments. His current research focuses on computational content analysis in the social sciences, applying methods such as natural language processing and computer vision to analyze and visualize patterns in digital communication, with a particular emphasis on sustainability communication and the opportunities and limitations of AI-assisted analysis."
+  },
+  {
     "objectID": "sessions/01-data-analysis.html",
     "href": "sessions/01-data-analysis.html",
     "title": "Session 1 · de-code data analysis",
@@ -35,6 +63,55 @@
     "text": "Workshop tasks (preliminary)\n\nPlaceholder — load a small CSV dataset and describe it in plain language.\nPlaceholder — prompt an AI assistant to propose a cleaning plan; apply one step.\nPlaceholder — request a summary table and one visualization; refine the prompt.\nPlaceholder — spot-check one AI-produced number against a manual calculation."
   },
   {
+    "objectID": "sessions/02-data-generation.html",
+    "href": "sessions/02-data-generation.html",
+    "title": "Session 2 · de-code data generation",
+    "section": "",
+    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
+  },
+  {
+    "objectID": "sessions/02-data-generation.html#topics",
+    "href": "sessions/02-data-generation.html#topics",
+    "title": "Session 2 · de-code data generation",
+    "section": "",
+    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
+  },
+  {
+    "objectID": "sessions/02-data-generation.html#workshop-tasks-preliminary",
+    "href": "sessions/02-data-generation.html#workshop-tasks-preliminary",
+    "title": "Session 2 · de-code data generation",
+    "section": "Workshop tasks (preliminary)",
+    "text": "Workshop tasks (preliminary)\n\nPlaceholder — describe a dataset schema in words; have AI generate 50 rows.\nPlaceholder — add constraints (ranges, categories, missingness) and regenerate.\nPlaceholder — compare generated distributions against the intended spec.\nPlaceholder — produce a teaching variant with a planted pattern to discover."
+  },
+  {
+    "objectID": "sessions/02-data-generation-slides.html#topics",
+    "href": "sessions/02-data-generation-slides.html#topics",
+    "title": "Session 2 · de-code data generation",
+    "section": "Topics",
+    "text": "Topics\n\n\n\nWhy synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
+  },
+  {
+    "objectID": "sessions/02-data-generation-slides.html#workshop-tasks-preliminary",
+    "href": "sessions/02-data-generation-slides.html#workshop-tasks-preliminary",
+    "title": "Session 2 · de-code data generation",
+    "section": "Workshop tasks (preliminary)",
+    "text": "Workshop tasks (preliminary)\n\nPlaceholder — describe a dataset schema in words; have AI generate 50 rows.\nPlaceholder — add constraints (ranges, categories, missingness) and regenerate.\nPlaceholder — compare generated distributions against the intended spec.\nPlaceholder — produce a teaching variant with a planted pattern to discover."
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#topics",
+    "href": "sessions/03-app-building-slides.html#topics",
+    "title": "Session 3 · de-code app building",
+    "section": "Topics",
+    "text": "Topics\n\n\n\nFrom notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance"
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#workshop-tasks-preliminary",
+    "href": "sessions/03-app-building-slides.html#workshop-tasks-preliminary",
+    "title": "Session 3 · de-code app building",
+    "section": "Workshop tasks (preliminary)",
+    "text": "Workshop tasks (preliminary)\n\nPlaceholder — sketch a one-screen app around yesterday’s analysis.\nPlaceholder — build the skeleton with an AI-generated starter (e.g. Shiny).\nPlaceholder — wire one input to one output and verify the reactivity.\nPlaceholder — swap in your own dataset and share the running app locally."
+  },
+  {
     "objectID": "sessions/03-app-building.html",
     "href": "sessions/03-app-building.html",
     "title": "Session 3 · de-code app building",
@@ -56,18 +133,18 @@
     "text": "Workshop tasks (preliminary)\n\nPlaceholder — sketch a one-screen app around yesterday’s analysis.\nPlaceholder — build the skeleton with an AI-generated starter (e.g. Shiny).\nPlaceholder — wire one input to one output and verify the reactivity.\nPlaceholder — swap in your own dataset and share the running app locally."
   },
   {
-    "objectID": "sessions/03-app-building-slides.html#topics",
-    "href": "sessions/03-app-building-slides.html#topics",
-    "title": "Session 3 · de-code app building",
+    "objectID": "sessions/05-mcp-skills-slides.html#topics",
+    "href": "sessions/05-mcp-skills-slides.html#topics",
+    "title": "Session 5 · de-code mcp and skills",
     "section": "Topics",
-    "text": "Topics\n\n\n\nFrom notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance"
+    "text": "Topics\n\n\n\nWhat MCP servers provide\nConnecting AI to your tools\nReusable skills and workflows\nComposing capabilities safely\nCourse wrap-up and next steps"
   },
   {
-    "objectID": "sessions/03-app-building-slides.html#workshop-tasks-preliminary",
-    "href": "sessions/03-app-building-slides.html#workshop-tasks-preliminary",
-    "title": "Session 3 · de-code app building",
+    "objectID": "sessions/05-mcp-skills-slides.html#workshop-tasks-preliminary",
+    "href": "sessions/05-mcp-skills-slides.html#workshop-tasks-preliminary",
+    "title": "Session 5 · de-code mcp and skills",
     "section": "Workshop tasks (preliminary)",
-    "text": "Workshop tasks (preliminary)\n\nPlaceholder — sketch a one-screen app around yesterday’s analysis.\nPlaceholder — build the skeleton with an AI-generated starter (e.g. Shiny).\nPlaceholder — wire one input to one output and verify the reactivity.\nPlaceholder — swap in your own dataset and share the running app locally."
+    "text": "Workshop tasks (preliminary)\n\nPlaceholder — inspect which MCP servers/skills your assistant has available.\nPlaceholder — use one MCP-provided tool in a small end-to-end task.\nPlaceholder — draft a reusable skill for a workflow from this week.\nPlaceholder — plan one real task from your own work to automate next week."
   },
   {
     "objectID": "sessions/05-mcp-skills.html",
@@ -89,48 +166,6 @@
     "title": "Session 5 · de-code mcp and skills",
     "section": "Workshop tasks (preliminary)",
     "text": "Workshop tasks (preliminary)\n\nPlaceholder — inspect which MCP servers/skills your assistant has available.\nPlaceholder — use one MCP-provided tool in a small end-to-end task.\nPlaceholder — draft a reusable skill for a workflow from this week.\nPlaceholder — plan one real task from your own work to automate next week."
-  },
-  {
-    "objectID": "sessions/05-mcp-skills-slides.html#topics",
-    "href": "sessions/05-mcp-skills-slides.html#topics",
-    "title": "Session 5 · de-code mcp and skills",
-    "section": "Topics",
-    "text": "Topics\n\n\n\nWhat MCP servers provide\nConnecting AI to your tools\nReusable skills and workflows\nComposing capabilities safely\nCourse wrap-up and next steps"
-  },
-  {
-    "objectID": "sessions/05-mcp-skills-slides.html#workshop-tasks-preliminary",
-    "href": "sessions/05-mcp-skills-slides.html#workshop-tasks-preliminary",
-    "title": "Session 5 · de-code mcp and skills",
-    "section": "Workshop tasks (preliminary)",
-    "text": "Workshop tasks (preliminary)\n\nPlaceholder — inspect which MCP servers/skills your assistant has available.\nPlaceholder — use one MCP-provided tool in a small end-to-end task.\nPlaceholder — draft a reusable skill for a workflow from this week.\nPlaceholder — plan one real task from your own work to automate next week."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Democratizing Coding with AI (5–9 October)",
-    "section": "",
-    "text": "Instructor: Nils Holmberg, Lund University, Department of Communication\nDates: 5–9 October (week 41), 09:00–12:00 (5–7 Oct.) and 13:00–16:00 (8–9 Oct.)\nTimeEdit schedule"
-  },
-  {
-    "objectID": "index.html#abstract",
-    "href": "index.html#abstract",
-    "title": "Democratizing Coding with AI (5–9 October)",
-    "section": "Abstract",
-    "text": "Abstract\nThis workshop is aimed at users who want to leverage AI and natural language interfaces to perform data analysis, generate data, and build applications — without traditional coding barriers. In the opening sessions, participants will explore AI-assisted workflows and low-code paradigms, learning how to structure analytical tasks as prompts and set up their working environment. Hands-on exercises guide attendees from asking questions to executing real analytical steps.\nThe workshop then deepens into practical application: cleaning and exploring data with AI, generating visualizations through natural language, and finally building lightweight apps and dashboards. By the end of the five days, participants will be able to translate problems into AI-assisted workflows, analyze and generate data using natural language, and build simple functional applications — while critically assessing the outputs AI produces."
-  },
-  {
-    "objectID": "index.html#sessions",
-    "href": "index.html#sessions",
-    "title": "Democratizing Coding with AI (5–9 October)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nDay\nSession\nMaterials\n\n\n\n\nMon 5 Oct\n1 · de-code data analysis\nslides\n\n\nTue 6 Oct\n2 · de-code data generation\nslides\n\n\nWed 7 Oct\n3 · de-code app building\nslides\n\n\nThu 8 Oct\n4 · de-code agentic coding\nslides\n\n\nFri 9 Oct\n5 · de-code mcp and skills\nslides"
-  },
-  {
-    "objectID": "index.html#about-the-instructor",
-    "href": "index.html#about-the-instructor",
-    "title": "Democratizing Coding with AI (5–9 October)",
-    "section": "About the instructor",
-    "text": "About the instructor\nNils Holmberg is a senior lecturer at the Department of Communication, Lund University. He holds a PhD in Media and Communication Science from Lund University (2016) and has a background in experimental research on digital advertising, including the use of eye-tracking to study visual attention and comprehension in online environments. His current research focuses on computational content analysis in the social sciences, applying methods such as natural language processing and computer vision to analyze and visualize patterns in digital communication, with a particular emphasis on sustainability communication and the opportunities and limitations of AI-assisted analysis."
   },
   {
     "objectID": "sessions/04-agentic-coding-slides.html#topics",
@@ -166,40 +201,5 @@
     "title": "Session 4 · de-code agentic coding",
     "section": "Workshop tasks (preliminary)",
     "text": "Workshop tasks (preliminary)\n\nPlaceholder — give an agent a small multi-step task and observe its plan.\nPlaceholder — interrupt, correct course, and compare the revised plan.\nPlaceholder — have the agent commit work to a branch; review the diff.\nPlaceholder — discuss: which checks would you never delegate, and why?"
-  },
-  {
-    "objectID": "sessions/02-data-generation-slides.html#topics",
-    "href": "sessions/02-data-generation-slides.html#topics",
-    "title": "Session 2 · de-code data generation",
-    "section": "Topics",
-    "text": "Topics\n\n\n\nWhy synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
-  },
-  {
-    "objectID": "sessions/02-data-generation-slides.html#workshop-tasks-preliminary",
-    "href": "sessions/02-data-generation-slides.html#workshop-tasks-preliminary",
-    "title": "Session 2 · de-code data generation",
-    "section": "Workshop tasks (preliminary)",
-    "text": "Workshop tasks (preliminary)\n\nPlaceholder — describe a dataset schema in words; have AI generate 50 rows.\nPlaceholder — add constraints (ranges, categories, missingness) and regenerate.\nPlaceholder — compare generated distributions against the intended spec.\nPlaceholder — produce a teaching variant with a planted pattern to discover."
-  },
-  {
-    "objectID": "sessions/02-data-generation.html",
-    "href": "sessions/02-data-generation.html",
-    "title": "Session 2 · de-code data generation",
-    "section": "",
-    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
-  },
-  {
-    "objectID": "sessions/02-data-generation.html#topics",
-    "href": "sessions/02-data-generation.html#topics",
-    "title": "Session 2 · de-code data generation",
-    "section": "",
-    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions"
-  },
-  {
-    "objectID": "sessions/02-data-generation.html#workshop-tasks-preliminary",
-    "href": "sessions/02-data-generation.html#workshop-tasks-preliminary",
-    "title": "Session 2 · de-code data generation",
-    "section": "Workshop tasks (preliminary)",
-    "text": "Workshop tasks (preliminary)\n\nPlaceholder — describe a dataset schema in words; have AI generate 50 rows.\nPlaceholder — add constraints (ranges, categories, missingness) and regenerate.\nPlaceholder — compare generated distributions against the intended spec.\nPlaceholder — produce a teaching variant with a planted pattern to discover."
   }
 ]
