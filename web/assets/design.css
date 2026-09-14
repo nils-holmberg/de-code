@@ -263,3 +263,276 @@ footer {
     justify-content: start;
   }
 }
+
+/* ---------- specifications as code ---------- */
+
+.specs-page {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.specs-page a:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 4px;
+}
+
+.hero.specs-hero {
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.75fr);
+  padding-block: clamp(2.5rem, 4vw, 3.75rem);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  overflow: hidden;
+}
+
+.hero.specs-hero > * {
+  min-width: 0;
+}
+
+.specs-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero.specs-hero h1 {
+  max-width: 820px;
+  margin: 0 0 1.1rem;
+  font-size: clamp(3.25rem, 5.4vw, 5.4rem);
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+.hero.specs-hero h1 .specs-word {
+  display: inline-block;
+  margin-top: 0.12em;
+  padding: 0.02em 0.16em 0.09em;
+  border-radius: 0.13em;
+  background: var(--lime);
+  color: var(--light);
+  letter-spacing: -0.04em;
+}
+
+.hero.specs-hero p:not(.specs-eyebrow) {
+  max-width: 680px;
+  margin-bottom: 0;
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.specs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.7rem;
+}
+
+.specs-actions .button {
+  margin-top: 0;
+}
+
+.specs-page .button {
+  border-radius: 999px;
+}
+
+.specs-page .button.alt:hover {
+  background: var(--dark);
+  color: var(--light);
+}
+
+.specs-board {
+  height: clamp(280px, 26vw, 360px);
+  display: grid;
+  grid-template-columns: 1.45fr 0.75fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.specs-tile {
+  min-width: 0;
+  border-radius: 14px;
+}
+
+.specs-tile-logo {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  background: var(--dark)
+    url("https://nils-holmberg.github.io/resn-dev/res/avatar/avatar-256-transparent-green.svg")
+    center / 68% no-repeat;
+}
+
+.specs-tile-paper {
+  grid-column: 2;
+  grid-row: 2;
+  border: 3px solid var(--dark);
+  background: var(--light);
+}
+
+.specs-tile-accent {
+  grid-column: 2;
+  grid-row: 1;
+  background: var(--lime);
+}
+
+.specs-courses {
+  background: var(--light);
+}
+
+.specs-section-heading {
+  max-width: 820px;
+}
+
+.specs-section-heading .section-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.specs-section-heading .section-lead {
+  margin-bottom: 0;
+}
+
+.specs-course-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 1.25rem;
+  margin-top: 2.75rem;
+}
+
+.specs-course {
+  min-height: 410px;
+  padding: clamp(2rem, 4vw, 3.25rem);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.specs-course-academic {
+  background: var(--dark);
+  color: var(--light);
+}
+
+.specs-course-public {
+  background: var(--lime);
+  color: var(--dark);
+}
+
+.specs-audience {
+  align-self: flex-start;
+  margin: 0 0 1.4rem;
+  padding: 0.42rem 0.75rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.specs-course h3 {
+  max-width: 620px;
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.specs-course-academic h3 {
+  color: var(--lime);
+}
+
+.specs-course p {
+  max-width: 620px;
+}
+
+.specs-course ul {
+  margin: 0 0 2rem;
+  padding-left: 1.25rem;
+}
+
+.specs-course li + li {
+  margin-top: 0.45rem;
+}
+
+.specs-course .button {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.specs-course-public .button {
+  background: var(--dark);
+  color: var(--lime);
+}
+
+.specs-course-public .button:hover {
+  background: var(--light);
+  color: var(--dark);
+}
+
+.specs-contact {
+  background: var(--soft);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: center;
+}
+
+.specs-contact .section-title,
+.specs-contact .section-lead {
+  margin-top: 0;
+}
+
+.specs-contact .section-title {
+  margin-bottom: 0.75rem;
+}
+
+.specs-contact .section-lead {
+  margin-bottom: 0;
+}
+
+.specs-contact .button {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .hero.specs-hero,
+  .specs-course-grid,
+  .specs-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .specs-board {
+    width: min(100%, 430px);
+    height: clamp(210px, 48vw, 280px);
+  }
+
+  .specs-course {
+    min-height: 0;
+  }
+
+  .specs-contact .button {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero.specs-hero {
+    padding-block: 2.25rem;
+    gap: 1.75rem;
+  }
+
+  .hero.specs-hero h1 {
+    margin-bottom: 0.9rem;
+    font-size: clamp(2.45rem, 10vw, 3.4rem);
+  }
+
+  .specs-board {
+    height: 165px;
+    gap: 0.5rem;
+  }
+
+  .specs-tile {
+    border-radius: 10px;
+  }
+}
