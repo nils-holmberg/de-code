@@ -1,0 +1,96 @@
+---
+title: "Democratizing Coding with AI"
+subtitle: "Social Sciences Skill School, Lund University"
+author: "Nils Holmberg"
+date: today
+date-format: "D MMMM YYYY"
+format:
+  pdf:
+    papersize: a4
+    documentclass: article
+    fontsize: 11pt
+    mainfont: "Inter"
+    sansfont: "Inter"
+    geometry:
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=2.5cm
+      - right=2.5cm
+    colorlinks: true
+    linkcolor: black
+    urlcolor: lulink
+    include-in-header:
+      text: |
+        \usepackage{xcolor}
+        \definecolor{lulink}{HTML}{0A5CB8}
+        \usepackage{etoolbox}
+        \usepackage{tabularx}
+        \usepackage{array}
+        \raggedbottom
+        \pagestyle{empty}
+        \setlength{\parskip}{0.55em}
+        \setlength{\parindent}{0pt}
+        \renewcommand{\arraystretch}{1.15}
+        % ragged-right table cells (no stretched inter-word spacing)
+        \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+        \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+        % left-aligned title block: title, subtitle, author, date
+        \makeatletter
+        \newcommand{\subtitle}[1]{%
+          \apptocmd{\@title}{\par\vspace{0.2em}{\large\normalfont #1}}{}{}}
+        \renewcommand{\maketitle}{%
+          \begingroup\raggedright
+          {\LARGE\bfseries\@title\par}
+          \vspace{0.6em}
+          {\normalsize\@author\par}
+          {\normalsize\@date\par}
+          \endgroup
+          \vspace{0.4em}\hrule\vspace{0.6em}}
+        \makeatother
+---
+
+Dear participant,
+
+Welcome to **Democratizing Coding with AI**, a five half-day Skill School at the Social Sciences, Lund University. It is for anyone who wants to use AI and natural language to analyze data, generate data and build small applications. No prior programming experience is required.
+
+Each session pairs a short walkthrough with hands-on exercises on your own machine. By the end of the week you should be able to turn a research problem into an AI-assisted workflow, analyze and generate data in natural language, build a simple application, and critically assess what the AI produces.
+
+We will work with two related Google products: [Gemini](https://gemini.google.com) as the conversational assistant and [Antigravity](https://antigravity.google) as the agentic coding environment. Please bring a laptop on which you can install software and sign in with a Google account, and feel free to bring a small dataset of your own to use in the exercises.
+
+\vspace{0.3em}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{|L{1.7cm}|L{2.2cm}|L{3.9cm}|Y|}
+\hline
+\textbf{Day} & \textbf{Time} & \textbf{Room} & \textbf{Theme and main topics} \\
+\hline
+Mon 5 Oct & 09:00--12:00 & Allhelgonaskolan 119 Stora &
+\textbf{Data analysis} --- asking questions in natural language, turning prompts into workflows,
+cleaning and exploring tabular data, assessing AI output critically \\
+\hline
+Tue 6 Oct & 09:00--12:00 & Allhelgonaskolan 119 Stora &
+\textbf{Data generation} --- why synthetic data matters, generating examples from prompts,
+simulations and test cases, validating generated distributions \\
+\hline
+Wed 7 Oct & 09:00--12:00 & G:a Köket 107 (Sh:107) &
+\textbf{App building} --- from notebook to shareable app, low-code dashboards and forms, inputs
+and reactivity, deploying lightweight tools \\
+\hline
+Thu 8 Oct & 13:00--16:00 & G:a Polikliniken 128 (Hus M 128) &
+\textbf{Agentic coding} --- from single prompts to agents, delegating multi-step tasks, reviewing
+agent output safely, version control as a safety net \\
+\hline
+Fri 9 Oct & 13:00--16:00 & Allhelgonaskolan 119 Stora &
+\textbf{MCP and skills} --- what MCP servers provide, connecting AI to your tools, reusable
+skills and workflows, wrap-up and next steps \\
+\hline
+\end{tabularx}
+\end{center}
+
+\vspace{0.1em}
+
+The schedule is preliminary and may be adjusted to the interests of the group. Rooms follow the TimeEdit schedule for Research Methods in Social Sciences (SIMM12), week 41 --- please check it before each day in case of changes. Looking forward to seeing you in October!
+
+Nils Holmberg \
+Senior lecturer, Department of Communication, Lund University
