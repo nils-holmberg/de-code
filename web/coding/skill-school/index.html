@@ -180,27 +180,27 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>Mon 5 Oct</td>
 <td><a href="./sessions/01-data-analysis.html">1 · de-code data analysis</a></td>
-<td><a href="sessions/01-data-analysis-slides.html">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/01-data-analysis.ipynb">notebook</a></td>
+<td><a href="sessions/01-data-analysis-slides.html" target="_blank">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/01-data-analysis.ipynb">notebook</a></td>
 </tr>
 <tr class="even">
 <td>Tue 6 Oct</td>
 <td><a href="./sessions/02-data-generation.html">2 · de-code data generation</a></td>
-<td><a href="sessions/02-data-generation-slides.html">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb">notebook</a></td>
+<td><a href="sessions/02-data-generation-slides.html" target="_blank">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb">notebook</a></td>
 </tr>
 <tr class="odd">
 <td>Wed 7 Oct</td>
 <td><a href="./sessions/03-app-building.html">3 · de-code app building</a></td>
-<td><a href="sessions/03-app-building-slides.html">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb">notebook</a></td>
+<td><a href="sessions/03-app-building-slides.html" target="_blank">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb">notebook</a></td>
 </tr>
 <tr class="even">
 <td>Thu 8 Oct</td>
 <td><a href="./sessions/04-agentic-coding.html">4 · de-code agentic coding</a></td>
-<td><a href="sessions/04-agentic-coding-slides.html">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/04-agentic-coding.ipynb">notebook</a></td>
+<td><a href="sessions/04-agentic-coding-slides.html" target="_blank">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/04-agentic-coding.ipynb">notebook</a></td>
 </tr>
 <tr class="odd">
 <td>Fri 9 Oct</td>
 <td><a href="./sessions/05-mcp-skills.html">5 · de-code mcp and skills</a></td>
-<td><a href="sessions/05-mcp-skills-slides.html">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-mcp-skills.ipynb">notebook</a></td>
+<td><a href="sessions/05-mcp-skills-slides.html" target="_blank">slides</a> · <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-mcp-skills.ipynb">notebook</a></td>
 </tr>
 </tbody>
 </table>
@@ -300,6 +300,11 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
