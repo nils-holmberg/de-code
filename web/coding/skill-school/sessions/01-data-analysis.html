@@ -26,10 +26,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -74,6 +109,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <style>.cell-output-display img { max-width: 100%; height: auto; }</style>
 
 
@@ -171,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Critically assess AI output</li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="51a191f0" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="bbdb3382" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -183,16 +221,802 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="workshop-tasks-preliminary" class="level2">
-<h2 class="anchored" data-anchor-id="workshop-tasks-preliminary">Workshop tasks (preliminary)</h2>
+<section id="part-1-loading-data" class="level1">
+<h1>Part 1 · Loading data</h1>
+<section id="load-from-github" class="level2">
+<h2 class="anchored" data-anchor-id="load-from-github">Load from GitHub</h2>
+<p>The sample dataset is a small simulated survey: 100 respondents, one group variable and six questionnaire items on a 1–5 scale, combined into three indices. The file lives in the course repository on GitHub. Its <em>raw</em> URL returns the plain file, so pandas can read it directly from the web — nothing to download first.</p>
+<p>The file is tab-separated (<code>.tsv</code>), so we tell <code>read_csv</code> that the separator is a tab (<code>\t</code>).</p>
+<div id="b8119b3b" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(url, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.shape)  <span class="co"># (rows, columns)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(100, 10)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IV_CAT_GROUP</th>
+<th data-quarto-table-cell-role="th">IV1_ITEM1</th>
+<th data-quarto-table-cell-role="th">IV1_ITEM2</th>
+<th data-quarto-table-cell-role="th">IV2_ITEM1</th>
+<th data-quarto-table-cell-role="th">IV2_ITEM2</th>
+<th data-quarto-table-cell-role="th">DV_ITEM1</th>
+<th data-quarto-table-cell-role="th">DV_ITEM2</th>
+<th data-quarto-table-cell-role="th">IV_INDEX1</th>
+<th data-quarto-table-cell-role="th">IV_INDEX2</th>
+<th data-quarto-table-cell-role="th">DV_INDEX</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>category2</td>
+<td>4</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3.5</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>category1</td>
+<td>4</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>4.5</td>
+<td>3.0</td>
+<td>2.5</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>category2</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.5</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>category2</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>category1</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>2.0</td>
+<td>1.5</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="alternative-upload-the-file-to-colab" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-upload-the-file-to-colab">Alternative: upload the file to Colab</h2>
+<p>If you have the file on your own computer, you can upload it to the Colab session instead. This cell is not run on the course website; in Colab, run it and pick the file in the dialog. Uploaded files end up in <code>/content/</code>, the working folder of the Colab session.</p>
+<div id="4072bccb" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> files</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files.upload()  <span class="co"># choose komp014-simulated-data-n100.tsv</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"/content/komp014-simulated-data-n100.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="colab-install-pyreadstat" class="level2">
+<h2 class="anchored" data-anchor-id="colab-install-pyreadstat">Colab: install pyreadstat</h2>
+<p>SPSS files (<code>.sav</code>) need the <code>pyreadstat</code> package, which Colab does not include. Run this cell once per Colab session before the next step.</p>
+<div id="96727df9" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install pyreadstat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="same-data-four-formats" class="level2">
+<h2 class="anchored" data-anchor-id="same-data-four-formats">Same data, four formats</h2>
+<p>The same table can be stored in different file formats. Here we save <code>df</code> as CSV, TSV, Excel and SPSS, and attach a short <em>label</em> to each variable in the SPSS file.</p>
+<div id="6e18fa38" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV_CAT_GROUP"</span>: <span class="st">"Group (category1 / category2)"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV1_ITEM1"</span>: <span class="st">"IV1 item 1 (1-5)"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV1_ITEM2"</span>: <span class="st">"IV1 item 2 (1-5)"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV2_ITEM1"</span>: <span class="st">"IV2 item 1 (1-5)"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV2_ITEM2"</span>: <span class="st">"IV2 item 2 (1-5)"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DV_ITEM1"</span>: <span class="st">"DV item 1 (1-5)"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DV_ITEM2"</span>: <span class="st">"DV item 2 (1-5)"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV_INDEX1"</span>: <span class="st">"IV1 index, mean of IV1 items"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"IV_INDEX2"</span>: <span class="st">"IV2 index, mean of IV2 items"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"DV_INDEX"</span>: <span class="st">"DV index, mean of DV items"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> Path(<span class="st">"data"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>out.mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>df.to_csv(out <span class="op">/</span> <span class="st">"komp014.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>df.to_csv(out <span class="op">/</span> <span class="st">"komp014.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>df.to_excel(out <span class="op">/</span> <span class="st">"komp014.xlsx"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>pyreadstat.write_sav(df, out <span class="op">/</span> <span class="st">"komp014.sav"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                     column_labels<span class="op">=</span>[labels[c] <span class="cf">for</span> c <span class="kw">in</span> df.columns])</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="bu">sorted</span>(p.name <span class="cf">for</span> p <span class="kw">in</span> out.iterdir())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>['komp014.csv', 'komp014.sav', 'komp014.tsv', 'komp014.xlsx']</code></pre>
+</div>
+</div>
+</section>
+<section id="compare-the-formats" class="level2">
+<h2 class="anchored" data-anchor-id="compare-the-formats">Compare the formats</h2>
+<p>Now we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?</p>
+<div id="e909f8ce" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>readers <span class="op">=</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"csv"</span>: <span class="kw">lambda</span> p: pd.read_csv(p),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tsv"</span>: <span class="kw">lambda</span> p: pd.read_csv(p, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xlsx"</span>: <span class="kw">lambda</span> p: pd.read_excel(p),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sav"</span>: <span class="kw">lambda</span> p: pyreadstat.read_sav(p)[<span class="dv">0</span>],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fmt, read <span class="kw">in</span> readers.items():</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> out <span class="op">/</span> <span class="ss">f"komp014.</span><span class="sc">{</span>fmt<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    back <span class="op">=</span> read(path)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    rows.append({</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"format"</span>: fmt,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"bytes"</span>: path.stat().st_size,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># cast the original to the read-back types, then compare cell by cell</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"same values"</span>: back.equals(df.astype(back.dtypes.to_dict())),</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"same types"</span>: back.dtypes.astype(<span class="bu">str</span>).equals(df.dtypes.astype(<span class="bu">str</span>)),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"text file"</span>: fmt <span class="kw">in</span> (<span class="st">"csv"</span>, <span class="st">"tsv"</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">format</th>
+<th data-quarto-table-cell-role="th">bytes</th>
+<th data-quarto-table-cell-role="th">same values</th>
+<th data-quarto-table-cell-role="th">same types</th>
+<th data-quarto-table-cell-role="th">text file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>csv</td>
+<td>3500</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>tsv</td>
+<td>3500</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>xlsx</td>
+<td>8663</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>sav</td>
+<td>10037</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li><strong>CSV / TSV</strong> are plain text: open them in any editor, small, universal. Column types are <em>guessed</em> again on every read, and there is no place for labels.</li>
+<li><strong>Excel</strong> is a zipped binary format: handy for people, larger on disk, keeps types.</li>
+<li><strong>SPSS <code>.sav</code></strong> is binary and stores <em>metadata</em> with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:</li>
+</ul>
+<div id="11a62c3c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>_, meta <span class="op">=</span> pyreadstat.read_sav(out <span class="op">/</span> <span class="st">"komp014.sav"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dict</span>(<span class="bu">zip</span>(meta.column_names, meta.column_labels))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>{'IV_CAT_GROUP': 'Group (category1 / category2)',
+ 'IV1_ITEM1': 'IV1 item 1 (1-5)',
+ 'IV1_ITEM2': 'IV1 item 2 (1-5)',
+ 'IV2_ITEM1': 'IV2 item 1 (1-5)',
+ 'IV2_ITEM2': 'IV2 item 2 (1-5)',
+ 'DV_ITEM1': 'DV item 1 (1-5)',
+ 'DV_ITEM2': 'DV item 2 (1-5)',
+ 'IV_INDEX1': 'IV1 index, mean of IV1 items',
+ 'IV_INDEX2': 'IV2 index, mean of IV2 items',
+ 'DV_INDEX': 'DV index, mean of DV items'}</code></pre>
+</div>
+</div>
+</section>
+<section id="give-an-llm-context" class="level2">
+<h2 class="anchored" data-anchor-id="give-an-llm-context">Give an LLM context</h2>
+<p>A chat assistant cannot see your data. Paste a short description like the one below, followed by your question, and it can write code that fits your <code>df</code>. This cell only stores the text; it is not run on the course website.</p>
+<div id="ce4a66df" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">I am analysing a survey dataset in Python with pandas. It is already loaded as `df`.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">- 100 rows (respondents), 10 columns, no missing values</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">- IV_CAT_GROUP: text, two groups, "category1" and "category2" (50 each)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">- IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">  whole numbers, questionnaire items on a 1-5 scale</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">- IV_INDEX1, IV_INDEX2, DV_INDEX: decimals 1-5, each the mean of its two items</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">  (IV_INDEX1 = mean of IV1_ITEM1/2, and so on)</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">- DV_INDEX is the outcome (dependent variable); IV_CAT_GROUP, IV_INDEX1 and</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">  IV_INDEX2 are the predictors (independent variables)</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">Continue from here. Write short, commented Python code and explain the results</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">in plain language.</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="part-2-describing-each-variable" class="level1">
+<h1>Part 2 · Describing each variable</h1>
+<section id="descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive statistics</h2>
+<p><code>describe()</code> summarises every numeric column: how many values (<code>count</code>), the average (<code>mean</code>), the spread (<code>std</code>), the smallest and largest values, and the quartiles (<code>25%</code>, <code>50%</code> = median, <code>75%</code>). We add <em>skewness</em> (is the distribution lopsided?) and <em>kurtosis</em> (are the tails heavy?). Values near 0 mean roughly symmetric and normal-shaped.</p>
+<div id="8174c0cb" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric <span class="op">=</span> df.select_dtypes(<span class="st">"number"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> numeric.describe().T</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>stats[<span class="st">"skew"</span>] <span class="op">=</span> numeric.skew()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>stats[<span class="st">"kurtosis"</span>] <span class="op">=</span> numeric.kurt()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>stats.<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+<th data-quarto-table-cell-role="th">skew</th>
+<th data-quarto-table-cell-role="th">kurtosis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">IV1_ITEM1</th>
+<td>100.0</td>
+<td>3.09</td>
+<td>1.22</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>3.00</td>
+<td>4.00</td>
+<td>5.0</td>
+<td>-0.01</td>
+<td>-0.86</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV1_ITEM2</th>
+<td>100.0</td>
+<td>3.05</td>
+<td>1.24</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>3.00</td>
+<td>4.00</td>
+<td>5.0</td>
+<td>-0.06</td>
+<td>-0.94</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">IV2_ITEM1</th>
+<td>100.0</td>
+<td>2.84</td>
+<td>1.16</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>3.00</td>
+<td>3.00</td>
+<td>5.0</td>
+<td>0.32</td>
+<td>-0.53</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV2_ITEM2</th>
+<td>100.0</td>
+<td>2.78</td>
+<td>1.31</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>3.00</td>
+<td>4.00</td>
+<td>5.0</td>
+<td>0.17</td>
+<td>-1.06</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">DV_ITEM1</th>
+<td>100.0</td>
+<td>2.57</td>
+<td>1.20</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>2.00</td>
+<td>3.25</td>
+<td>5.0</td>
+<td>0.42</td>
+<td>-0.79</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">DV_ITEM2</th>
+<td>100.0</td>
+<td>2.56</td>
+<td>1.17</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>3.00</td>
+<td>3.00</td>
+<td>5.0</td>
+<td>0.34</td>
+<td>-0.58</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">IV_INDEX1</th>
+<td>100.0</td>
+<td>3.07</td>
+<td>1.11</td>
+<td>1.0</td>
+<td>2.38</td>
+<td>3.00</td>
+<td>4.00</td>
+<td>5.0</td>
+<td>-0.03</td>
+<td>-0.89</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV_INDEX2</th>
+<td>100.0</td>
+<td>2.81</td>
+<td>1.15</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>2.75</td>
+<td>3.50</td>
+<td>5.0</td>
+<td>0.29</td>
+<td>-0.79</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">DV_INDEX</th>
+<td>100.0</td>
+<td>2.56</td>
+<td>1.09</td>
+<td>1.0</td>
+<td>1.88</td>
+<td>2.50</td>
+<td>3.50</td>
+<td>5.0</td>
+<td>0.46</td>
+<td>-0.52</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="frequencies" class="level2">
+<h2 class="anchored" data-anchor-id="frequencies">Frequencies</h2>
+<p>For the group variable and the 1–5 items, it is more useful to <em>count</em> how often each value occurs. The first table counts the two groups; the second shows, for each item, the share of respondents (in %) who chose each answer from 1 to 5.</p>
+<div id="c8069c3f" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"IV_CAT_GROUP"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>IV_CAT_GROUP
+category2    50
+category1    50
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="036901d1" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> [<span class="st">"IV1_ITEM1"</span>, <span class="st">"IV1_ITEM2"</span>, <span class="st">"IV2_ITEM1"</span>, <span class="st">"IV2_ITEM2"</span>, <span class="st">"DV_ITEM1"</span>, <span class="st">"DV_ITEM2"</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> df[items].<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.value_counts(normalize<span class="op">=</span><span class="va">True</span>)).fillna(<span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>freq.index.name <span class="op">=</span> <span class="st">"answer"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>freq.<span class="bu">round</span>(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IV1_ITEM1</th>
+<th data-quarto-table-cell-role="th">IV1_ITEM2</th>
+<th data-quarto-table-cell-role="th">IV2_ITEM1</th>
+<th data-quarto-table-cell-role="th">IV2_ITEM2</th>
+<th data-quarto-table-cell-role="th">DV_ITEM1</th>
+<th data-quarto-table-cell-role="th">DV_ITEM2</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>11.0</td>
+<td>13.0</td>
+<td>12.0</td>
+<td>21.0</td>
+<td>20.0</td>
+<td>22.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>21.0</td>
+<td>21.0</td>
+<td>28.0</td>
+<td>23.0</td>
+<td>35.0</td>
+<td>26.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>32.0</td>
+<td>28.0</td>
+<td>36.0</td>
+<td>25.0</td>
+<td>20.0</td>
+<td>33.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>20.0</td>
+<td>24.0</td>
+<td>12.0</td>
+<td>19.0</td>
+<td>18.0</td>
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>16.0</td>
+<td>14.0</td>
+<td>12.0</td>
+<td>12.0</td>
+<td>7.0</td>
+<td>7.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="distributions" class="level2">
+<h2 class="anchored" data-anchor-id="distributions">Distributions</h2>
+<p>A histogram shows how the values of one variable are spread out: each bar counts the respondents in a range of values. The smooth line is a <em>density curve</em>, an estimate of the shape of the distribution. Items have only five possible values, so their bars are discrete; the indices take more values and look smoother.</p>
+<div id="c5a4cff1" class="cell" data-fig-height="7.5" data-fig-width="9" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">7.5</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, col <span class="kw">in</span> <span class="bu">zip</span>(axes.flat, numeric.columns):</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    sns.histplot(df[col], bins<span class="op">=</span><span class="dv">9</span>, kde<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-data-analysis_files/figure-html/cell-13-output-1.png" width="849" height="703" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="categorical-variable" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variable">Categorical variable</h2>
+<p>The group variable is text, so it gets a bar chart of counts instead of a histogram. Both groups have 50 respondents: the design is balanced.</p>
+<div id="1ccbcbfc" class="cell" data-fig-height="3.2" data-fig-width="4.5" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">4.5</span>, <span class="fl">3.2</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"IV_CAT_GROUP"</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-data-analysis_files/figure-html/cell-14-output-1.png" width="406" height="282" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-relating-the-outcome-to-the-predictors" class="level1">
+<h1>Part 3 · Relating the outcome to the predictors</h1>
+<section id="group-comparison-table" class="level2">
+<h2 class="anchored" data-anchor-id="group-comparison-table">Group comparison table</h2>
+<p>Now we look at two variables at a time: the outcome <code>DV_INDEX</code> against each predictor. We use the indices rather than the single items, since each index summarises its two items. First, the outcome split by group: does the average differ between the groups?</p>
+<div id="c814ff0d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"IV_CAT_GROUP"</span>)[<span class="st">"DV_INDEX"</span>].agg([<span class="st">"count"</span>, <span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"median"</span>]).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">median</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV_CAT_GROUP</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">category1</th>
+<td>50</td>
+<td>2.87</td>
+<td>1.04</td>
+<td>2.75</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">category2</th>
+<td>50</td>
+<td>2.26</td>
+<td>1.06</td>
+<td>2.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-table" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-table">Correlation table</h2>
+<p>For two numeric variables, the <em>correlation</em> (Pearson’s r) measures how closely they move together, from −1 (opposite) through 0 (unrelated) to +1 (in step).</p>
+<div id="4b5b3d3d" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"DV_INDEX"</span>, <span class="st">"IV_INDEX1"</span>, <span class="st">"IV_INDEX2"</span>]].corr().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">DV_INDEX</th>
+<th data-quarto-table-cell-role="th">IV_INDEX1</th>
+<th data-quarto-table-cell-role="th">IV_INDEX2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">DV_INDEX</th>
+<td>1.00</td>
+<td>0.41</td>
+<td>0.41</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV_INDEX1</th>
+<td>0.41</td>
+<td>1.00</td>
+<td>0.32</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">IV_INDEX2</th>
+<td>0.41</td>
+<td>0.32</td>
+<td>1.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="visualizations">Visualizations</h2>
+<p>Left: the outcome per group as a box plot (median, middle half and range) with each respondent as a dot. Middle and right: the outcome against each index, one dot per respondent, with a fitted straight line and its uncertainty band.</p>
+<div id="1a0cb241" class="cell" data-fig-height="3.6" data-fig-width="10" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.6</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"IV_CAT_GROUP"</span>, y<span class="op">=</span><span class="st">"DV_INDEX"</span>, color<span class="op">=</span><span class="st">"#d3f9d8"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"IV_CAT_GROUP"</span>, y<span class="op">=</span><span class="st">"DV_INDEX"</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>              alpha<span class="op">=</span><span class="fl">0.6</span>, jitter<span class="op">=</span><span class="fl">0.2</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">""</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, iv <span class="kw">in</span> <span class="bu">zip</span>(axes[<span class="dv">1</span>:], [<span class="st">"IV_INDEX1"</span>, <span class="st">"IV_INDEX2"</span>]):</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    sns.regplot(data<span class="op">=</span>df, x<span class="op">=</span>iv, y<span class="op">=</span><span class="st">"DV_INDEX"</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                scatter_kws<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="fl">0.6</span>}, ax<span class="op">=</span>ax)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-data-analysis_files/figure-html/cell-17-output-1.png" width="930" height="329" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="significance-tests" class="level2">
+<h2 class="anchored" data-anchor-id="significance-tests">Significance tests</h2>
+<p>A significance test asks: could a difference or relationship this large plausibly appear by chance if there were none in the population? A small <em>p</em>-value (by convention below 0.05) says chance alone is an unlikely explanation. The <em>effect size</em> says how large the effect is, which <em>p</em> does not.</p>
+<ul>
+<li><strong>Group → DV:</strong> Welch’s t-test compares the two group means; Cohen’s <em>d</em> is the difference in standard-deviation units (around 0.2 small, 0.5 medium, 0.8 large).</li>
+<li><strong>Index → DV:</strong> Pearson’s correlation test; <em>r</em> itself is the effect size (around 0.1 small, 0.3 medium, 0.5 large).</li>
+</ul>
+<div id="041e5cd6" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats <span class="im">as</span> st</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>g1, g2 <span class="op">=</span> (df.loc[df[<span class="st">"IV_CAT_GROUP"</span>] <span class="op">==</span> g, <span class="st">"DV_INDEX"</span>] <span class="cf">for</span> g <span class="kw">in</span> [<span class="st">"category1"</span>, <span class="st">"category2"</span>])</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> st.ttest_ind(g1, g2, equal_var<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>pooled_sd <span class="op">=</span> ((g1.var() <span class="op">+</span> g2.var()) <span class="op">/</span> <span class="dv">2</span>) <span class="op">**</span> <span class="fl">0.5</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> [{</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"predictor"</span>: <span class="st">"IV_CAT_GROUP"</span>, <span class="st">"test"</span>: <span class="st">"Welch t-test"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"statistic"</span>: t.statistic, <span class="st">"p"</span>: t.pvalue,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"effect size"</span>: (g1.mean() <span class="op">-</span> g2.mean()) <span class="op">/</span> pooled_sd, <span class="st">"measure"</span>: <span class="st">"Cohen's d"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>}]</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> iv <span class="kw">in</span> [<span class="st">"IV_INDEX1"</span>, <span class="st">"IV_INDEX2"</span>]:</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> st.pearsonr(df[iv], df[<span class="st">"DV_INDEX"</span>])</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    results.append({</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"predictor"</span>: iv, <span class="st">"test"</span>: <span class="st">"Pearson correlation"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"statistic"</span>: r.statistic, <span class="st">"p"</span>: r.pvalue,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"effect size"</span>: r.statistic, <span class="st">"measure"</span>: <span class="st">"r"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(results).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>results[<span class="st">"p"</span>] <span class="op">=</span> results[<span class="st">"p"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> p: <span class="st">"&lt; .001"</span> <span class="cf">if</span> p <span class="op">&lt;</span> <span class="fl">0.001</span> <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>p<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">predictor</th>
+<th data-quarto-table-cell-role="th">test</th>
+<th data-quarto-table-cell-role="th">statistic</th>
+<th data-quarto-table-cell-role="th">p</th>
+<th data-quarto-table-cell-role="th">effect size</th>
+<th data-quarto-table-cell-role="th">measure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>IV_CAT_GROUP</td>
+<td>Welch t-test</td>
+<td>2.905</td>
+<td>0.005</td>
+<td>0.581</td>
+<td>Cohen's d</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>IV_INDEX1</td>
+<td>Pearson correlation</td>
+<td>0.412</td>
+<td>&lt; .001</td>
+<td>0.412</td>
+<td>r</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>IV_INDEX2</td>
+<td>Pearson correlation</td>
+<td>0.411</td>
+<td>&lt; .001</td>
+<td>0.411</td>
+<td>r</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The data are simulated, so these effects were built in on purpose; with real survey data, read them as associations, not proof of cause and effect.</p>
+</section>
+<section id="check-the-ai" class="level2">
+<h2 class="anchored" data-anchor-id="check-the-ai">Check the AI</h2>
+<p>AI assistants write convincing code, and sometimes convincing mistakes. Before you trust an AI-produced result, check one number yourself:</p>
 <ol type="1">
-<li>Placeholder — load a small CSV dataset and describe it in plain language.</li>
-<li>Placeholder — prompt an AI assistant to propose a cleaning plan; apply one step.</li>
-<li>Placeholder — request a summary table and one visualization; refine the prompt.</li>
-<li>Placeholder — spot-check one AI-produced number against a manual calculation.</li>
+<li>Paste the context prompt from Part 1 into a chat assistant.</li>
+<li>Ask it for the mean of <code>DV_INDEX</code> in each group, or the correlation between <code>DV_INDEX</code> and <code>IV_INDEX1</code>.</li>
+<li>Run its code and compare the answer with the tables above. Do they match? If not, which one is right — and why?</li>
 </ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
