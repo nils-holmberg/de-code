@@ -11,7 +11,7 @@
     "href": "index.html#abstract",
     "title": "Democratizing Coding with AI (5–9 October)",
     "section": "Abstract",
-    "text": "Abstract\nThis workshop is aimed at users who want to leverage AI and natural language interfaces to perform data analysis, generate data, and build applications — without traditional coding barriers. In the opening sessions, participants will explore AI-assisted workflows and low-code paradigms, learning how to structure analytical tasks as prompts and set up their working environment. Hands-on exercises guide attendees from asking questions to executing real analytical steps.\nThe workshop then deepens into practical application: cleaning and exploring data with AI, generating visualizations through natural language, and finally building lightweight apps and dashboards. By the end of the five days, participants will be able to translate problems into AI-assisted workflows, analyze and generate data using natural language, and build simple functional applications — while critically assessing the outputs AI produces."
+    "text": "Abstract\nThe first days focus on data. Participants analyse a survey dataset by asking questions in natural language, then use AI to generate realistic synthetic data and simulated survey respondents. Along the way they learn to write clear prompts, run the resulting code in Colab, and check every number the AI produces.\nThe last days focus on building. Participants create small apps and dashboards and work with AI agents and their tools. They write specifications as code: plain-text files that give the AI context, hold instructions that prompts can refer to, and serve agents as blueprints for building and testing an app."
   },
   {
     "objectID": "index.html#sessions",
@@ -427,6 +427,160 @@
     "text": "Topics\n\n\n\nFrom notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance\nSlides\nNotebook"
   },
   {
+    "objectID": "sessions/03-app-building-slides.html#a-flexible-definition",
+    "href": "sessions/03-app-building-slides.html#a-flexible-definition",
+    "title": "Session 3 · de-code app building",
+    "section": "1.1 A flexible definition",
+    "text": "1.1 A flexible definition\nIn this course, an app is any program that takes some input, does a job for someone, and produces output they can use — without them having to read or change the code. That makes “app” a wide term. What differs is how the input arrives, where the program runs, and who uses it:\n\n\n\n\n\n\n\n\n\n\nApp\nInput\nJob\nOutput\nWho runs it\n\n\n\n\nNotebook cell with settings at the top\na few variables you edit\nanalyse a dataset\ntables, charts, a report file\nyou, in Colab\n\n\nCommand-line script\na file name, options\nconvert or clean files\nnew files\nyou, in a terminal\n\n\nSpreadsheet with formulas\nnumbers typed into cells\ncalculate\ntotals, charts\nanyone with Excel\n\n\nInteractive dashboard (Shiny)\nmenus, sliders\nfilter and summarise data\nlive charts and tables\nanyone with the link\n\n\nLocal web page (HTML + JavaScript)\nclicks, typed text\nstore and show information\nan updated page\nanyone who opens the file\n\n\nHosted web app\nforms, accounts\na service\npages, emails, downloads\nthe public\n\n\nChatbot (custom GPT, Gemini Gem)\nquestions in plain language\nanswer with set instructions\ntext, files\nanyone with access\n\n\nMobile app\ntaps, camera, location\neverything above, on a phone\nscreens, notifications\napp-store users\n\n\n\nWe start at the top of the table, with an app that is a single notebook cell, and work our way down."
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#a-toy-app-prompt",
+    "href": "sessions/03-app-building-slides.html#a-toy-app-prompt",
+    "title": "Session 3 · de-code app building",
+    "section": "1.2 A toy app prompt",
+    "text": "1.2 A toy app prompt\nThis prompt asks Gemini for a tiny report app: one Colab cell with its settings at the top. Paste the prompt into Gemini, then paste the code it returns into a new cell in Colab. The cell below only stores the text.\n\nprompt = \"\"\"\nWrite one Google Colab Python code cell that works as a small report app.\n\nSettings at the top of the cell, as plain variables the user can edit:\n- DATA_URL = \"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\"\n- OUTCOME = \"DV_INDEX\", GROUP = \"IV_CAT_GROUP\", PREFIX = \"app\"\n\nThe cell should:\n1. load the tab-separated file from DATA_URL with pandas\n2. save a summary table (count, mean, SD, min, quartiles, max) of all columns whose\n   name contains INDEX to PREFIX-summary.csv\n3. save one histogram per index as PREFIX-hist-&lt;index&gt;.png\n4. save a box plot of OUTCOME by GROUP as PREFIX-groups.png\n5. save one self-contained HTML report, PREFIX-report.html, with the summary table and\n   all charts embedded as base64 images, so it is a single file that opens anywhere\n6. print the name and size of every file it wrote\n\nWrite all files to the current working folder. Use only pandas and matplotlib. Return\nonly the code, with short comments.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#the-generated-app",
+    "href": "sessions/03-app-building-slides.html#the-generated-app",
+    "title": "Session 3 · de-code app building",
+    "section": "1.3 The generated app",
+    "text": "1.3 The generated app\nA version of the code the model returns. Run it in the session notebook in Colab, then open the Files panel (the folder icon on the left) to see the six new files. Right-click a file to download it; open app-report.html in your browser.\n\n# ---- Settings: change these and run the cell again ----\nDATA_URL = \"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\"\nOUTCOME = \"DV_INDEX\"\nGROUP = \"IV_CAT_GROUP\"\nPREFIX = \"app\"\n\nimport base64\nfrom io import BytesIO\nfrom pathlib import Path\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\n# 1. Load the data\ndf = pd.read_csv(DATA_URL, sep=\"\\t\")\nindices = [c for c in df.columns if \"INDEX\" in c]\nwritten = []\n\n\ndef save_figure(fig, name):\n    \"\"\"Save a figure as PNG and return it base64-encoded for the HTML report.\"\"\"\n    path = Path(f\"{PREFIX}-{name}.png\")\n    fig.savefig(path, dpi=110, bbox_inches=\"tight\")\n    buffer = BytesIO()\n    fig.savefig(buffer, format=\"png\", dpi=110, bbox_inches=\"tight\")\n    plt.close(fig)\n    written.append(path)\n    return base64.b64encode(buffer.getvalue()).decode()\n\n\n# 2. Summary table of the indices\nsummary = df[indices].describe().T.round(2)\nsummary_path = Path(f\"{PREFIX}-summary.csv\")\nsummary.to_csv(summary_path)\nwritten.append(summary_path)\n\n# 3. One histogram per index\nimages = {}\nfor col in indices:\n    fig, ax = plt.subplots(figsize=(4, 3))\n    ax.hist(df[col], bins=9, color=\"#2f9e44\", edgecolor=\"white\")\n    ax.set_title(col)\n    images[f\"Distribution of {col}\"] = save_figure(fig, f\"hist-{col.lower()}\")\n\n# 4. Outcome by group\nfig, ax = plt.subplots(figsize=(4, 3))\ndf.boxplot(column=OUTCOME, by=GROUP, ax=ax, grid=False)\nax.set_title(f\"{OUTCOME} by {GROUP}\")\nfig.suptitle(\"\")\nimages[f\"{OUTCOME} by {GROUP}\"] = save_figure(fig, \"groups\")\n\n# 5. One self-contained HTML report with the table and all charts embedded\nfigures = \"\\n\".join(\n    f'&lt;h2&gt;{title}&lt;/h2&gt;&lt;img src=\"data:image/png;base64,{data}\" alt=\"{title}\"&gt;'\n    for title, data in images.items()\n)\nhtml = f\"\"\"&lt;!doctype html&gt;\n&lt;html&gt;&lt;head&gt;&lt;meta charset=\"utf-8\"&gt;&lt;title&gt;Report: {OUTCOME}&lt;/title&gt;\n&lt;style&gt;body {{ font-family: Arial, sans-serif; max-width: 800px; margin: 2em auto; }}\ntable {{ border-collapse: collapse; }} td, th {{ padding: 4px 8px; border: 1px solid #ccc; }}&lt;/style&gt;\n&lt;/head&gt;&lt;body&gt;\n&lt;h1&gt;Report: {OUTCOME}&lt;/h1&gt;\n&lt;p&gt;{len(df)} rows, {df.shape[1]} columns, source: {DATA_URL}&lt;/p&gt;\n&lt;h2&gt;Summary of the indices&lt;/h2&gt;\n{summary.to_html()}\n{figures}\n&lt;/body&gt;&lt;/html&gt;\"\"\"\nreport_path = Path(f\"{PREFIX}-report.html\")\nreport_path.write_text(html, encoding=\"utf-8\")\nwritten.append(report_path)\n\n# 6. Tell the user what was made\nprint(f\"Wrote {len(written)} files:\")\nfor path in written:\n    print(f\"  {path.name:28} {path.stat().st_size:&gt;8,} bytes\")\nsummary\n\nWrote 6 files:\n  app-summary.csv                   176 bytes\n  app-hist-iv_index1.png          9,357 bytes\n  app-hist-iv_index2.png         10,087 bytes\n  app-hist-dv_index.png          10,111 bytes\n  app-groups.png                 12,931 bytes\n  app-report.html                58,450 bytes\n\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\n\n\nIV_INDEX1\n100.0\n3.07\n1.11\n1.0\n2.38\n3.00\n4.0\n5.0\n\n\nIV_INDEX2\n100.0\n2.81\n1.15\n1.0\n2.00\n2.75\n3.5\n5.0\n\n\nDV_INDEX\n100.0\n2.56\n1.09\n1.0\n1.88\n2.50\n3.5\n5.0\n\n\n\n\n\n\n\nChanging a setting at the top — say OUTCOME = \"IV_INDEX1\" or PREFIX = \"run2\" — and running the cell again is using the app: same job, new input, new output, no code reading required."
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#how-a-spec-works",
+    "href": "sessions/03-app-building-slides.html#how-a-spec-works",
+    "title": "Session 3 · de-code app building",
+    "section": "2.1 How a spec works",
+    "text": "2.1 How a spec works\nA prompt is a one-off request. A specification (spec) is a document you keep: a plain-text file that describes what an app should do and how to check it, written so that both people and AI can follow it. Writing specs as files — specifications as code — lets them do three jobs at once:\n\nContext: the AI reads the spec before it writes anything, so it knows the data, the users and the constraints instead of guessing.\nInstructions: prompts can stay short — “implement section 3 of SPEC.md” — because the details live in the spec.\nBlueprint: an AI agent such as Google Antigravity can plan the work from the spec, build the app step by step, and test it against the acceptance checks.\n\nThe workflow: run the spec cells below in Colab to create SPEC.md, download it, put it in an empty folder, open that folder in Antigravity, and ask the agent: “Read SPEC.md and build the app step by step. Check every acceptance criterion and report the result.” When something is wrong, change the spec and ask again — the spec stays the single source of truth. The cells below only store text; on this page nothing is run."
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#purpose-and-users",
+    "href": "sessions/03-app-building-slides.html#purpose-and-users",
+    "title": "Session 3 · de-code app building",
+    "section": "2.2 Purpose and users",
+    "text": "2.2 Purpose and users\nStart with why and for whom. One clear sentence of purpose keeps the agent from adding features nobody asked for.\n\nspec = \"\"\"\n# SPEC: TPB explorer (Shiny for Python)\n\n## 1. Purpose and users\n\nBuild an interactive web app that lets students explore a synthetic Theory of Planned\nBehavior (TPB) survey experiment: how attitude (ATT), subjective norm (SN) and perceived\nbehavioral control (PBC) relate to children's intention (BI) to learn an instrument, and\nwhether a peer testimonial (treatment) raised that intention.\n\nUsers: course participants with no coding background. They use the app in a browser,\nmainly on a laptop, to look at distributions, relationships and the experiment result.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#data",
+    "href": "sessions/03-app-building-slides.html#data",
+    "title": "Session 3 · de-code app building",
+    "section": "2.3 Data",
+    "text": "2.3 Data\nDescribe the data precisely: where it is, every column and its role. The agent then writes correct loading code on the first try, and the checks at the end tell it whether it did.\n\nspec += \"\"\"\n## 2. Data\n\nLoad this tab-separated file at start-up (100 rows, no missing values):\nhttps://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-tpb-exp-n100.tsv\n\nColumns:\n- Background (text): age_group (\"10 years\" to \"13 years\"), grade_level (\"Grade 4\" to\n  \"Grade 6\"), gender (\"Girl\", \"Boy\", \"Non-binary\", \"Prefer not to say\")\n- Experiment (text): experimental_condition (\"control\" or \"treatment\")\n- Items (whole numbers 1-5, 1 = strongly disagree, 5 = strongly agree), three per scale:\n  - ATT: att_fun_exciting, att_valuable_use_of_time, att_feel_good_about_self\n  - SN: sn_parent_guardian_approval, sn_friend_approval, sn_teacher_encouragement\n  - PBC: pbc_confident_can_learn, pbc_enough_spare_time, pbc_instrument_access\n  - BI: bi_plan_next_6_months, bi_try_best_to_learn_soon, bi_want_to_start_school_year\n- Indices (decimals 1-5): ATT_index, SN_index, PBC_index, BI_index = mean of the three\n  items of each scale. Recompute them from the items after loading.\n\nIf loading fails or the file does not have 100 rows, show a clear error message in the\napp instead of crashing.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#features-and-layout",
+    "href": "sessions/03-app-building-slides.html#features-and-layout",
+    "title": "Session 3 · de-code app building",
+    "section": "2.4 Features and layout",
+    "text": "2.4 Features and layout\nDescribe what the user sees and can do, screen by screen. Numbered requirements give the agent a to-do list and give you something concrete to check.\n\nspec += \"\"\"\n## 3. Features and layout\n\nPage title \"TPB explorer\". A sidebar on the left, tabs on the right.\n\nSidebar filters (all selected by default, apply to every tab):\n- F1 experimental condition (checkboxes)\n- F2 gender, F3 grade level, F4 age group (checkbox groups)\n- F5 a line showing \"n = &lt;number of rows after filtering&gt;\"\n- F6 a button that downloads the filtered rows as CSV\n\nTabs:\n- T1 Overview: table of mean and SD of the four indices, overall and by condition\n- T2 Distributions: dropdown to pick one index; histogram with a density curve\n- T3 Relationships: dropdowns for x and y index (default PBC_index and BI_index);\n  scatter plot with a fitted line; Pearson r and p shown above the plot\n- T4 Experiment: box plot of BI_index by condition with the individual points;\n  Welch t-test (t, p) and Cohen's d for treatment vs control shown in a small table\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#behaviour",
+    "href": "sessions/03-app-building-slides.html#behaviour",
+    "title": "Session 3 · de-code app building",
+    "section": "2.5 Behaviour",
+    "text": "2.5 Behaviour\nSay how the app should behave, not just what it shows: what reacts to what, and what happens in edge cases such as an empty selection.\n\nspec += \"\"\"\n## 4. Behaviour\n\n- Every table, plot and number updates immediately when a filter changes.\n- If the filters leave fewer than 5 rows, show \"Too few rows for this view\" instead of\n  plots and tests.\n- If only one condition is selected, T4 shows \"Select both conditions to compare\"\n  instead of the test.\n- Round numbers to 2 decimals; show p-values below .001 as \"&lt; .001\".\n- Use one colour palette across all plots; label every axis with the full construct\n  name (for example \"Behavioral intention (BI)\").\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#technical-constraints",
+    "href": "sessions/03-app-building-slides.html#technical-constraints",
+    "title": "Session 3 · de-code app building",
+    "section": "2.6 Technical constraints",
+    "text": "2.6 Technical constraints\nConstraints decide how it is built. Fixing the framework, files and libraries keeps the result small, runnable and easy to put online.\n\nspec += \"\"\"\n## 5. Technical constraints\n\n- Shiny for Python, core API (from shiny import App, ui, render, reactive).\n- Libraries: shiny, pandas, matplotlib, scipy. Nothing else.\n- Files: app.py (the whole app), requirements.txt (pinned versions), README.md (how to\n  run locally and how to deploy, see section 7).\n- No database, no login, no files written at run time.\n- Runs locally with:  shiny run app.py  and opens at http://127.0.0.1:8000\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#acceptance-checks",
+    "href": "sessions/03-app-building-slides.html#acceptance-checks",
+    "title": "Session 3 · de-code app building",
+    "section": "2.7 Acceptance checks",
+    "text": "2.7 Acceptance checks\nThe checks are the definition of done. Each one is a statement that is either true or false, so the agent can test its own work — and so can you.\n\nspec += \"\"\"\n## 6. Acceptance checks\n\n- A1 With all filters selected, F5 shows n = 100.\n- A2 Unticking \"treatment\" shows n = 50, and T4 shows \"Select both conditions to\n  compare\" instead of the test.\n- A3 The means in T1 equal pandas df.groupby(\"experimental_condition\")[indices].mean()\n  rounded to 2 decimals.\n- A4 Changing the T3 dropdowns updates the plot and r without reloading the page.\n- A5 The downloaded CSV has the same rows as F5 reports.\n- A6 shiny run app.py starts without errors or warnings in a fresh virtual\n  environment created from requirements.txt.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#putting-it-online",
+    "href": "sessions/03-app-building-slides.html#putting-it-online",
+    "title": "Session 3 · de-code app building",
+    "section": "2.8 Putting it online",
+    "text": "2.8 Putting it online\nA spec can also describe how the app goes live, so the agent prepares the right files. Three realistic routes, from easiest to most independent:\n\nPosit Connect Cloud publishes straight from a GitHub repository and updates the app when you push changes.\nshinyapps.io uploads from your computer with a command-line tool.\nShinylive turns the app into a static website that runs entirely in the visitor’s browser — it can be hosted on Netlify or GitHub Pages, like this course site.\n\n\nspec += \"\"\"\n## 7. Putting it online\n\nWrite these steps into README.md and make sure the files support them.\n\nOption A - Posit Connect Cloud (recommended):\n1. Create a public GitHub repository with app.py, requirements.txt and README.md.\n2. Sign in at https://connect.posit.cloud with the GitHub account.\n3. Choose Publish, then Shiny, pick the repository, the branch (main) and app.py as\n   the primary file, and publish.\n4. Share the public URL; every push to main republishes the app.\n\nOption B - shinyapps.io:\n1. Create an account at https://www.shinyapps.io and copy a token from the dashboard.\n2. In a terminal:\n       pip install rsconnect-python\n       rsconnect add --account &lt;account&gt; --name &lt;account&gt; --token &lt;token&gt; --secret &lt;secret&gt;\n       rsconnect deploy shiny . --name &lt;account&gt; --title tpb-explorer\n\nOption C - Shinylive (static site, no server):\n1. In a terminal:\n       pip install shinylive\n       shinylive export . site\n2. Upload the site folder to Netlify or GitHub Pages. The app then runs in the\n   visitor's browser; all libraries must be available in Pyodide (shiny, pandas,\n   matplotlib and scipy are).\n\nNever put passwords or tokens in the repository. The data are synthetic, so the app can\nbe public.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#save-the-spec",
+    "href": "sessions/03-app-building-slides.html#save-the-spec",
+    "title": "Session 3 · de-code app building",
+    "section": "2.9 Save the spec",
+    "text": "2.9 Save the spec\nThe last cell joins all parts into one file. In Colab, run all spec cells, then download SPEC.md from the Files panel and give it to Antigravity.\n\nwith open(\"SPEC.md\", \"w\") as f:\n    f.write(spec)\nprint(spec)"
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#why-a-local-web-app",
+    "href": "sessions/03-app-building-slides.html#why-a-local-web-app",
+    "title": "Session 3 · de-code app building",
+    "section": "3.1 Why a local web app",
+    "text": "3.1 Why a local web app\nNot every app needs a server. A web browser can run an app made of three plain files — HTML for the structure, CSS for the look, and JavaScript for the behaviour. You open index.html by double-clicking it, and the app runs on your own computer: no install, no account, no internet connection. Compared with the Shiny app there is no data file to load; instead the app creates data — your notes — and stores it in the browser.\nThe spec below follows the same pattern as before: purpose, constraints, data, features, checks. Run its cells in Colab to create NOTES-SPEC.md for Antigravity."
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#purpose-and-users-1",
+    "href": "sessions/03-app-building-slides.html#purpose-and-users-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.2 Purpose and users",
+    "text": "3.2 Purpose and users\n\nnotes_spec = \"\"\"\n# SPEC: Course notes (local web app)\n\n## 1. Purpose and users\n\nA simple note-taking app for course participants to write down ideas, prompts and\nresults during the sessions. One user, one computer, no account.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#files-and-constraints",
+    "href": "sessions/03-app-building-slides.html#files-and-constraints",
+    "title": "Session 3 · de-code app building",
+    "section": "3.3 Files and constraints",
+    "text": "3.3 Files and constraints\nThese constraints are what make the app local: no frameworks to install, nothing loaded from the internet, and it must work when opened straight from a folder.\n\nnotes_spec += \"\"\"\n## 2. Files and constraints\n\n- Exactly three files in one folder: index.html, style.css, app.js.\n- Plain HTML, CSS and JavaScript. No frameworks, no libraries, no CDN links, no build\n  step, no server.\n- Must work when index.html is opened directly from the folder (a file:// address),\n  also without an internet connection, in current Chrome, Firefox, Edge and Safari.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#data-model-and-storage",
+    "href": "sessions/03-app-building-slides.html#data-model-and-storage",
+    "title": "Session 3 · de-code app building",
+    "section": "3.4 Data model and storage",
+    "text": "3.4 Data model and storage\nA data model says exactly what one note is. Storage says where notes are kept — here localStorage, a small database that every browser has for each page.\n\nnotes_spec += \"\"\"\n## 3. Data model and storage\n\n- A note has: id (unique text), title (text), body (text), tags (list of words),\n  created and updated (date and time).\n- All notes are saved in the browser's localStorage under the key \"course-notes\" as\n  JSON, after every change.\n- Export: a button that downloads all notes as course-notes-&lt;date&gt;.json.\n- Import: a button that reads such a file and adds its notes, skipping ids that already\n  exist.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#features-and-layout-1",
+    "href": "sessions/03-app-building-slides.html#features-and-layout-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.5 Features and layout",
+    "text": "3.5 Features and layout\n\nnotes_spec += \"\"\"\n## 4. Features and layout\n\n- N1 Two columns: a list of notes on the left, the selected note in an editor on the\n  right. On narrow screens (below 700 px), show one column at a time.\n- N2 \"New note\" button; the new note opens in the editor with the title selected.\n- N3 Edit title, body and tags (comma-separated); changes save automatically.\n- N4 Delete a note after a confirmation question.\n- N5 Search box that filters the list by title and body as you type.\n- N6 Click a tag to show only notes with that tag; click again to show all.\n- N7 The list is sorted by last updated, newest first, and shows title, date and the\n  first line of the body.\n- N8 Keyboard shortcuts: Ctrl/Cmd+N new note, Ctrl/Cmd+F focus search, Esc clears the\n  search.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#look-and-accessibility",
+    "href": "sessions/03-app-building-slides.html#look-and-accessibility",
+    "title": "Session 3 · de-code app building",
+    "section": "3.6 Look and accessibility",
+    "text": "3.6 Look and accessibility\nSaying how the app should look and who must be able to use it avoids an app that only works for its builder.\n\nnotes_spec += \"\"\"\n## 5. Look and accessibility\n\n- Clean, readable design: system font, comfortable line length, enough contrast.\n- Follow the computer's light or dark mode (prefers-color-scheme).\n- Every control has a visible label or an accessible name; everything works with the\n  keyboard, with a visible focus outline.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#acceptance-checks-1",
+    "href": "sessions/03-app-building-slides.html#acceptance-checks-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.7 Acceptance checks",
+    "text": "3.7 Acceptance checks\n\nnotes_spec += \"\"\"\n## 6. Acceptance checks\n\n- A1 Opening index.html from the folder shows the app with no errors in the browser\n  console.\n- A2 A new note with a title, body and two tags is still there after closing and\n  reopening the browser.\n- A3 Searching for a word in a body shows only notes containing that word.\n- A4 Export, delete all notes, import the exported file: every note is back.\n- A5 The app works with the computer offline.\n- A6 At 400 px width, all features are reachable.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#how-to-run",
+    "href": "sessions/03-app-building-slides.html#how-to-run",
+    "title": "Session 3 · de-code app building",
+    "section": "3.8 How to run",
+    "text": "3.8 How to run\n\nnotes_spec += \"\"\"\n## 7. How to run\n\nWrite this into a short README.md:\n1. Keep index.html, style.css and app.js together in one folder.\n2. Double-click index.html, or drag it into a browser window.\n3. Notes are stored in that browser on that computer only. Use Export regularly as a\n   backup, and Import to move notes to another browser or computer.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#save-the-spec-1",
+    "href": "sessions/03-app-building-slides.html#save-the-spec-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.9 Save the spec",
+    "text": "3.9 Save the spec\n\nwith open(\"NOTES-SPEC.md\", \"w\") as f:\n    f.write(notes_spec)\nprint(notes_spec)"
+  },
+  {
+    "objectID": "sessions/03-app-building-slides.html#your-turn",
+    "href": "sessions/03-app-building-slides.html#your-turn",
+    "title": "Session 3 · de-code app building",
+    "section": "3.10 Your turn",
+    "text": "3.10 Your turn\nPick an app idea of your own — a reading list, a habit tracker, a quiz for your students, a dashboard for your own data. Copy one of the specs, then:\n\nRewrite Purpose and users for your idea.\nReplace Data (or the data model) and Features with what your app needs.\nKeep the constraints that make it easy to run, and write acceptance checks you could test yourself.\nGive the spec to Antigravity, check the result against your acceptance checks, and improve the spec — not the code — until it passes."
+  },
+  {
     "objectID": "sessions/03-app-building.html",
     "href": "sessions/03-app-building.html",
     "title": "Session 3 · de-code app building",
@@ -439,6 +593,160 @@
     "title": "Session 3 · de-code app building",
     "section": "",
     "text": "From notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance\nSlides\nNotebook"
+  },
+  {
+    "objectID": "sessions/03-app-building.html#a-flexible-definition",
+    "href": "sessions/03-app-building.html#a-flexible-definition",
+    "title": "Session 3 · de-code app building",
+    "section": "1.1 A flexible definition",
+    "text": "1.1 A flexible definition\nIn this course, an app is any program that takes some input, does a job for someone, and produces output they can use — without them having to read or change the code. That makes “app” a wide term. What differs is how the input arrives, where the program runs, and who uses it:\n\n\n\n\n\n\n\n\n\n\nApp\nInput\nJob\nOutput\nWho runs it\n\n\n\n\nNotebook cell with settings at the top\na few variables you edit\nanalyse a dataset\ntables, charts, a report file\nyou, in Colab\n\n\nCommand-line script\na file name, options\nconvert or clean files\nnew files\nyou, in a terminal\n\n\nSpreadsheet with formulas\nnumbers typed into cells\ncalculate\ntotals, charts\nanyone with Excel\n\n\nInteractive dashboard (Shiny)\nmenus, sliders\nfilter and summarise data\nlive charts and tables\nanyone with the link\n\n\nLocal web page (HTML + JavaScript)\nclicks, typed text\nstore and show information\nan updated page\nanyone who opens the file\n\n\nHosted web app\nforms, accounts\na service\npages, emails, downloads\nthe public\n\n\nChatbot (custom GPT, Gemini Gem)\nquestions in plain language\nanswer with set instructions\ntext, files\nanyone with access\n\n\nMobile app\ntaps, camera, location\neverything above, on a phone\nscreens, notifications\napp-store users\n\n\n\nWe start at the top of the table, with an app that is a single notebook cell, and work our way down."
+  },
+  {
+    "objectID": "sessions/03-app-building.html#a-toy-app-prompt",
+    "href": "sessions/03-app-building.html#a-toy-app-prompt",
+    "title": "Session 3 · de-code app building",
+    "section": "1.2 A toy app prompt",
+    "text": "1.2 A toy app prompt\nThis prompt asks Gemini for a tiny report app: one Colab cell with its settings at the top. Paste the prompt into Gemini, then paste the code it returns into a new cell in Colab. The cell below only stores the text.\n\nprompt = \"\"\"\nWrite one Google Colab Python code cell that works as a small report app.\n\nSettings at the top of the cell, as plain variables the user can edit:\n- DATA_URL = \"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\"\n- OUTCOME = \"DV_INDEX\", GROUP = \"IV_CAT_GROUP\", PREFIX = \"app\"\n\nThe cell should:\n1. load the tab-separated file from DATA_URL with pandas\n2. save a summary table (count, mean, SD, min, quartiles, max) of all columns whose\n   name contains INDEX to PREFIX-summary.csv\n3. save one histogram per index as PREFIX-hist-&lt;index&gt;.png\n4. save a box plot of OUTCOME by GROUP as PREFIX-groups.png\n5. save one self-contained HTML report, PREFIX-report.html, with the summary table and\n   all charts embedded as base64 images, so it is a single file that opens anywhere\n6. print the name and size of every file it wrote\n\nWrite all files to the current working folder. Use only pandas and matplotlib. Return\nonly the code, with short comments.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#the-generated-app",
+    "href": "sessions/03-app-building.html#the-generated-app",
+    "title": "Session 3 · de-code app building",
+    "section": "1.3 The generated app",
+    "text": "1.3 The generated app\nA version of the code the model returns. Run it in the session notebook in Colab, then open the Files panel (the folder icon on the left) to see the six new files. Right-click a file to download it; open app-report.html in your browser.\n\n# ---- Settings: change these and run the cell again ----\nDATA_URL = \"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\"\nOUTCOME = \"DV_INDEX\"\nGROUP = \"IV_CAT_GROUP\"\nPREFIX = \"app\"\n\nimport base64\nfrom io import BytesIO\nfrom pathlib import Path\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\n# 1. Load the data\ndf = pd.read_csv(DATA_URL, sep=\"\\t\")\nindices = [c for c in df.columns if \"INDEX\" in c]\nwritten = []\n\n\ndef save_figure(fig, name):\n    \"\"\"Save a figure as PNG and return it base64-encoded for the HTML report.\"\"\"\n    path = Path(f\"{PREFIX}-{name}.png\")\n    fig.savefig(path, dpi=110, bbox_inches=\"tight\")\n    buffer = BytesIO()\n    fig.savefig(buffer, format=\"png\", dpi=110, bbox_inches=\"tight\")\n    plt.close(fig)\n    written.append(path)\n    return base64.b64encode(buffer.getvalue()).decode()\n\n\n# 2. Summary table of the indices\nsummary = df[indices].describe().T.round(2)\nsummary_path = Path(f\"{PREFIX}-summary.csv\")\nsummary.to_csv(summary_path)\nwritten.append(summary_path)\n\n# 3. One histogram per index\nimages = {}\nfor col in indices:\n    fig, ax = plt.subplots(figsize=(4, 3))\n    ax.hist(df[col], bins=9, color=\"#2f9e44\", edgecolor=\"white\")\n    ax.set_title(col)\n    images[f\"Distribution of {col}\"] = save_figure(fig, f\"hist-{col.lower()}\")\n\n# 4. Outcome by group\nfig, ax = plt.subplots(figsize=(4, 3))\ndf.boxplot(column=OUTCOME, by=GROUP, ax=ax, grid=False)\nax.set_title(f\"{OUTCOME} by {GROUP}\")\nfig.suptitle(\"\")\nimages[f\"{OUTCOME} by {GROUP}\"] = save_figure(fig, \"groups\")\n\n# 5. One self-contained HTML report with the table and all charts embedded\nfigures = \"\\n\".join(\n    f'&lt;h2&gt;{title}&lt;/h2&gt;&lt;img src=\"data:image/png;base64,{data}\" alt=\"{title}\"&gt;'\n    for title, data in images.items()\n)\nhtml = f\"\"\"&lt;!doctype html&gt;\n&lt;html&gt;&lt;head&gt;&lt;meta charset=\"utf-8\"&gt;&lt;title&gt;Report: {OUTCOME}&lt;/title&gt;\n&lt;style&gt;body {{ font-family: Arial, sans-serif; max-width: 800px; margin: 2em auto; }}\ntable {{ border-collapse: collapse; }} td, th {{ padding: 4px 8px; border: 1px solid #ccc; }}&lt;/style&gt;\n&lt;/head&gt;&lt;body&gt;\n&lt;h1&gt;Report: {OUTCOME}&lt;/h1&gt;\n&lt;p&gt;{len(df)} rows, {df.shape[1]} columns, source: {DATA_URL}&lt;/p&gt;\n&lt;h2&gt;Summary of the indices&lt;/h2&gt;\n{summary.to_html()}\n{figures}\n&lt;/body&gt;&lt;/html&gt;\"\"\"\nreport_path = Path(f\"{PREFIX}-report.html\")\nreport_path.write_text(html, encoding=\"utf-8\")\nwritten.append(report_path)\n\n# 6. Tell the user what was made\nprint(f\"Wrote {len(written)} files:\")\nfor path in written:\n    print(f\"  {path.name:28} {path.stat().st_size:&gt;8,} bytes\")\nsummary\n\nWrote 6 files:\n  app-summary.csv                   176 bytes\n  app-hist-iv_index1.png          9,357 bytes\n  app-hist-iv_index2.png         10,087 bytes\n  app-hist-dv_index.png          10,111 bytes\n  app-groups.png                 12,931 bytes\n  app-report.html                58,450 bytes\n\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\n\n\nIV_INDEX1\n100.0\n3.07\n1.11\n1.0\n2.38\n3.00\n4.0\n5.0\n\n\nIV_INDEX2\n100.0\n2.81\n1.15\n1.0\n2.00\n2.75\n3.5\n5.0\n\n\nDV_INDEX\n100.0\n2.56\n1.09\n1.0\n1.88\n2.50\n3.5\n5.0\n\n\n\n\n\n\n\nChanging a setting at the top — say OUTCOME = \"IV_INDEX1\" or PREFIX = \"run2\" — and running the cell again is using the app: same job, new input, new output, no code reading required."
+  },
+  {
+    "objectID": "sessions/03-app-building.html#how-a-spec-works",
+    "href": "sessions/03-app-building.html#how-a-spec-works",
+    "title": "Session 3 · de-code app building",
+    "section": "2.1 How a spec works",
+    "text": "2.1 How a spec works\nA prompt is a one-off request. A specification (spec) is a document you keep: a plain-text file that describes what an app should do and how to check it, written so that both people and AI can follow it. Writing specs as files — specifications as code — lets them do three jobs at once:\n\nContext: the AI reads the spec before it writes anything, so it knows the data, the users and the constraints instead of guessing.\nInstructions: prompts can stay short — “implement section 3 of SPEC.md” — because the details live in the spec.\nBlueprint: an AI agent such as Google Antigravity can plan the work from the spec, build the app step by step, and test it against the acceptance checks.\n\nThe workflow: run the spec cells below in Colab to create SPEC.md, download it, put it in an empty folder, open that folder in Antigravity, and ask the agent: “Read SPEC.md and build the app step by step. Check every acceptance criterion and report the result.” When something is wrong, change the spec and ask again — the spec stays the single source of truth. The cells below only store text; on this page nothing is run."
+  },
+  {
+    "objectID": "sessions/03-app-building.html#purpose-and-users",
+    "href": "sessions/03-app-building.html#purpose-and-users",
+    "title": "Session 3 · de-code app building",
+    "section": "2.2 Purpose and users",
+    "text": "2.2 Purpose and users\nStart with why and for whom. One clear sentence of purpose keeps the agent from adding features nobody asked for.\n\nspec = \"\"\"\n# SPEC: TPB explorer (Shiny for Python)\n\n## 1. Purpose and users\n\nBuild an interactive web app that lets students explore a synthetic Theory of Planned\nBehavior (TPB) survey experiment: how attitude (ATT), subjective norm (SN) and perceived\nbehavioral control (PBC) relate to children's intention (BI) to learn an instrument, and\nwhether a peer testimonial (treatment) raised that intention.\n\nUsers: course participants with no coding background. They use the app in a browser,\nmainly on a laptop, to look at distributions, relationships and the experiment result.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#data",
+    "href": "sessions/03-app-building.html#data",
+    "title": "Session 3 · de-code app building",
+    "section": "2.3 Data",
+    "text": "2.3 Data\nDescribe the data precisely: where it is, every column and its role. The agent then writes correct loading code on the first try, and the checks at the end tell it whether it did.\n\nspec += \"\"\"\n## 2. Data\n\nLoad this tab-separated file at start-up (100 rows, no missing values):\nhttps://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-tpb-exp-n100.tsv\n\nColumns:\n- Background (text): age_group (\"10 years\" to \"13 years\"), grade_level (\"Grade 4\" to\n  \"Grade 6\"), gender (\"Girl\", \"Boy\", \"Non-binary\", \"Prefer not to say\")\n- Experiment (text): experimental_condition (\"control\" or \"treatment\")\n- Items (whole numbers 1-5, 1 = strongly disagree, 5 = strongly agree), three per scale:\n  - ATT: att_fun_exciting, att_valuable_use_of_time, att_feel_good_about_self\n  - SN: sn_parent_guardian_approval, sn_friend_approval, sn_teacher_encouragement\n  - PBC: pbc_confident_can_learn, pbc_enough_spare_time, pbc_instrument_access\n  - BI: bi_plan_next_6_months, bi_try_best_to_learn_soon, bi_want_to_start_school_year\n- Indices (decimals 1-5): ATT_index, SN_index, PBC_index, BI_index = mean of the three\n  items of each scale. Recompute them from the items after loading.\n\nIf loading fails or the file does not have 100 rows, show a clear error message in the\napp instead of crashing.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#features-and-layout",
+    "href": "sessions/03-app-building.html#features-and-layout",
+    "title": "Session 3 · de-code app building",
+    "section": "2.4 Features and layout",
+    "text": "2.4 Features and layout\nDescribe what the user sees and can do, screen by screen. Numbered requirements give the agent a to-do list and give you something concrete to check.\n\nspec += \"\"\"\n## 3. Features and layout\n\nPage title \"TPB explorer\". A sidebar on the left, tabs on the right.\n\nSidebar filters (all selected by default, apply to every tab):\n- F1 experimental condition (checkboxes)\n- F2 gender, F3 grade level, F4 age group (checkbox groups)\n- F5 a line showing \"n = &lt;number of rows after filtering&gt;\"\n- F6 a button that downloads the filtered rows as CSV\n\nTabs:\n- T1 Overview: table of mean and SD of the four indices, overall and by condition\n- T2 Distributions: dropdown to pick one index; histogram with a density curve\n- T3 Relationships: dropdowns for x and y index (default PBC_index and BI_index);\n  scatter plot with a fitted line; Pearson r and p shown above the plot\n- T4 Experiment: box plot of BI_index by condition with the individual points;\n  Welch t-test (t, p) and Cohen's d for treatment vs control shown in a small table\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#behaviour",
+    "href": "sessions/03-app-building.html#behaviour",
+    "title": "Session 3 · de-code app building",
+    "section": "2.5 Behaviour",
+    "text": "2.5 Behaviour\nSay how the app should behave, not just what it shows: what reacts to what, and what happens in edge cases such as an empty selection.\n\nspec += \"\"\"\n## 4. Behaviour\n\n- Every table, plot and number updates immediately when a filter changes.\n- If the filters leave fewer than 5 rows, show \"Too few rows for this view\" instead of\n  plots and tests.\n- If only one condition is selected, T4 shows \"Select both conditions to compare\"\n  instead of the test.\n- Round numbers to 2 decimals; show p-values below .001 as \"&lt; .001\".\n- Use one colour palette across all plots; label every axis with the full construct\n  name (for example \"Behavioral intention (BI)\").\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#technical-constraints",
+    "href": "sessions/03-app-building.html#technical-constraints",
+    "title": "Session 3 · de-code app building",
+    "section": "2.6 Technical constraints",
+    "text": "2.6 Technical constraints\nConstraints decide how it is built. Fixing the framework, files and libraries keeps the result small, runnable and easy to put online.\n\nspec += \"\"\"\n## 5. Technical constraints\n\n- Shiny for Python, core API (from shiny import App, ui, render, reactive).\n- Libraries: shiny, pandas, matplotlib, scipy. Nothing else.\n- Files: app.py (the whole app), requirements.txt (pinned versions), README.md (how to\n  run locally and how to deploy, see section 7).\n- No database, no login, no files written at run time.\n- Runs locally with:  shiny run app.py  and opens at http://127.0.0.1:8000\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#acceptance-checks",
+    "href": "sessions/03-app-building.html#acceptance-checks",
+    "title": "Session 3 · de-code app building",
+    "section": "2.7 Acceptance checks",
+    "text": "2.7 Acceptance checks\nThe checks are the definition of done. Each one is a statement that is either true or false, so the agent can test its own work — and so can you.\n\nspec += \"\"\"\n## 6. Acceptance checks\n\n- A1 With all filters selected, F5 shows n = 100.\n- A2 Unticking \"treatment\" shows n = 50, and T4 shows \"Select both conditions to\n  compare\" instead of the test.\n- A3 The means in T1 equal pandas df.groupby(\"experimental_condition\")[indices].mean()\n  rounded to 2 decimals.\n- A4 Changing the T3 dropdowns updates the plot and r without reloading the page.\n- A5 The downloaded CSV has the same rows as F5 reports.\n- A6 shiny run app.py starts without errors or warnings in a fresh virtual\n  environment created from requirements.txt.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#putting-it-online",
+    "href": "sessions/03-app-building.html#putting-it-online",
+    "title": "Session 3 · de-code app building",
+    "section": "2.8 Putting it online",
+    "text": "2.8 Putting it online\nA spec can also describe how the app goes live, so the agent prepares the right files. Three realistic routes, from easiest to most independent:\n\nPosit Connect Cloud publishes straight from a GitHub repository and updates the app when you push changes.\nshinyapps.io uploads from your computer with a command-line tool.\nShinylive turns the app into a static website that runs entirely in the visitor’s browser — it can be hosted on Netlify or GitHub Pages, like this course site.\n\n\nspec += \"\"\"\n## 7. Putting it online\n\nWrite these steps into README.md and make sure the files support them.\n\nOption A - Posit Connect Cloud (recommended):\n1. Create a public GitHub repository with app.py, requirements.txt and README.md.\n2. Sign in at https://connect.posit.cloud with the GitHub account.\n3. Choose Publish, then Shiny, pick the repository, the branch (main) and app.py as\n   the primary file, and publish.\n4. Share the public URL; every push to main republishes the app.\n\nOption B - shinyapps.io:\n1. Create an account at https://www.shinyapps.io and copy a token from the dashboard.\n2. In a terminal:\n       pip install rsconnect-python\n       rsconnect add --account &lt;account&gt; --name &lt;account&gt; --token &lt;token&gt; --secret &lt;secret&gt;\n       rsconnect deploy shiny . --name &lt;account&gt; --title tpb-explorer\n\nOption C - Shinylive (static site, no server):\n1. In a terminal:\n       pip install shinylive\n       shinylive export . site\n2. Upload the site folder to Netlify or GitHub Pages. The app then runs in the\n   visitor's browser; all libraries must be available in Pyodide (shiny, pandas,\n   matplotlib and scipy are).\n\nNever put passwords or tokens in the repository. The data are synthetic, so the app can\nbe public.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#save-the-spec",
+    "href": "sessions/03-app-building.html#save-the-spec",
+    "title": "Session 3 · de-code app building",
+    "section": "2.9 Save the spec",
+    "text": "2.9 Save the spec\nThe last cell joins all parts into one file. In Colab, run all spec cells, then download SPEC.md from the Files panel and give it to Antigravity.\n\nwith open(\"SPEC.md\", \"w\") as f:\n    f.write(spec)\nprint(spec)"
+  },
+  {
+    "objectID": "sessions/03-app-building.html#why-a-local-web-app",
+    "href": "sessions/03-app-building.html#why-a-local-web-app",
+    "title": "Session 3 · de-code app building",
+    "section": "3.1 Why a local web app",
+    "text": "3.1 Why a local web app\nNot every app needs a server. A web browser can run an app made of three plain files — HTML for the structure, CSS for the look, and JavaScript for the behaviour. You open index.html by double-clicking it, and the app runs on your own computer: no install, no account, no internet connection. Compared with the Shiny app there is no data file to load; instead the app creates data — your notes — and stores it in the browser.\nThe spec below follows the same pattern as before: purpose, constraints, data, features, checks. Run its cells in Colab to create NOTES-SPEC.md for Antigravity."
+  },
+  {
+    "objectID": "sessions/03-app-building.html#purpose-and-users-1",
+    "href": "sessions/03-app-building.html#purpose-and-users-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.2 Purpose and users",
+    "text": "3.2 Purpose and users\n\nnotes_spec = \"\"\"\n# SPEC: Course notes (local web app)\n\n## 1. Purpose and users\n\nA simple note-taking app for course participants to write down ideas, prompts and\nresults during the sessions. One user, one computer, no account.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#files-and-constraints",
+    "href": "sessions/03-app-building.html#files-and-constraints",
+    "title": "Session 3 · de-code app building",
+    "section": "3.3 Files and constraints",
+    "text": "3.3 Files and constraints\nThese constraints are what make the app local: no frameworks to install, nothing loaded from the internet, and it must work when opened straight from a folder.\n\nnotes_spec += \"\"\"\n## 2. Files and constraints\n\n- Exactly three files in one folder: index.html, style.css, app.js.\n- Plain HTML, CSS and JavaScript. No frameworks, no libraries, no CDN links, no build\n  step, no server.\n- Must work when index.html is opened directly from the folder (a file:// address),\n  also without an internet connection, in current Chrome, Firefox, Edge and Safari.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#data-model-and-storage",
+    "href": "sessions/03-app-building.html#data-model-and-storage",
+    "title": "Session 3 · de-code app building",
+    "section": "3.4 Data model and storage",
+    "text": "3.4 Data model and storage\nA data model says exactly what one note is. Storage says where notes are kept — here localStorage, a small database that every browser has for each page.\n\nnotes_spec += \"\"\"\n## 3. Data model and storage\n\n- A note has: id (unique text), title (text), body (text), tags (list of words),\n  created and updated (date and time).\n- All notes are saved in the browser's localStorage under the key \"course-notes\" as\n  JSON, after every change.\n- Export: a button that downloads all notes as course-notes-&lt;date&gt;.json.\n- Import: a button that reads such a file and adds its notes, skipping ids that already\n  exist.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#features-and-layout-1",
+    "href": "sessions/03-app-building.html#features-and-layout-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.5 Features and layout",
+    "text": "3.5 Features and layout\n\nnotes_spec += \"\"\"\n## 4. Features and layout\n\n- N1 Two columns: a list of notes on the left, the selected note in an editor on the\n  right. On narrow screens (below 700 px), show one column at a time.\n- N2 \"New note\" button; the new note opens in the editor with the title selected.\n- N3 Edit title, body and tags (comma-separated); changes save automatically.\n- N4 Delete a note after a confirmation question.\n- N5 Search box that filters the list by title and body as you type.\n- N6 Click a tag to show only notes with that tag; click again to show all.\n- N7 The list is sorted by last updated, newest first, and shows title, date and the\n  first line of the body.\n- N8 Keyboard shortcuts: Ctrl/Cmd+N new note, Ctrl/Cmd+F focus search, Esc clears the\n  search.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#look-and-accessibility",
+    "href": "sessions/03-app-building.html#look-and-accessibility",
+    "title": "Session 3 · de-code app building",
+    "section": "3.6 Look and accessibility",
+    "text": "3.6 Look and accessibility\nSaying how the app should look and who must be able to use it avoids an app that only works for its builder.\n\nnotes_spec += \"\"\"\n## 5. Look and accessibility\n\n- Clean, readable design: system font, comfortable line length, enough contrast.\n- Follow the computer's light or dark mode (prefers-color-scheme).\n- Every control has a visible label or an accessible name; everything works with the\n  keyboard, with a visible focus outline.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#acceptance-checks-1",
+    "href": "sessions/03-app-building.html#acceptance-checks-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.7 Acceptance checks",
+    "text": "3.7 Acceptance checks\n\nnotes_spec += \"\"\"\n## 6. Acceptance checks\n\n- A1 Opening index.html from the folder shows the app with no errors in the browser\n  console.\n- A2 A new note with a title, body and two tags is still there after closing and\n  reopening the browser.\n- A3 Searching for a word in a body shows only notes containing that word.\n- A4 Export, delete all notes, import the exported file: every note is back.\n- A5 The app works with the computer offline.\n- A6 At 400 px width, all features are reachable.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#how-to-run",
+    "href": "sessions/03-app-building.html#how-to-run",
+    "title": "Session 3 · de-code app building",
+    "section": "3.8 How to run",
+    "text": "3.8 How to run\n\nnotes_spec += \"\"\"\n## 7. How to run\n\nWrite this into a short README.md:\n1. Keep index.html, style.css and app.js together in one folder.\n2. Double-click index.html, or drag it into a browser window.\n3. Notes are stored in that browser on that computer only. Use Export regularly as a\n   backup, and Import to move notes to another browser or computer.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/03-app-building.html#save-the-spec-1",
+    "href": "sessions/03-app-building.html#save-the-spec-1",
+    "title": "Session 3 · de-code app building",
+    "section": "3.9 Save the spec",
+    "text": "3.9 Save the spec\n\nwith open(\"NOTES-SPEC.md\", \"w\") as f:\n    f.write(notes_spec)\nprint(notes_spec)"
+  },
+  {
+    "objectID": "sessions/03-app-building.html#your-turn",
+    "href": "sessions/03-app-building.html#your-turn",
+    "title": "Session 3 · de-code app building",
+    "section": "3.10 Your turn",
+    "text": "3.10 Your turn\nPick an app idea of your own — a reading list, a habit tracker, a quiz for your students, a dashboard for your own data. Copy one of the specs, then:\n\nRewrite Purpose and users for your idea.\nReplace Data (or the data model) and Features with what your app needs.\nKeep the constraints that make it easy to run, and write acceptance checks you could test yourself.\nGive the spec to Antigravity, check the result against your acceptance checks, and improve the spec — not the code — until it passes."
   },
   {
     "objectID": "sessions/05-mcp-skills-slides.html#topics",

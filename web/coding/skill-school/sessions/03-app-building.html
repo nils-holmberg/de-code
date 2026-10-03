@@ -26,10 +26,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -74,6 +109,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <style>.cell-output-display img { max-width: 100%; height: auto; }</style>
 
 
@@ -180,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="e37d1751" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="f33847a8" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -192,16 +230,589 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="workshop-tasks-preliminary" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Workshop tasks (preliminary)</h1>
+<section id="what-is-an-app" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> What is an app?</h1>
+<section id="a-flexible-definition" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="a-flexible-definition"><span class="header-section-number">1.1</span> A flexible definition</h2>
+<p>In this course, an <strong>app</strong> is any program that takes some <strong>input</strong>, does a <strong>job</strong> for someone, and produces <strong>output</strong> they can use — without them having to read or change the code. That makes “app” a wide term. What differs is how the input arrives, where the program runs, and who uses it:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>App</th>
+<th>Input</th>
+<th>Job</th>
+<th>Output</th>
+<th>Who runs it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Notebook cell with settings at the top</td>
+<td>a few variables you edit</td>
+<td>analyse a dataset</td>
+<td>tables, charts, a report file</td>
+<td>you, in Colab</td>
+</tr>
+<tr class="even">
+<td>Command-line script</td>
+<td>a file name, options</td>
+<td>convert or clean files</td>
+<td>new files</td>
+<td>you, in a terminal</td>
+</tr>
+<tr class="odd">
+<td>Spreadsheet with formulas</td>
+<td>numbers typed into cells</td>
+<td>calculate</td>
+<td>totals, charts</td>
+<td>anyone with Excel</td>
+</tr>
+<tr class="even">
+<td>Interactive dashboard (Shiny)</td>
+<td>menus, sliders</td>
+<td>filter and summarise data</td>
+<td>live charts and tables</td>
+<td>anyone with the link</td>
+</tr>
+<tr class="odd">
+<td>Local web page (HTML + JavaScript)</td>
+<td>clicks, typed text</td>
+<td>store and show information</td>
+<td>an updated page</td>
+<td>anyone who opens the file</td>
+</tr>
+<tr class="even">
+<td>Hosted web app</td>
+<td>forms, accounts</td>
+<td>a service</td>
+<td>pages, emails, downloads</td>
+<td>the public</td>
+</tr>
+<tr class="odd">
+<td>Chatbot (custom GPT, Gemini Gem)</td>
+<td>questions in plain language</td>
+<td>answer with set instructions</td>
+<td>text, files</td>
+<td>anyone with access</td>
+</tr>
+<tr class="even">
+<td>Mobile app</td>
+<td>taps, camera, location</td>
+<td>everything above, on a phone</td>
+<td>screens, notifications</td>
+<td>app-store users</td>
+</tr>
+</tbody>
+</table>
+<p>We start at the top of the table, with an app that is a single notebook cell, and work our way down.</p>
+</section>
+<section id="a-toy-app-prompt" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="a-toy-app-prompt"><span class="header-section-number">1.2</span> A toy app prompt</h2>
+<p>This prompt asks Gemini for a tiny <em>report app</em>: one Colab cell with its settings at the top. Paste the prompt into <a href="https://gemini.google.com/">Gemini</a>, then paste the code it returns into a new cell in Colab. The cell below only stores the text.</p>
+<div id="76071aa3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">Write one Google Colab Python code cell that works as a small report app.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">Settings at the top of the cell, as plain variables the user can edit:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">- DATA_URL = "https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">- OUTCOME = "DV_INDEX", GROUP = "IV_CAT_GROUP", PREFIX = "app"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">The cell should:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">1. load the tab-separated file from DATA_URL with pandas</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">2. save a summary table (count, mean, SD, min, quartiles, max) of all columns whose</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">   name contains INDEX to PREFIX-summary.csv</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">3. save one histogram per index as PREFIX-hist-&lt;index&gt;.png</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">4. save a box plot of OUTCOME by GROUP as PREFIX-groups.png</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">5. save one self-contained HTML report, PREFIX-report.html, with the summary table and</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">   all charts embedded as base64 images, so it is a single file that opens anywhere</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">6. print the name and size of every file it wrote</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">Write all files to the current working folder. Use only pandas and matplotlib. Return</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">only the code, with short comments.</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="the-generated-app" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="the-generated-app"><span class="header-section-number">1.3</span> The generated app</h2>
+<p>A version of the code the model returns. Run it in the <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb">session notebook in Colab</a>, then open the <strong>Files</strong> panel (the folder icon on the left) to see the six new files. Right-click a file to download it; open <code>app-report.html</code> in your browser.</p>
+<div id="33789a51" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Settings: change these and run the cell again ----</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>DATA_URL <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>OUTCOME <span class="op">=</span> <span class="st">"DV_INDEX"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>GROUP <span class="op">=</span> <span class="st">"IV_CAT_GROUP"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>PREFIX <span class="op">=</span> <span class="st">"app"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> io <span class="im">import</span> BytesIO</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Load the data</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA_URL, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"INDEX"</span> <span class="kw">in</span> c]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>written <span class="op">=</span> []</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_figure(fig, name):</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Save a figure as PNG and return it base64-encoded for the HTML report."""</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> Path(<span class="ss">f"</span><span class="sc">{</span>PREFIX<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.png"</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    fig.savefig(path, dpi<span class="op">=</span><span class="dv">110</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">buffer</span> <span class="op">=</span> BytesIO()</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    fig.savefig(<span class="bu">buffer</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"png"</span>, dpi<span class="op">=</span><span class="dv">110</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    plt.close(fig)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    written.append(path)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> base64.b64encode(<span class="bu">buffer</span>.getvalue()).decode()</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Summary table of the indices</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> df[indices].describe().T.<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>summary_path <span class="op">=</span> Path(<span class="ss">f"</span><span class="sc">{</span>PREFIX<span class="sc">}</span><span class="ss">-summary.csv"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>summary.to_csv(summary_path)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>written.append(summary_path)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. One histogram per index</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> {}</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> indices:</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    ax.hist(df[col], bins<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>, edgecolor<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    ax.set_title(col)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    images[<span class="ss">f"Distribution of </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> save_figure(fig, <span class="ss">f"hist-</span><span class="sc">{</span>col<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Outcome by group</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>df.boxplot(column<span class="op">=</span>OUTCOME, by<span class="op">=</span>GROUP, ax<span class="op">=</span>ax, grid<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"</span><span class="sc">{</span>OUTCOME<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>GROUP<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">""</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>images[<span class="ss">f"</span><span class="sc">{</span>OUTCOME<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>GROUP<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> save_figure(fig, <span class="st">"groups"</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. One self-contained HTML report with the table and all charts embedded</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>figures <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f'&lt;h2&gt;</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">&lt;/h2&gt;&lt;img src="data:image/png;base64,</span><span class="sc">{</span>data<span class="sc">}</span><span class="ss">" alt="</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">"&gt;'</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> title, data <span class="kw">in</span> images.items()</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>html <span class="op">=</span> <span class="ss">f"""&lt;!doctype html&gt;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Report: </span><span class="sc">{</span>OUTCOME<span class="sc">}</span><span class="ss">&lt;/title&gt;</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;style&gt;body </span><span class="ch">{{</span><span class="ss"> font-family: Arial, sans-serif; max-width: 800px; margin: 2em auto; </span><span class="ch">}}</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">table </span><span class="ch">{{</span><span class="ss"> border-collapse: collapse; </span><span class="ch">}}</span><span class="ss"> td, th </span><span class="ch">{{</span><span class="ss"> padding: 4px 8px; border: 1px solid #ccc; </span><span class="ch">}}</span><span class="ss">&lt;/style&gt;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;/head&gt;&lt;body&gt;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;h1&gt;Report: </span><span class="sc">{</span>OUTCOME<span class="sc">}</span><span class="ss">&lt;/h1&gt;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;p&gt;</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> rows, </span><span class="sc">{</span>df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> columns, source: </span><span class="sc">{</span>DATA_URL<span class="sc">}</span><span class="ss">&lt;/p&gt;</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;h2&gt;Summary of the indices&lt;/h2&gt;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>summary<span class="sc">.</span>to_html()<span class="sc">}</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>figures<span class="sc">}</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;/body&gt;&lt;/html&gt;"""</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>report_path <span class="op">=</span> Path(<span class="ss">f"</span><span class="sc">{</span>PREFIX<span class="sc">}</span><span class="ss">-report.html"</span>)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>report_path.write_text(html, encoding<span class="op">=</span><span class="st">"utf-8"</span>)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>written.append(report_path)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Tell the user what was made</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Wrote </span><span class="sc">{</span><span class="bu">len</span>(written)<span class="sc">}</span><span class="ss"> files:"</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> written:</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>path<span class="sc">.</span>name<span class="sc">:28}</span><span class="ss"> </span><span class="sc">{</span>path<span class="sc">.</span>stat()<span class="sc">.</span>st_size<span class="sc">:&gt;8,}</span><span class="ss"> bytes"</span>)</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Wrote 6 files:
+  app-summary.csv                   176 bytes
+  app-hist-iv_index1.png          9,357 bytes
+  app-hist-iv_index2.png         10,087 bytes
+  app-hist-dv_index.png          10,111 bytes
+  app-groups.png                 12,931 bytes
+  app-report.html                58,450 bytes</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">IV_INDEX1</th>
+<td>100.0</td>
+<td>3.07</td>
+<td>1.11</td>
+<td>1.0</td>
+<td>2.38</td>
+<td>3.00</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV_INDEX2</th>
+<td>100.0</td>
+<td>2.81</td>
+<td>1.15</td>
+<td>1.0</td>
+<td>2.00</td>
+<td>2.75</td>
+<td>3.5</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">DV_INDEX</th>
+<td>100.0</td>
+<td>2.56</td>
+<td>1.09</td>
+<td>1.0</td>
+<td>1.88</td>
+<td>2.50</td>
+<td>3.5</td>
+<td>5.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Changing a setting at the top — say <code>OUTCOME = "IV_INDEX1"</code> or <code>PREFIX = "run2"</code> — and running the cell again <em>is</em> using the app: same job, new input, new output, no code reading required.</p>
+</section>
+</section>
+<section id="spec-for-a-shiny-data-app" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Spec for a Shiny data app</h1>
+<section id="how-a-spec-works" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="how-a-spec-works"><span class="header-section-number">2.1</span> How a spec works</h2>
+<p>A prompt is a one-off request. A <strong>specification</strong> (spec) is a document you keep: a plain-text file that describes <em>what</em> an app should do and <em>how to check it</em>, written so that both people and AI can follow it. Writing specs as files — <em>specifications as code</em> — lets them do three jobs at once:</p>
+<ul>
+<li><strong>Context:</strong> the AI reads the spec before it writes anything, so it knows the data, the users and the constraints instead of guessing.</li>
+<li><strong>Instructions:</strong> prompts can stay short — “implement section 3 of SPEC.md” — because the details live in the spec.</li>
+<li><strong>Blueprint:</strong> an AI agent such as <a href="https://antigravity.google/">Google Antigravity</a> can plan the work from the spec, build the app step by step, and test it against the acceptance checks.</li>
+</ul>
+<p>The workflow: run the spec cells below in Colab to create <code>SPEC.md</code>, download it, put it in an empty folder, open that folder in Antigravity, and ask the agent: <em>“Read SPEC.md and build the app step by step. Check every acceptance criterion and report the result.”</em> When something is wrong, change the spec and ask again — the spec stays the single source of truth. The cells below only store text; on this page nothing is run.</p>
+</section>
+<section id="purpose-and-users" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="purpose-and-users"><span class="header-section-number">2.2</span> Purpose and users</h2>
+<p>Start with <em>why</em> and <em>for whom</em>. One clear sentence of purpose keeps the agent from adding features nobody asked for.</p>
+<div id="db0aa678" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st"># SPEC: TPB explorer (Shiny for Python)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">## 1. Purpose and users</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">Build an interactive web app that lets students explore a synthetic Theory of Planned</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">Behavior (TPB) survey experiment: how attitude (ATT), subjective norm (SN) and perceived</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">behavioral control (PBC) relate to children's intention (BI) to learn an instrument, and</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">whether a peer testimonial (treatment) raised that intention.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">Users: course participants with no coding background. They use the app in a browser,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">mainly on a laptop, to look at distributions, relationships and the experiment result.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="data" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data"><span class="header-section-number">2.3</span> Data</h2>
+<p>Describe the data precisely: where it is, every column and its role. The agent then writes correct loading code on the first try, and the checks at the end tell it whether it did.</p>
+<div id="68e60023" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 2. Data</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">Load this tab-separated file at start-up (100 rows, no missing values):</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-tpb-exp-n100.tsv</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">Columns:</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">- Background (text): age_group ("10 years" to "13 years"), grade_level ("Grade 4" to</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">  "Grade 6"), gender ("Girl", "Boy", "Non-binary", "Prefer not to say")</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">- Experiment (text): experimental_condition ("control" or "treatment")</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">- Items (whole numbers 1-5, 1 = strongly disagree, 5 = strongly agree), three per scale:</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">  - ATT: att_fun_exciting, att_valuable_use_of_time, att_feel_good_about_self</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">  - SN: sn_parent_guardian_approval, sn_friend_approval, sn_teacher_encouragement</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">  - PBC: pbc_confident_can_learn, pbc_enough_spare_time, pbc_instrument_access</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">  - BI: bi_plan_next_6_months, bi_try_best_to_learn_soon, bi_want_to_start_school_year</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="st">- Indices (decimals 1-5): ATT_index, SN_index, PBC_index, BI_index = mean of the three</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="st">  items of each scale. Recompute them from the items after loading.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="st">If loading fails or the file does not have 100 rows, show a clear error message in the</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="st">app instead of crashing.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="features-and-layout" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="features-and-layout"><span class="header-section-number">2.4</span> Features and layout</h2>
+<p>Describe what the user sees and can do, screen by screen. Numbered requirements give the agent a to-do list and give you something concrete to check.</p>
+<div id="3f6949b8" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 3. Features and layout</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">Page title "TPB explorer". A sidebar on the left, tabs on the right.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">Sidebar filters (all selected by default, apply to every tab):</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">- F1 experimental condition (checkboxes)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">- F2 gender, F3 grade level, F4 age group (checkbox groups)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">- F5 a line showing "n = &lt;number of rows after filtering&gt;"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="st">- F6 a button that downloads the filtered rows as CSV</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">Tabs:</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">- T1 Overview: table of mean and SD of the four indices, overall and by condition</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">- T2 Distributions: dropdown to pick one index; histogram with a density curve</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">- T3 Relationships: dropdowns for x and y index (default PBC_index and BI_index);</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">  scatter plot with a fitted line; Pearson r and p shown above the plot</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">- T4 Experiment: box plot of BI_index by condition with the individual points;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">  Welch t-test (t, p) and Cohen's d for treatment vs control shown in a small table</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="behaviour" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="behaviour"><span class="header-section-number">2.5</span> Behaviour</h2>
+<p>Say how the app should <em>behave</em>, not just what it shows: what reacts to what, and what happens in edge cases such as an empty selection.</p>
+<div id="641afff0" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 4. Behaviour</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">- Every table, plot and number updates immediately when a filter changes.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">- If the filters leave fewer than 5 rows, show "Too few rows for this view" instead of</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">  plots and tests.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">- If only one condition is selected, T4 shows "Select both conditions to compare"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">  instead of the test.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">- Round numbers to 2 decimals; show p-values below .001 as "&lt; .001".</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">- Use one colour palette across all plots; label every axis with the full construct</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">  name (for example "Behavioral intention (BI)").</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="technical-constraints" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="technical-constraints"><span class="header-section-number">2.6</span> Technical constraints</h2>
+<p>Constraints decide <em>how</em> it is built. Fixing the framework, files and libraries keeps the result small, runnable and easy to put online.</p>
+<div id="57592bcb" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 5. Technical constraints</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">- Shiny for Python, core API (from shiny import App, ui, render, reactive).</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Libraries: shiny, pandas, matplotlib, scipy. Nothing else.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">- Files: app.py (the whole app), requirements.txt (pinned versions), README.md (how to</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">  run locally and how to deploy, see section 7).</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">- No database, no login, no files written at run time.</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">- Runs locally with:  shiny run app.py  and opens at http://127.0.0.1:8000</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="acceptance-checks" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="acceptance-checks"><span class="header-section-number">2.7</span> Acceptance checks</h2>
+<p>The checks are the <em>definition of done</em>. Each one is a statement that is either true or false, so the agent can test its own work — and so can you.</p>
+<div id="1c4b84a9" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 6. Acceptance checks</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">- A1 With all filters selected, F5 shows n = 100.</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">- A2 Unticking "treatment" shows n = 50, and T4 shows "Select both conditions to</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="st">  compare" instead of the test.</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st">- A3 The means in T1 equal pandas df.groupby("experimental_condition")[indices].mean()</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="st">  rounded to 2 decimals.</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="st">- A4 Changing the T3 dropdowns updates the plot and r without reloading the page.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st">- A5 The downloaded CSV has the same rows as F5 reports.</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="st">- A6 shiny run app.py starts without errors or warnings in a fresh virtual</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="st">  environment created from requirements.txt.</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="putting-it-online" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="putting-it-online"><span class="header-section-number">2.8</span> Putting it online</h2>
+<p>A spec can also describe how the app goes live, so the agent prepares the right files. Three realistic routes, from easiest to most independent:</p>
+<ul>
+<li><strong>Posit Connect Cloud</strong> publishes straight from a GitHub repository and updates the app when you push changes.</li>
+<li><strong>shinyapps.io</strong> uploads from your computer with a command-line tool.</li>
+<li><strong>Shinylive</strong> turns the app into a static website that runs entirely in the visitor’s browser — it can be hosted on Netlify or GitHub Pages, like this course site.</li>
+</ul>
+<div id="e4a05d27" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 7. Putting it online</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">Write these steps into README.md and make sure the files support them.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">Option A - Posit Connect Cloud (recommended):</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create a public GitHub repository with app.py, requirements.txt and README.md.</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">2. Sign in at https://connect.posit.cloud with the GitHub account.</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">3. Choose Publish, then Shiny, pick the repository, the branch (main) and app.py as</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">   the primary file, and publish.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">4. Share the public URL; every push to main republishes the app.</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">Option B - shinyapps.io:</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">1. Create an account at https://www.shinyapps.io and copy a token from the dashboard.</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">2. In a terminal:</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="st">       pip install rsconnect-python</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="st">       rsconnect add --account &lt;account&gt; --name &lt;account&gt; --token &lt;token&gt; --secret &lt;secret&gt;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="st">       rsconnect deploy shiny . --name &lt;account&gt; --title tpb-explorer</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="st">Option C - Shinylive (static site, no server):</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="st">1. In a terminal:</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="st">       pip install shinylive</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="st">       shinylive export . site</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="st">2. Upload the site folder to Netlify or GitHub Pages. The app then runs in the</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="st">   visitor's browser; all libraries must be available in Pyodide (shiny, pandas,</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="st">   matplotlib and scipy are).</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="st">Never put passwords or tokens in the repository. The data are synthetic, so the app can</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="st">be public.</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="save-the-spec" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="save-the-spec"><span class="header-section-number">2.9</span> Save the spec</h2>
+<p>The last cell joins all parts into one file. In Colab, run all spec cells, then download <code>SPEC.md</code> from the Files panel and give it to Antigravity.</p>
+<div id="0ec3a3cf" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    f.write(spec)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="spec-for-a-local-note-taking-web-app" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Spec for a local note-taking web app</h1>
+<section id="why-a-local-web-app" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="why-a-local-web-app"><span class="header-section-number">3.1</span> Why a local web app</h2>
+<p>Not every app needs a server. A web browser can run an app made of three plain files — HTML for the structure, CSS for the look, and JavaScript for the behaviour. You open <code>index.html</code> by double-clicking it, and the app runs on your own computer: no install, no account, no internet connection. Compared with the Shiny app there is no data file to load; instead the app <em>creates</em> data — your notes — and stores it in the browser.</p>
+<p>The spec below follows the same pattern as before: purpose, constraints, data, features, checks. Run its cells in Colab to create <code>NOTES-SPEC.md</code> for Antigravity.</p>
+</section>
+<section id="purpose-and-users-1" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="purpose-and-users-1"><span class="header-section-number">3.2</span> Purpose and users</h2>
+<div id="771f79d0" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st"># SPEC: Course notes (local web app)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">## 1. Purpose and users</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">A simple note-taking app for course participants to write down ideas, prompts and</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">results during the sessions. One user, one computer, no account.</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="files-and-constraints" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="files-and-constraints"><span class="header-section-number">3.3</span> Files and constraints</h2>
+<p>These constraints are what make the app <em>local</em>: no frameworks to install, nothing loaded from the internet, and it must work when opened straight from a folder.</p>
+<div id="733ba1ee" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 2. Files and constraints</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">- Exactly three files in one folder: index.html, style.css, app.js.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Plain HTML, CSS and JavaScript. No frameworks, no libraries, no CDN links, no build</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">  step, no server.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">- Must work when index.html is opened directly from the folder (a file:// address),</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">  also without an internet connection, in current Chrome, Firefox, Edge and Safari.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="data-model-and-storage" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="data-model-and-storage"><span class="header-section-number">3.4</span> Data model and storage</h2>
+<p>A data model says exactly what one note <em>is</em>. Storage says where notes are kept — here <code>localStorage</code>, a small database that every browser has for each page.</p>
+<div id="4bcec2d1" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 3. Data model and storage</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">- A note has: id (unique text), title (text), body (text), tags (list of words),</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">  created and updated (date and time).</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">- All notes are saved in the browser's localStorage under the key "course-notes" as</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">  JSON, after every change.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">- Export: a button that downloads all notes as course-notes-&lt;date&gt;.json.</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">- Import: a button that reads such a file and adds its notes, skipping ids that already</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="st">  exist.</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="features-and-layout-1" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="features-and-layout-1"><span class="header-section-number">3.5</span> Features and layout</h2>
+<div id="48cca376" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 4. Features and layout</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">- N1 Two columns: a list of notes on the left, the selected note in an editor on the</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">  right. On narrow screens (below 700 px), show one column at a time.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">- N2 "New note" button; the new note opens in the editor with the title selected.</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">- N3 Edit title, body and tags (comma-separated); changes save automatically.</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">- N4 Delete a note after a confirmation question.</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">- N5 Search box that filters the list by title and body as you type.</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">- N6 Click a tag to show only notes with that tag; click again to show all.</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">- N7 The list is sorted by last updated, newest first, and shows title, date and the</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="st">  first line of the body.</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">- N8 Keyboard shortcuts: Ctrl/Cmd+N new note, Ctrl/Cmd+F focus search, Esc clears the</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">  search.</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="look-and-accessibility" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="look-and-accessibility"><span class="header-section-number">3.6</span> Look and accessibility</h2>
+<p>Saying how the app should look and who must be able to use it avoids an app that only works for its builder.</p>
+<div id="32201b50" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 5. Look and accessibility</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">- Clean, readable design: system font, comfortable line length, enough contrast.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Follow the computer's light or dark mode (prefers-color-scheme).</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">- Every control has a visible label or an accessible name; everything works with the</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">  keyboard, with a visible focus outline.</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="acceptance-checks-1" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="acceptance-checks-1"><span class="header-section-number">3.7</span> Acceptance checks</h2>
+<div id="20045c6e" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 6. Acceptance checks</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">- A1 Opening index.html from the folder shows the app with no errors in the browser</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">  console.</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">- A2 A new note with a title, body and two tags is still there after closing and</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">  reopening the browser.</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">- A3 Searching for a word in a body shows only notes containing that word.</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">- A4 Export, delete all notes, import the exported file: every note is back.</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">- A5 The app works with the computer offline.</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="st">- A6 At 400 px width, all features are reachable.</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="how-to-run" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="how-to-run"><span class="header-section-number">3.8</span> How to run</h2>
+<div id="7e92e81e" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">## 7. How to run</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">Write this into a short README.md:</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">1. Keep index.html, style.css and app.js together in one folder.</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">2. Double-click index.html, or drag it into a browser window.</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">3. Notes are stored in that browser on that computer only. Use Export regularly as a</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">   backup, and Import to move notes to another browser or computer.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="save-the-spec-1" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="save-the-spec-1"><span class="header-section-number">3.9</span> Save the spec</h2>
+<div id="67ad5af3" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"NOTES-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    f.write(notes_spec)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="your-turn" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="your-turn"><span class="header-section-number">3.10</span> Your turn</h2>
+<p>Pick an app idea of your own — a reading list, a habit tracker, a quiz for your students, a dashboard for your own data. Copy one of the specs, then:</p>
 <ol type="1">
-<li>Placeholder — sketch a one-screen app around yesterday’s analysis.</li>
-<li>Placeholder — build the skeleton with an AI-generated starter (e.g.&nbsp;Shiny).</li>
-<li>Placeholder — wire one input to one output and verify the reactivity.</li>
-<li>Placeholder — swap in your own dataset and share the running app locally.</li>
+<li>Rewrite <strong>Purpose and users</strong> for your idea.</li>
+<li>Replace <strong>Data</strong> (or the data model) and <strong>Features</strong> with what your app needs.</li>
+<li>Keep the <strong>constraints</strong> that make it easy to run, and write <strong>acceptance checks</strong> you could test yourself.</li>
+<li>Give the spec to Antigravity, check the result against your acceptance checks, and improve the spec — not the code — until it passes.</li>
 </ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
