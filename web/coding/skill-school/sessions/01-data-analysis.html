@@ -214,9 +214,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Clean and explore tabular data</li>
 <li>Describe, summarize, visualize</li>
 <li>Critically assess AI output</li>
+<li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/01-data-analysis-slides.html" target="_blank">Slides</a></li>
+<li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/01-data-analysis.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="69726a01" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="636aedb6" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -234,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.1" class="anchored" data-anchor-id="load-from-github"><span class="header-section-number">1.1</span> Load from GitHub</h2>
 <p>The sample dataset is a small simulated survey: 100 respondents, one group variable and six questionnaire items on a 1–5 scale, combined into three indices. The file lives in the course repository on GitHub. Its <em>raw</em> URL returns the plain file, so pandas can read it directly from the web — nothing to download first.</p>
 <p>The file is tab-separated (<code>.tsv</code>), so we tell <code>read_csv</code> that the separator is a tab (<code>\t</code>).</p>
-<div id="78a4f311" class="cell" data-execution_count="2">
+<div id="c6363443" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv"</span></span>
@@ -341,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="alternative-upload-the-file-to-colab" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="alternative-upload-the-file-to-colab"><span class="header-section-number">1.2</span> Alternative: upload the file to Colab</h2>
 <p>If you have the file on your own computer, you can upload it to the Colab session instead. This cell is not run on the course website; in Colab, run it and pick the file in the dialog. Uploaded files end up in <code>/content/</code>, the working folder of the Colab session.</p>
-<div id="55622b13" class="cell" data-execution_count="3">
+<div id="e9c29558" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google.colab <span class="im">import</span> files</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files.upload()  <span class="co"># choose komp014-simulated-data-n100.tsv</span></span>
@@ -352,14 +354,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="colab-install-pyreadstat" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="colab-install-pyreadstat"><span class="header-section-number">1.3</span> Colab: install pyreadstat</h2>
 <p>SPSS files (<code>.sav</code>) need the <code>pyreadstat</code> package, which Colab does not include. Run this cell once per Colab session before the next step.</p>
-<div id="9f085c1c" class="cell" data-execution_count="4">
+<div id="6556f5ee" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install pyreadstat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="same-data-four-formats" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="same-data-four-formats"><span class="header-section-number">1.4</span> Same data, four formats</h2>
 <p>The same table can be stored in different file formats. Here we save <code>df</code> as CSV, TSV, Excel and SPSS, and attach a short <em>label</em> to each variable in the SPSS file.</p>
-<div id="47ab75bd" class="cell" data-execution_count="5">
+<div id="15cb6d6d" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
@@ -395,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="compare-the-formats" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="compare-the-formats"><span class="header-section-number">1.5</span> Compare the formats</h2>
 <p>Now we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?</p>
-<div id="a7dc9532" class="cell" data-execution_count="6">
+<div id="302b35e0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>readers <span class="op">=</span> {</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"csv"</span>: <span class="kw">lambda</span> p: pd.read_csv(p),</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tsv"</span>: <span class="kw">lambda</span> p: pd.read_csv(p, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>),</span>
@@ -476,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Excel</strong> is a zipped binary format: handy for people, larger on disk, keeps types.</li>
 <li><strong>SPSS <code>.sav</code></strong> is binary and stores <em>metadata</em> with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:</li>
 </ul>
-<div id="3d5c5290" class="cell" data-execution_count="7">
+<div id="4c9399da" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>_, meta <span class="op">=</span> pyreadstat.read_sav(out <span class="op">/</span> <span class="st">"komp014.sav"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">dict</span>(<span class="bu">zip</span>(meta.column_names, meta.column_labels))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -496,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="give-an-llm-context" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="give-an-llm-context"><span class="header-section-number">1.6</span> Give an LLM context</h2>
 <p>A chat assistant cannot see your data. Paste a short description like the one below, followed by your question, and it can write code that fits your <code>df</code>. This cell only stores the text; it is not run on the course website.</p>
-<div id="73a649f2" class="cell" data-execution_count="8">
+<div id="53fe3cfb" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">I am analysing a survey dataset in Python with pandas. It is already loaded as `df`.</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -521,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="descriptive-statistics" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="descriptive-statistics"><span class="header-section-number">2.1</span> Descriptive statistics</h2>
 <p><code>describe()</code> summarises every numeric column: how many values (<code>count</code>), the average (<code>mean</code>), the spread (<code>std</code>), the smallest and largest values, and the quartiles (<code>25%</code>, <code>50%</code> = median, <code>75%</code>). We add <em>skewness</em> (is the distribution lopsided?) and <em>kurtosis</em> (are the tails heavy?). Values near 0 mean roughly symmetric and normal-shaped.</p>
-<div id="2e5428ab" class="cell" data-execution_count="9">
+<div id="e75ee341" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric <span class="op">=</span> df.select_dtypes(<span class="st">"number"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> numeric.describe().T</span>
@@ -676,7 +678,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="frequencies" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="frequencies"><span class="header-section-number">2.2</span> Frequencies</h2>
 <p>For the group variable and the 1–5 items, it is more useful to <em>count</em> how often each value occurs. The first table counts the two groups; the second shows, for each item, the share of respondents (in %) who chose each answer from 1 to 5.</p>
-<div id="e382df4c" class="cell" data-execution_count="10">
+<div id="42122e3b" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"IV_CAT_GROUP"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>IV_CAT_GROUP
@@ -685,7 +687,7 @@ category1    50
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="2b41f1cc" class="cell" data-execution_count="11">
+<div id="33d3cf7c" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> [<span class="st">"IV1_ITEM1"</span>, <span class="st">"IV1_ITEM2"</span>, <span class="st">"IV2_ITEM1"</span>, <span class="st">"IV2_ITEM2"</span>, <span class="st">"DV_ITEM1"</span>, <span class="st">"DV_ITEM2"</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> df[items].<span class="bu">apply</span>(<span class="kw">lambda</span> s: s.value_counts(normalize<span class="op">=</span><span class="va">True</span>)).fillna(<span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span></span>
@@ -772,7 +774,7 @@ Name: count, dtype: int64</code></pre>
 <section id="distributions" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="distributions"><span class="header-section-number">2.3</span> Distributions</h2>
 <p>A histogram shows how the values of one variable are spread out: each bar counts the respondents in a range of values. The smooth line is a <em>density curve</em>, an estimate of the shape of the distribution. Items have only five possible values, so their bars are discrete; the indices take more values and look smoother.</p>
-<div id="003a2fda" class="cell" data-fig-height="7.5" data-fig-width="9" data-execution_count="12">
+<div id="2b4b1288" class="cell" data-fig-height="7.5" data-fig-width="9" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
@@ -796,7 +798,7 @@ Name: count, dtype: int64</code></pre>
 <section id="categorical-variable" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="categorical-variable"><span class="header-section-number">2.4</span> Categorical variable</h2>
 <p>The group variable is text, so it gets a bar chart of counts instead of a histogram. Both groups have 50 respondents: the design is balanced.</p>
-<div id="b01d2618" class="cell" data-fig-height="3.2" data-fig-width="4.5" data-execution_count="13">
+<div id="d82c2fc1" class="cell" data-fig-height="3.2" data-fig-width="4.5" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">4.5</span>, <span class="fl">3.2</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"IV_CAT_GROUP"</span>, color<span class="op">=</span><span class="st">"#2f9e44"</span>, ax<span class="op">=</span>ax)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
@@ -816,7 +818,7 @@ Name: count, dtype: int64</code></pre>
 <section id="group-comparison-table" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="group-comparison-table"><span class="header-section-number">3.1</span> Group comparison table</h2>
 <p>Now we look at two variables at a time: the outcome <code>DV_INDEX</code> against each predictor. We use the indices rather than the single items, since each index summarises its two items. First, the outcome split by group: does the average differ between the groups?</p>
-<div id="783dbc4a" class="cell" data-execution_count="14">
+<div id="d33cb845" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"IV_CAT_GROUP"</span>)[<span class="st">"DV_INDEX"</span>].agg([<span class="st">"count"</span>, <span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"median"</span>]).<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
@@ -864,7 +866,7 @@ Name: count, dtype: int64</code></pre>
 <section id="correlation-table" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="correlation-table"><span class="header-section-number">3.2</span> Correlation table</h2>
 <p>For two numeric variables, the <em>correlation</em> (Pearson’s r) measures how closely they move together, from −1 (opposite) through 0 (unrelated) to +1 (in step).</p>
-<div id="e37254d9" class="cell" data-execution_count="15">
+<div id="d70168d0" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"DV_INDEX"</span>, <span class="st">"IV_INDEX1"</span>, <span class="st">"IV_INDEX2"</span>]].corr().<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
@@ -908,7 +910,7 @@ Name: count, dtype: int64</code></pre>
 <section id="visualizations" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="visualizations"><span class="header-section-number">3.3</span> Visualizations</h2>
 <p>Left: the outcome per group as a box plot (median, middle half and range) with each respondent as a dot. Middle and right: the outcome against each index, one dot per respondent, with a fitted straight line and its uncertainty band.</p>
-<div id="3a6ad2fd" class="cell" data-fig-height="3.6" data-fig-width="10" data-execution_count="16">
+<div id="4a358879" class="cell" data-fig-height="3.6" data-fig-width="10" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">3.6</span>))</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"IV_CAT_GROUP"</span>, y<span class="op">=</span><span class="st">"DV_INDEX"</span>, color<span class="op">=</span><span class="st">"#d3f9d8"</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
@@ -938,7 +940,7 @@ Name: count, dtype: int64</code></pre>
 <li><strong>Group → DV:</strong> Welch’s t-test compares the two group means; Cohen’s <em>d</em> is the difference in standard-deviation units (around 0.2 small, 0.5 medium, 0.8 large).</li>
 <li><strong>Index → DV:</strong> Pearson’s correlation test; <em>r</em> itself is the effect size (around 0.1 small, 0.3 medium, 0.5 large).</li>
 </ul>
-<div id="1b6b730a" class="cell" data-execution_count="17">
+<div id="351571f2" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats <span class="im">as</span> st</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>g1, g2 <span class="op">=</span> (df.loc[df[<span class="st">"IV_CAT_GROUP"</span>] <span class="op">==</span> g, <span class="st">"DV_INDEX"</span>] <span class="cf">for</span> g <span class="kw">in</span> [<span class="st">"category1"</span>, <span class="st">"category2"</span>])</span>

@@ -211,9 +211,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Simulations and test cases</li>
 <li>Teaching datasets on demand</li>
 <li>Validate generated distributions</li>
+<li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/02-data-generation-slides.html" target="_blank">Slides</a></li>
+<li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="f9f68dbd" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="7fa7fb90" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -230,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-prompt" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="the-prompt"><span class="header-section-number">1.1</span> The prompt</h2>
 <p>In session 1 we analysed a small simulated survey. Here we see how a dataset like that is made: we describe the data we want in words, and an AI model writes the Python code that generates it. The prompt below was given to Gemini — <a href="https://share.gemini.google/GUJjiP3uJVBB">open the Gemini chat</a> to see the answer, or paste the prompt into a chat of your own. The cell only stores the text; it is not run.</p>
-<div id="11028aeb" class="cell" data-execution_count="2">
+<div id="004cf90f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">Write a complete, reproducible Jupyter notebook Python code cell as code snippet using</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">numpy, pandas, scipy, and statsmodels that generates and validates a synthetic dataset of</span></span>
@@ -319,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-the-generated-code" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="run-the-generated-code"><span class="header-section-number">1.3</span> Run the generated code</h2>
 <p>This is the code Gemini returned. Run it in the <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb">session notebook in Colab</a> to test it: it searches for a seed, saves <code>komp014-simulated-data-n100.tsv</code> and prints the validation report. The result is a dataset like the one from session 1 — same design, different random draw.</p>
-<div id="2d254c9b" class="cell" data-execution_count="3">
+<div id="3515e1a6" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -558,7 +560,7 @@ R-squared: 0.3580</code></pre>
 <section id="update-the-prompt" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="update-the-prompt"><span class="header-section-number">2.2</span> Update the prompt</h2>
 <p>Instead of writing a new prompt from scratch, we ask the model to <em>revise</em> the previous one. Send this in the <strong>same</strong> <a href="https://share.gemini.google/GUJjiP3uJVBB">Gemini chat</a>, so it can reuse the code it already wrote.</p>
-<div id="f1da5e4a" class="cell" data-execution_count="4">
+<div id="8df5b21e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>update_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">Rewrite the previous code so that it generates a realistic synthetic dataset for a</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">Theory of Planned Behavior (TPB) survey experiment instead of the generic one. Keep the</span></span>
@@ -594,130 +596,126 @@ R-squared: 0.3580</code></pre>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="st">(Model 1: ATT + SN + PBC; Model 2: adds treatment) with R^2, delta R^2, coefficients,</span></span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="st">95% CIs and p-values (p &lt; 0.05 for all predictors in Model 2).</span></span>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="st">Save the dataset to csv/komp014-tpb-exp-n100.tsv (create the csv folder if needed). Return</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="st">only executable Python code with concise comments.</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="st">Save the dataset to komp014-tpb-exp-n100.tsv. Return only executable Python code with concise comments.</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="the-generated-code" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="the-generated-code"><span class="header-section-number">2.3</span> The generated code</h2>
 <p>A version of the code the model returns. It follows the same pattern as before: a function that generates one candidate dataset from a seed, a function that checks every target from the prompt, and a loop that keeps the first seed that passes.</p>
-<div id="fc120943" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ITEMS <span class="op">=</span> {</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ATT"</span>: [<span class="st">"att_fun_exciting"</span>, <span class="st">"att_valuable_use_of_time"</span>, <span class="st">"att_feel_good_about_self"</span>],</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SN"</span>: [<span class="st">"sn_parent_guardian_approval"</span>, <span class="st">"sn_friend_approval"</span>, <span class="st">"sn_teacher_encouragement"</span>],</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PBC"</span>: [<span class="st">"pbc_confident_can_learn"</span>, <span class="st">"pbc_enough_spare_time"</span>, <span class="st">"pbc_instrument_access"</span>],</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BI"</span>: [<span class="st">"bi_plan_next_6_months"</span>, <span class="st">"bi_try_best_to_learn_soon"</span>, <span class="st">"bi_want_to_start_school_year"</span>],</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>CUTOFFS <span class="op">=</span> [<span class="op">-</span><span class="fl">1.3</span>, <span class="op">-</span><span class="fl">0.45</span>, <span class="fl">0.45</span>, <span class="fl">1.3</span>]  <span class="co"># latent score -&gt; Likert 1-5</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cronbach_alpha(items):</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> items.shape[<span class="dv">1</span>]</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> k <span class="op">/</span> (k <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> items.var(ddof<span class="op">=</span><span class="dv">1</span>).<span class="bu">sum</span>() <span class="op">/</span> items.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>).var(ddof<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cohens_d(a, b):</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    pooled <span class="op">=</span> np.sqrt(((<span class="bu">len</span>(a) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> a.var(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">+</span> (<span class="bu">len</span>(b) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> b.var(ddof<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                     <span class="op">/</span> (<span class="bu">len</span>(a) <span class="op">+</span> <span class="bu">len</span>(b) <span class="op">-</span> <span class="dv">2</span>))</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (a.mean() <span class="op">-</span> b.mean()) <span class="op">/</span> pooled</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate(seed):</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Background variables; grade depends on age</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> rng.choice([<span class="st">"10 years"</span>, <span class="st">"11 years"</span>, <span class="st">"12 years"</span>, <span class="st">"13 years"</span>], N, p<span class="op">=</span>[<span class="fl">.26</span>, <span class="fl">.32</span>, <span class="fl">.32</span>, <span class="fl">.10</span>])</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    grade_given_age <span class="op">=</span> {<span class="st">"10 years"</span>: [<span class="fl">.75</span>, <span class="fl">.25</span>, <span class="dv">0</span>], <span class="st">"11 years"</span>: [<span class="fl">.15</span>, <span class="fl">.70</span>, <span class="fl">.15</span>],</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"12 years"</span>: [<span class="dv">0</span>, <span class="fl">.25</span>, <span class="fl">.75</span>], <span class="st">"13 years"</span>: [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]}</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    grade <span class="op">=</span> [rng.choice([<span class="st">"Grade 4"</span>, <span class="st">"Grade 5"</span>, <span class="st">"Grade 6"</span>], p<span class="op">=</span>grade_given_age[a]) <span class="cf">for</span> a <span class="kw">in</span> age]</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    gender <span class="op">=</span> rng.choice([<span class="st">"Girl"</span>, <span class="st">"Boy"</span>, <span class="st">"Non-binary"</span>, <span class="st">"Prefer not to say"</span>], N,</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                        p<span class="op">=</span>[<span class="fl">.46</span>, <span class="fl">.50</span>, <span class="fl">.02</span>, <span class="fl">.02</span>])</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    condition <span class="op">=</span> rng.permutation([<span class="st">"control"</span>] <span class="op">*</span> <span class="dv">50</span> <span class="op">+</span> [<span class="st">"treatment"</span>] <span class="op">*</span> <span class="dv">50</span>)  <span class="co"># random assignment</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    treat <span class="op">=</span> (condition <span class="op">==</span> <span class="st">"treatment"</span>).astype(<span class="bu">float</span>)</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Latent TPB predictors with weak intercorrelations; BI depends on all four</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> rng.multivariate_normal([<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [[<span class="dv">1</span>, <span class="fl">.2</span>, <span class="fl">.2</span>], [<span class="fl">.2</span>, <span class="dv">1</span>, <span class="fl">.2</span>], [<span class="fl">.2</span>, <span class="fl">.2</span>, <span class="dv">1</span>]], N)</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    bi <span class="op">=</span> pred <span class="op">@</span> [<span class="fl">0.28</span>, <span class="fl">0.28</span>, <span class="fl">0.28</span>] <span class="op">+</span> <span class="fl">0.45</span> <span class="op">*</span> (treat <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.75</span>, N)</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    latent <span class="op">=</span> {<span class="st">"ATT"</span>: pred[:, <span class="dv">0</span>], <span class="st">"SN"</span>: pred[:, <span class="dv">1</span>], <span class="st">"PBC"</span>: pred[:, <span class="dv">2</span>], <span class="st">"BI"</span>: bi <span class="op">/</span> bi.std()}</span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame({<span class="st">"age_group"</span>: age, <span class="st">"grade_level"</span>: grade, <span class="st">"gender"</span>: gender,</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"experimental_condition"</span>: condition})</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Items = latent score + item noise, cut into five answer categories</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> name <span class="kw">in</span> names:</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            df[name] <span class="op">=</span> np.digitize(latent[construct] <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.75</span>, N), CUTOFFS) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        df[<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index"</span>] <span class="op">=</span> df[names].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> meets_targets(df):</span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    alphas <span class="op">=</span> [cronbach_alpha(df[names]) <span class="cf">for</span> names <span class="kw">in</span> ITEMS.values()]</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    r_bi <span class="op">=</span> [df[<span class="ss">f"</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">_index"</span>].corr(df[<span class="st">"BI_index"</span>]) <span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"ATT"</span>, <span class="st">"SN"</span>, <span class="st">"PBC"</span>]]</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    r_pred <span class="op">=</span> df[[<span class="st">"ATT_index"</span>, <span class="st">"SN_index"</span>, <span class="st">"PBC_index"</span>]].corr().values[np.triu_indices(<span class="dv">3</span>, <span class="dv">1</span>)]</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> cohens_d(df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"treatment"</span>, <span class="st">"BI_index"</span>],</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>                 df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"control"</span>, <span class="st">"BI_index"</span>])</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    skews <span class="op">=</span> [stats.skew(df[n]) <span class="cf">for</span> names <span class="kw">in</span> ITEMS.values() <span class="cf">for</span> n <span class="kw">in</span> names]</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    model2 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>                     <span class="st">" + C(experimental_condition)"</span>, df).fit()</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="bu">all</span>(<span class="fl">.65</span> <span class="op">&lt;=</span> a <span class="op">&lt;=</span> <span class="fl">.85</span> <span class="cf">for</span> a <span class="kw">in</span> alphas)</span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="fl">.25</span> <span class="op">&lt;=</span> r <span class="op">&lt;=</span> <span class="fl">.40</span> <span class="cf">for</span> r <span class="kw">in</span> r_bi)</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="fl">.05</span> <span class="op">&lt;=</span> r <span class="op">&lt;=</span> <span class="fl">.30</span> <span class="cf">for</span> r <span class="kw">in</span> r_pred)</span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="fl">.40</span> <span class="op">&lt;=</span> d <span class="op">&lt;=</span> <span class="fl">.60</span></span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="bu">abs</span>(s) <span class="op">&lt;=</span> <span class="fl">.5</span> <span class="cf">for</span> s <span class="kw">in</span> skews)</span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> (model2.pvalues.iloc[<span class="dv">1</span>:] <span class="op">&lt;</span> <span class="fl">.05</span>).<span class="bu">all</span>())</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Bounded, transparent seed search: keep the first dataset that meets every target</span></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> seed <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5001</span>):</span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> generate(seed)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> meets_targets(df):</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"No seed met the targets; widen the ranges in the prompt."</span>)</span>
+<div id="7054abd0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ITEMS <span class="op">=</span> {</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ATT"</span>: [<span class="st">"att_fun_exciting"</span>, <span class="st">"att_valuable_use_of_time"</span>, <span class="st">"att_feel_good_about_self"</span>],</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SN"</span>: [<span class="st">"sn_parent_guardian_approval"</span>, <span class="st">"sn_friend_approval"</span>, <span class="st">"sn_teacher_encouragement"</span>],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PBC"</span>: [<span class="st">"pbc_confident_can_learn"</span>, <span class="st">"pbc_enough_spare_time"</span>, <span class="st">"pbc_instrument_access"</span>],</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BI"</span>: [<span class="st">"bi_plan_next_6_months"</span>, <span class="st">"bi_try_best_to_learn_soon"</span>, <span class="st">"bi_want_to_start_school_year"</span>],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>CUTOFFS <span class="op">=</span> [<span class="op">-</span><span class="fl">1.3</span>, <span class="op">-</span><span class="fl">0.45</span>, <span class="fl">0.45</span>, <span class="fl">1.3</span>]  <span class="co"># latent score -&gt; Likert 1-5</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cronbach_alpha(items):</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> items.shape[<span class="dv">1</span>]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> k <span class="op">/</span> (k <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> items.var(ddof<span class="op">=</span><span class="dv">1</span>).<span class="bu">sum</span>() <span class="op">/</span> items.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>).var(ddof<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cohens_d(a, b):</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    pooled <span class="op">=</span> np.sqrt(((<span class="bu">len</span>(a) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> a.var(ddof<span class="op">=</span><span class="dv">1</span>) <span class="op">+</span> (<span class="bu">len</span>(b) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> b.var(ddof<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                     <span class="op">/</span> (<span class="bu">len</span>(a) <span class="op">+</span> <span class="bu">len</span>(b) <span class="op">-</span> <span class="dv">2</span>))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (a.mean() <span class="op">-</span> b.mean()) <span class="op">/</span> pooled</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate(seed):</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Background variables; grade depends on age</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> rng.choice([<span class="st">"10 years"</span>, <span class="st">"11 years"</span>, <span class="st">"12 years"</span>, <span class="st">"13 years"</span>], N, p<span class="op">=</span>[<span class="fl">.26</span>, <span class="fl">.32</span>, <span class="fl">.32</span>, <span class="fl">.10</span>])</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    grade_given_age <span class="op">=</span> {<span class="st">"10 years"</span>: [<span class="fl">.75</span>, <span class="fl">.25</span>, <span class="dv">0</span>], <span class="st">"11 years"</span>: [<span class="fl">.15</span>, <span class="fl">.70</span>, <span class="fl">.15</span>],</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"12 years"</span>: [<span class="dv">0</span>, <span class="fl">.25</span>, <span class="fl">.75</span>], <span class="st">"13 years"</span>: [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]}</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    grade <span class="op">=</span> [rng.choice([<span class="st">"Grade 4"</span>, <span class="st">"Grade 5"</span>, <span class="st">"Grade 6"</span>], p<span class="op">=</span>grade_given_age[a]) <span class="cf">for</span> a <span class="kw">in</span> age]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    gender <span class="op">=</span> rng.choice([<span class="st">"Girl"</span>, <span class="st">"Boy"</span>, <span class="st">"Non-binary"</span>, <span class="st">"Prefer not to say"</span>], N,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                        p<span class="op">=</span>[<span class="fl">.46</span>, <span class="fl">.50</span>, <span class="fl">.02</span>, <span class="fl">.02</span>])</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    condition <span class="op">=</span> rng.permutation([<span class="st">"control"</span>] <span class="op">*</span> <span class="dv">50</span> <span class="op">+</span> [<span class="st">"treatment"</span>] <span class="op">*</span> <span class="dv">50</span>)  <span class="co"># random assignment</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    treat <span class="op">=</span> (condition <span class="op">==</span> <span class="st">"treatment"</span>).astype(<span class="bu">float</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Latent TPB predictors with weak intercorrelations; BI depends on all four</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> rng.multivariate_normal([<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [[<span class="dv">1</span>, <span class="fl">.2</span>, <span class="fl">.2</span>], [<span class="fl">.2</span>, <span class="dv">1</span>, <span class="fl">.2</span>], [<span class="fl">.2</span>, <span class="fl">.2</span>, <span class="dv">1</span>]], N)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    bi <span class="op">=</span> pred <span class="op">@</span> [<span class="fl">0.28</span>, <span class="fl">0.28</span>, <span class="fl">0.28</span>] <span class="op">+</span> <span class="fl">0.45</span> <span class="op">*</span> (treat <span class="op">-</span> <span class="fl">0.5</span>) <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.75</span>, N)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    latent <span class="op">=</span> {<span class="st">"ATT"</span>: pred[:, <span class="dv">0</span>], <span class="st">"SN"</span>: pred[:, <span class="dv">1</span>], <span class="st">"PBC"</span>: pred[:, <span class="dv">2</span>], <span class="st">"BI"</span>: bi <span class="op">/</span> bi.std()}</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame({<span class="st">"age_group"</span>: age, <span class="st">"grade_level"</span>: grade, <span class="st">"gender"</span>: gender,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"experimental_condition"</span>: condition})</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Items = latent score + item noise, cut into five answer categories</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> name <span class="kw">in</span> names:</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            df[name] <span class="op">=</span> np.digitize(latent[construct] <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="fl">0.75</span>, N), CUTOFFS) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        df[<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index"</span>] <span class="op">=</span> df[names].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> meets_targets(df):</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    alphas <span class="op">=</span> [cronbach_alpha(df[names]) <span class="cf">for</span> names <span class="kw">in</span> ITEMS.values()]</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    r_bi <span class="op">=</span> [df[<span class="ss">f"</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">_index"</span>].corr(df[<span class="st">"BI_index"</span>]) <span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"ATT"</span>, <span class="st">"SN"</span>, <span class="st">"PBC"</span>]]</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    r_pred <span class="op">=</span> df[[<span class="st">"ATT_index"</span>, <span class="st">"SN_index"</span>, <span class="st">"PBC_index"</span>]].corr().values[np.triu_indices(<span class="dv">3</span>, <span class="dv">1</span>)]</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> cohens_d(df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"treatment"</span>, <span class="st">"BI_index"</span>],</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>                 df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"control"</span>, <span class="st">"BI_index"</span>])</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    skews <span class="op">=</span> [stats.skew(df[n]) <span class="cf">for</span> names <span class="kw">in</span> ITEMS.values() <span class="cf">for</span> n <span class="kw">in</span> names]</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    model2 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>                     <span class="st">" + C(experimental_condition)"</span>, df).fit()</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="bu">all</span>(<span class="fl">.65</span> <span class="op">&lt;=</span> a <span class="op">&lt;=</span> <span class="fl">.85</span> <span class="cf">for</span> a <span class="kw">in</span> alphas)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="fl">.25</span> <span class="op">&lt;=</span> r <span class="op">&lt;=</span> <span class="fl">.40</span> <span class="cf">for</span> r <span class="kw">in</span> r_bi)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="fl">.05</span> <span class="op">&lt;=</span> r <span class="op">&lt;=</span> <span class="fl">.30</span> <span class="cf">for</span> r <span class="kw">in</span> r_pred)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="fl">.40</span> <span class="op">&lt;=</span> d <span class="op">&lt;=</span> <span class="fl">.60</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(<span class="bu">abs</span>(s) <span class="op">&lt;=</span> <span class="fl">.5</span> <span class="cf">for</span> s <span class="kw">in</span> skews)</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> (model2.pvalues.iloc[<span class="dv">1</span>:] <span class="op">&lt;</span> <span class="fl">.05</span>).<span class="bu">all</span>())</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Bounded, transparent seed search: keep the first dataset that meets every target</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> seed <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5001</span>):</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> generate(seed)</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> meets_targets(df):</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"No seed met the targets; widen the ranges in the prompt."</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"komp014-tpb-exp-n100.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>Path(<span class="st">"csv"</span>).mkdir(exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"csv/komp014-tpb-exp-n100.tsv"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">   cases: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">   missing values: </span><span class="sc">{</span>df<span class="sc">.</span>isna()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Frequencies ---"</span>)</span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"age_group"</span>, <span class="st">"grade_level"</span>, <span class="st">"gender"</span>, <span class="st">"experimental_condition"</span>]:</span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df[col].value_counts().sort_index().to_string(), <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Index descriptives &amp; reliability ---"</span>)</span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> df[<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index"</span>]</span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index  mean </span><span class="sc">{</span>s<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">  SD </span><span class="sc">{</span>s<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">  "</span></span>
-<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"skew </span><span class="sc">{</span>stats<span class="sc">.</span>skew(s)<span class="sc">:.2f}</span><span class="ss">  alpha </span><span class="sc">{</span>cronbach_alpha(df[names])<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected seed: </span><span class="sc">{</span>seed<span class="sc">}</span><span class="ss">   cases: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">   missing values: </span><span class="sc">{</span>df<span class="sc">.</span>isna()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Frequencies ---"</span>)</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">"age_group"</span>, <span class="st">"grade_level"</span>, <span class="st">"gender"</span>, <span class="st">"experimental_condition"</span>]:</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df[col].value_counts().sort_index().to_string(), <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Index descriptives &amp; reliability ---"</span>)</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> construct, names <span class="kw">in</span> ITEMS.items():</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> df[<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index"</span>]</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>construct<span class="sc">}</span><span class="ss">_index  mean </span><span class="sc">{</span>s<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">  SD </span><span class="sc">{</span>s<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">  "</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"skew </span><span class="sc">{</span>stats<span class="sc">.</span>skew(s)<span class="sc">:.2f}</span><span class="ss">  alpha </span><span class="sc">{</span>cronbach_alpha(df[names])<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Pearson correlations ---"</span>)</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[[<span class="st">"ATT_index"</span>, <span class="st">"SN_index"</span>, <span class="st">"PBC_index"</span>, <span class="st">"BI_index"</span>]].corr().<span class="bu">round</span>(<span class="dv">2</span>))</span>
 <span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Pearson correlations ---"</span>)</span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[[<span class="st">"ATT_index"</span>, <span class="st">"SN_index"</span>, <span class="st">"PBC_index"</span>, <span class="st">"BI_index"</span>]].corr().<span class="bu">round</span>(<span class="dv">2</span>))</span>
-<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Treatment vs control (BI) ---"</span>)</span>
-<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>treated <span class="op">=</span> df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"treatment"</span>, <span class="st">"BI_index"</span>]</span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>control <span class="op">=</span> df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"control"</span>, <span class="st">"BI_index"</span>]</span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> stats.ttest_ind(treated, control, equal_var<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Welch t = </span><span class="sc">{</span>t<span class="sc">.</span>statistic<span class="sc">:.2f}</span><span class="ss">, p = </span><span class="sc">{</span>t<span class="sc">.</span>pvalue<span class="sc">:.4f}</span><span class="ss">, Cohen's d = </span><span class="sc">{</span>cohens_d(treated, control)<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Hierarchical OLS regression of BI ---"</span>)</span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span>, df).fit()</span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span></span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>                 <span class="st">" + C(experimental_condition)"</span>, df).fit()</span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 1 R^2 = </span><span class="sc">{</span>model1<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">   Model 2 R^2 = </span><span class="sc">{</span>model2<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">   "</span></span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"delta R^2 = </span><span class="sc">{</span>model2<span class="sc">.</span>rsquared <span class="op">-</span> model1<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.concat([model2.params, model2.conf_int(), model2.pvalues], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>coefs.columns <span class="op">=</span> [<span class="st">"coef"</span>, <span class="st">"95% CI lower"</span>, <span class="st">"95% CI upper"</span>, <span class="st">"p"</span>]</span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coefs.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Treatment vs control (BI) ---"</span>)</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>treated <span class="op">=</span> df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"treatment"</span>, <span class="st">"BI_index"</span>]</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>control <span class="op">=</span> df.loc[df.experimental_condition <span class="op">==</span> <span class="st">"control"</span>, <span class="st">"BI_index"</span>]</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> stats.ttest_ind(treated, control, equal_var<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Welch t = </span><span class="sc">{</span>t<span class="sc">.</span>statistic<span class="sc">:.2f}</span><span class="ss">, p = </span><span class="sc">{</span>t<span class="sc">.</span>pvalue<span class="sc">:.4f}</span><span class="ss">, Cohen's d = </span><span class="sc">{</span>cohens_d(treated, control)<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Hierarchical OLS regression of BI ---"</span>)</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span>, df).fit()</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> smf.ols(<span class="st">"BI_index ~ ATT_index + SN_index + PBC_index"</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>                 <span class="st">" + C(experimental_condition)"</span>, df).fit()</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model 1 R^2 = </span><span class="sc">{</span>model1<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">   Model 2 R^2 = </span><span class="sc">{</span>model2<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">   "</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"delta R^2 = </span><span class="sc">{</span>model2<span class="sc">.</span>rsquared <span class="op">-</span> model1<span class="sc">.</span>rsquared<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> pd.concat([model2.params, model2.conf_int(), model2.pvalues], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>coefs.columns <span class="op">=</span> [<span class="st">"coef"</span>, <span class="st">"95% CI lower"</span>, <span class="st">"95% CI upper"</span>, <span class="st">"p"</span>]</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coefs.<span class="bu">round</span>(<span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Selected seed: 207   cases: 100   missing values: 0
 
@@ -789,7 +787,7 @@ PBC_index                               0.0072  </code></pre>
 <li><strong>Details:</strong> number of cases (100 is plenty), effect sizes (|r| around .20–.40 looks realistic), no missing values, and a file name.</li>
 </ol>
 <p>Fill in the brackets below and send it in the <a href="https://share.gemini.google/GUJjiP3uJVBB">same Gemini chat</a>:</p>
-<div id="49521d71" class="cell" data-execution_count="6">
+<div id="6067db66" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">Rewrite the previous code for a new synthetic dataset. Keep the same approach (latent</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">scores, Likert thresholds, mean indices, bounded seed search, printed validation).</span></span>
@@ -802,13 +800,13 @@ PBC_index                               0.0072  </code></pre>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">Background variables: [name: category A __%, category B __%]</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">Scales (optional): [construct]: items [item_1, item_2, item_3], index [construct_index]</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">Effect sizes: [for example |r| = .20-.40]. No missing values.</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">Save to csv/[dataset-name].tsv and print the seed, frequencies, descriptives,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">Save to [dataset-name].tsv and print the seed, frequencies, descriptives,</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">correlations and one multiple OLS regression with all predictors.</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">Return only executable Python code with concise comments.</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Paste the code you get back into the empty cell below and run it. Does the validation output match what you asked for?</p>
-<div id="630f04cc" class="cell" data-execution_count="7">
+<div id="47b72356" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paste the code Gemini wrote for your dataset here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -835,7 +833,7 @@ PBC_index                               0.0072  </code></pre>
 <section id="a-persona-prompt" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="a-persona-prompt"><span class="header-section-number">3.3</span> A persona prompt</h2>
 <p>This prompt grounds one persona from the TPB study, describes the study situation, and asks for a short answer in the person’s own words before each rating — models are better at writing than at picking numbers. The cell only stores the text; paste it into <a href="https://gemini.google.com/">Gemini</a>.</p>
-<div id="55769e94" class="cell" data-execution_count="8">
+<div id="4ca7de72" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>persona_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are taking part in a research study as a survey respondent. Stay in role and answer</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">as this person would, not as an AI assistant.</span></span>
@@ -861,7 +859,7 @@ PBC_index                               0.0072  </code></pre>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then test how durable the answers are. Send this follow-up in the same chat, and in a <strong>new</strong> chat paste the persona prompt again with the statements in reverse order. Do the ratings hold?</p>
-<div id="b900be0b" class="cell" data-execution_count="9">
+<div id="1f125737" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>durability_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">Your teacher says that most children in your class thought the text about the violin was</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">boring. Answer statement 4 again, first in your own words, then with a number from 1 to 5.</span></span>
