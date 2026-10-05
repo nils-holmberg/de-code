@@ -35,6 +35,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -52,6 +118,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -150,17 +217,39 @@ nils.holmberg@iko.lu.se
 <h2>Topics</h2>
 <div class="columns">
 <div class="column" style="width:42%;">
+<!-- table of contents: update when a section heading is renamed or moved -->
 <ul>
-<li>From single prompts to agents</li>
-<li>Planning, tools, and iteration</li>
-<li>Delegating multi-step tasks</li>
-<li>Reviewing agent output safely</li>
-<li>Version control as a safety net</li>
+<li><a href="#/safety-first">1 Safety first!</a>
+<ul>
+<li><a href="#/from-chat-to-agents">1.1 From chat to agents</a></li>
+<li><a href="#/common-agent-tools">1.2 Common agent tools</a></li>
+<li><a href="#/agents.md-rules-the-agent-reads-first">1.3 AGENTS.md: rules the agent reads first</a></li>
+<li><a href="#/other-guardrails">1.4 Other guardrails</a></li>
+<li><a href="#/choosing-a-model">1.5 Choosing a model</a></li>
+<li><a href="#/tokens-and-the-context-window">1.6 Tokens and the context window</a></li>
+<li><a href="#/slash-commands">1.7 Slash commands</a></li>
+</ul></li>
+<li><a href="#/google-antigravity">2 Google Antigravity</a>
+<ul>
+<li><a href="#/three-ways-to-work-with-the-same-agent">2.1 Three ways to work with the same agent</a></li>
+<li><a href="#/the-antigravity-app">2.2 The Antigravity app</a></li>
+<li><a href="#/the-antigravity-ide">2.3 The Antigravity IDE</a></li>
+<li><a href="#/the-antigravity-cli">2.4 The Antigravity CLI</a></li>
+<li><a href="#/create-a-project">2.5 Create a project</a></li>
+<li><a href="#/run-the-data-analysis-spec">2.6 Run the data analysis spec</a></li>
+</ul></li>
+<li><a href="#/write-an-app-spec">3 Write an app spec</a>
+<ul>
+<li><a href="#/a-basic-app-spec">3.1 A basic app spec</a></li>
+<li><a href="#/an-nlp-app-word-cloud-and-sentence-sentiment">3.2 An NLP app: word cloud and sentence sentiment</a></li>
+<li><a href="#/a-computer-vision-app-edge-detection">3.3 A computer vision app: edge detection</a></li>
+<li><a href="#/your-turn">3.4 Your turn</a></li>
+</ul></li>
 <li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/04-agentic-coding-slides.html" target="_blank">Slides</a></li>
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/04-agentic-coding.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="fd49a644" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="6fded8f1" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -171,17 +260,578 @@ nils.holmberg@iko.lu.se
 </div>
 </div></div>
 </section>
-<section id="workshop-tasks-preliminary" class="title-slide slide level1 center" data-number="1">
-<h1><span class="header-section-number">1</span> Workshop tasks (preliminary)</h1>
+<section>
+<section id="safety-first" class="title-slide slide level1 center" data-number="1">
+<h1><span class="header-section-number">1</span> Safety first!</h1>
+
+</section>
+<section id="from-chat-to-agents" class="slide level2 scrollable" data-number="1.1">
+<h2><span class="header-section-number">1.1</span> From chat to agents</h2>
+<p>A language model such as Gemini works by <strong>predicting the next word</strong>, over and over, based on everything written so far. In a chat, that produces an answer — but only text: you copy the code, run it, and paste back the result.</p>
+<p>An <strong>AI agent</strong> adds two things:</p>
 <ol type="1">
-<li>Placeholder — give an agent a small multi-step task and observe its plan.</li>
-<li>Placeholder — interrupt, correct course, and compare the revised plan.</li>
-<li>Placeholder — have the agent commit work to a branch; review the diff.</li>
-<li>Placeholder — discuss: which checks would you never delegate, and why?</li>
+<li><strong>Tools</strong> — functions the model can call to act outside the chat: read and write files, search a folder, run a command in a terminal, look something up on the web.</li>
+<li><strong>A loop</strong> — the agent plans a step, calls a tool, reads the result, and decides the next step, until the task is done or it needs your input.</li>
+</ol>
+<p>That makes agents powerful: you describe the goal, and the agent does the work in a folder on <em>your</em> computer. It also makes them risky: a tool that can write a file can overwrite one, and a tool that can run a command can delete things. So we start with safety.</p>
+</section>
+<section id="common-agent-tools" class="slide level2" data-number="1.2">
+<h2><span class="header-section-number">1.2</span> Common agent tools</h2>
+<p>Most coding agents — Antigravity included — offer a similar set of tools. The last column is a rough guide to how much damage a mistake could do.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>What it does</th>
+<th>Example</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read file</td>
+<td>Reads the contents of a file</td>
+<td>read <code>ANALYSIS-SPEC.md</code></td>
+<td>low</td>
+</tr>
+<tr class="even">
+<td>List / find files</td>
+<td>Lists folders or finds files by name</td>
+<td>find all <code>*.csv</code> files</td>
+<td>low</td>
+</tr>
+<tr class="odd">
+<td>Search in files</td>
+<td>Finds text inside files</td>
+<td>where is <code>DV_INDEX</code> used?</td>
+<td>low</td>
+</tr>
+<tr class="even">
+<td>Create / write file</td>
+<td>Creates a new file or replaces one</td>
+<td>write <code>app.py</code></td>
+<td>medium — can overwrite</td>
+</tr>
+<tr class="odd">
+<td>Edit file</td>
+<td>Changes part of an existing file</td>
+<td>rename a variable in <code>app.py</code></td>
+<td>medium</td>
+</tr>
+<tr class="even">
+<td>Run terminal command</td>
+<td>Runs a command in a shell</td>
+<td><code>quarto render report.qmd</code></td>
+<td>high — can do anything you can</td>
+</tr>
+<tr class="odd">
+<td>Web search</td>
+<td>Searches the internet</td>
+<td>“Gradio slider example”</td>
+<td>low — but results can be wrong</td>
+</tr>
+<tr class="even">
+<td>Fetch web page</td>
+<td>Downloads a page or file</td>
+<td>read a library’s documentation</td>
+<td>low–medium</td>
+</tr>
+<tr class="odd">
+<td>Ask the user</td>
+<td>Pauses and asks you a question</td>
+<td>“Which column is the outcome?”</td>
+<td>none — this is a good sign</td>
+</tr>
+<tr class="even">
+<td>Plan / to-do list</td>
+<td>Writes and updates its own task list</td>
+<td>1. load data 2. describe …</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>Reading is safe; <strong>writing, editing and running commands</strong> are where you want guardrails.</p>
+</section>
+<section id="agents.md-rules-the-agent-reads-first" class="slide level2" data-number="1.3">
+<h2><span class="header-section-number">1.3</span> AGENTS.md: rules the agent reads first</h2>
+<p>An <code>AGENTS.md</code> file is a plain Markdown file of <strong>standing instructions</strong>. The agent reads it at the start of every conversation, before your prompt, so the rules apply without you repeating them. Put one in a project folder for that project; Antigravity also reads global rules from <code>~/.gemini/AGENTS.md</code> (or <code>GEMINI.md</code>) for all your projects.</p>
+<p>Here is a real example, used while building this course. It stores the text; save it as <code>AGENTS.md</code> in your project folder.</p>
+<div id="885e4482" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>agents_md <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="st">## Local Python Environment</span></span>
+<span id="cb1-3"><a aria-label="3"></a></span>
+<span id="cb1-4"><a aria-label="4"></a><span class="st">This repository uses the Python virtual environment:</span></span>
+<span id="cb1-5"><a aria-label="5"></a><span class="st">~/lib/python/uv-osm</span></span>
+<span id="cb1-6"><a aria-label="6"></a></span>
+<span id="cb1-7"><a aria-label="7"></a><span class="st">---</span></span>
+<span id="cb1-8"><a aria-label="8"></a></span>
+<span id="cb1-9"><a aria-label="9"></a><span class="st">### Environment Activation</span></span>
+<span id="cb1-10"><a aria-label="10"></a></span>
+<span id="cb1-11"><a aria-label="11"></a><span class="st">When running any Python-related command (python, pytest, quarto render with python, etc.),</span></span>
+<span id="cb1-12"><a aria-label="12"></a><span class="st">ALWAYS prefix the command with:</span></span>
+<span id="cb1-13"><a aria-label="13"></a></span>
+<span id="cb1-14"><a aria-label="14"></a><span class="st">source ~/lib/python/uv-osm/bin/activate &amp;&amp; &lt;command&gt;</span></span>
+<span id="cb1-15"><a aria-label="15"></a></span>
+<span id="cb1-16"><a aria-label="16"></a><span class="st">If multiple commands are needed, prefer a single bash -lc invocation that activates once and runs all steps.</span></span>
+<span id="cb1-17"><a aria-label="17"></a></span>
+<span id="cb1-18"><a aria-label="18"></a><span class="st">---</span></span>
+<span id="cb1-19"><a aria-label="19"></a></span>
+<span id="cb1-20"><a aria-label="20"></a><span class="st">### Package Management Policy (IMPORTANT)</span></span>
+<span id="cb1-21"><a aria-label="21"></a></span>
+<span id="cb1-22"><a aria-label="22"></a><span class="st">This environment uses **uv** for dependency management.</span></span>
+<span id="cb1-23"><a aria-label="23"></a></span>
+<span id="cb1-24"><a aria-label="24"></a><span class="st">DO NOT install, upgrade, or remove any Python packages without explicitly asking first.</span></span>
+<span id="cb1-25"><a aria-label="25"></a></span>
+<span id="cb1-26"><a aria-label="26"></a><span class="st">If a dependency is required:</span></span>
+<span id="cb1-27"><a aria-label="27"></a></span>
+<span id="cb1-28"><a aria-label="28"></a><span class="st">1. Explain why the package is needed.</span></span>
+<span id="cb1-29"><a aria-label="29"></a><span class="st">2. Confirm with the user.</span></span>
+<span id="cb1-30"><a aria-label="30"></a><span class="st">3. Install it using:</span></span>
+<span id="cb1-31"><a aria-label="31"></a></span>
+<span id="cb1-32"><a aria-label="32"></a><span class="st">   source ~/lib/python/uv-osm/bin/activate &amp;&amp; uv pip install &lt;package&gt;</span></span>
+<span id="cb1-33"><a aria-label="33"></a></span>
+<span id="cb1-34"><a aria-label="34"></a><span class="st">Rules:</span></span>
+<span id="cb1-35"><a aria-label="35"></a></span>
+<span id="cb1-36"><a aria-label="36"></a><span class="st">- Prefer `uv pip install` over `pip install`.</span></span>
+<span id="cb1-37"><a aria-label="37"></a><span class="st">- Never use plain `pip install`.</span></span>
+<span id="cb1-38"><a aria-label="38"></a><span class="st">- Never install packages globally.</span></span>
+<span id="cb1-39"><a aria-label="39"></a><span class="st">- Never modify requirements files or pyproject.toml without confirmation.</span></span>
+<span id="cb1-40"><a aria-label="40"></a><span class="st">- If a package is missing, check first before proposing installation.</span></span>
+<span id="cb1-41"><a aria-label="41"></a></span>
+<span id="cb1-42"><a aria-label="42"></a><span class="st">---</span></span>
+<span id="cb1-43"><a aria-label="43"></a></span>
+<span id="cb1-44"><a aria-label="44"></a><span class="st">### File System Safety Policy (IMPORTANT)</span></span>
+<span id="cb1-45"><a aria-label="45"></a></span>
+<span id="cb1-46"><a aria-label="46"></a><span class="st">You may read and inspect files anywhere.</span></span>
+<span id="cb1-47"><a aria-label="47"></a></span>
+<span id="cb1-48"><a aria-label="48"></a><span class="st">You may create, modify, or delete files ONLY inside:</span></span>
+<span id="cb1-49"><a aria-label="49"></a></span>
+<span id="cb1-50"><a aria-label="50"></a><span class="st">    /tmp/</span></span>
+<span id="cb1-51"><a aria-label="51"></a><span class="st">    ~/tmp/</span></span>
+<span id="cb1-52"><a aria-label="52"></a></span>
+<span id="cb1-53"><a aria-label="53"></a><span class="st">This includes any subdirectory under /tmp/ or ~/tmp/ (e.g., /tmp/project/, /tmp/test/output.txt, ~/tmp/project/).</span></span>
+<span id="cb1-54"><a aria-label="54"></a></span>
+<span id="cb1-55"><a aria-label="55"></a><span class="st">You must NEVER modify files outside /tmp/ or ~/tmp/ without explicit confirmation.</span></span>
+<span id="cb1-56"><a aria-label="56"></a></span>
+<span id="cb1-57"><a aria-label="57"></a><span class="st">If changes to project files are required:</span></span>
+<span id="cb1-58"><a aria-label="58"></a><span class="st">1. Write the proposed version to /tmp/ or ~/tmp/.</span></span>
+<span id="cb1-59"><a aria-label="59"></a><span class="st">2. Show or explain the changes.</span></span>
+<span id="cb1-60"><a aria-label="60"></a><span class="st">3. Ask for approval before modifying the original file.</span></span>
+<span id="cb1-61"><a aria-label="61"></a></span>
+<span id="cb1-62"><a aria-label="62"></a><span class="st">Treat everything outside /tmp/ and ~/tmp/ as read-only unless explicitly approved.</span></span>
+<span id="cb1-63"><a aria-label="63"></a><span class="st">"""</span></span>
+<span id="cb1-64"><a aria-label="64"></a></span>
+<span id="cb1-65"><a aria-label="65"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"AGENTS.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb1-66"><a aria-label="66"></a>    f.write(agents_md)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The file has three policies, each closing a typical risk:</p>
+<ul>
+<li><strong>Environment:</strong> always use one specific Python environment, so the agent does not run code with the wrong setup.</li>
+<li><strong>Packages:</strong> never install or remove software without asking first — installs change your computer beyond the project.</li>
+<li><strong>File system:</strong> read anything, but write only in scratch folders; changes to real files are proposed first and need your approval.</li>
+</ul>
+<p>Note the style: short, direct, with the important parts marked <strong>IMPORTANT</strong> and concrete examples. Write rules the way you would brief a new colleague.</p>
+</section>
+<section id="other-guardrails" class="slide level2" data-number="1.4">
+<h2><span class="header-section-number">1.4</span> Other guardrails</h2>
+<p>Rules are one layer. Combine them with these:</p>
+<ul>
+<li><strong>Approve actions.</strong> By default the agent asks before writing files or running commands. Keep it that way; never start it with <code>--dangerously-skip-permissions</code>.</li>
+<li><strong>Plan first.</strong> In plan mode (<code>/plan</code>, or <code>agy --mode plan</code>) the agent only investigates and proposes a plan; nothing changes until you approve it.</li>
+<li><strong>Use the sandbox.</strong> <code>agy --sandbox</code> restricts what terminal commands can reach.</li>
+<li><strong>Work in a copy.</strong> Give the agent a project folder with copies of your data, never the only copy.</li>
+<li><strong>Keep checkpoints.</strong> Version control (git) or the agent’s own <code>/rewind</code> lets you go back; <code>/diff</code> shows exactly what changed.</li>
+<li><strong>No secrets.</strong> Keep passwords, API keys and personal data out of the project folder.</li>
+</ul>
+<div id="9110fe49" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Start the CLI agent in a project folder, in plan mode, inside the sandbox</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="op">!</span>cd <span class="op">~/</span>projects<span class="op">/</span>komp014<span class="op">-</span>analysis <span class="op">&amp;&amp;</span> agy <span class="op">--</span>mode plan <span class="op">--</span>sandbox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="choosing-a-model" class="slide level2" data-number="1.5">
+<h2><span class="header-section-number">1.5</span> Choosing a model</h2>
+<p>An agent can run on different models, and you can switch between them. The trade-off is always speed and cost against capability:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model family</th>
+<th>Good for</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gemini Flash (low / medium / high)</td>
+<td>everyday tasks, quick edits, most course work</td>
+<td>fast and cheap; start here</td>
+</tr>
+<tr class="even">
+<td>Gemini Pro</td>
+<td>harder problems, bigger plans, tricky bugs</td>
+<td>slower, uses more quota</td>
+</tr>
+<tr class="odd">
+<td>Claude (Sonnet, Opus)</td>
+<td>a second opinion, long careful reasoning</td>
+<td>also available in Antigravity</td>
+</tr>
+<tr class="even">
+<td>GPT-OSS</td>
+<td>an open-weight alternative</td>
+<td>useful for comparison</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>effort</strong> level (<code>low</code> to <code>max</code>) sets how long the model thinks before acting: more effort helps on hard tasks and wastes time on easy ones. Switch with <code>/model</code> and <code>/effort</code>, or ask another model once without switching: <code>/model &lt;name&gt; &lt;prompt&gt;</code>. In the CLI, <code>agy models</code> lists what your account can use.</p>
+</section>
+<section id="tokens-and-the-context-window" class="slide level2" data-number="1.6">
+<h2><span class="header-section-number">1.6</span> Tokens and the context window</h2>
+<p>Models read and write <strong>tokens</strong> — pieces of words, roughly ¾ of a word each. Everything the agent sees counts: your prompt, <code>AGENTS.md</code>, every file it reads, every command output, and its own replies. All of it must fit in the model’s <strong>context window</strong>, its working memory.</p>
+<p>When a long conversation fills the window, the agent <strong>compacts</strong> it — it replaces older parts with a summary — and details can get lost. Tokens also cost quota.</p>
+<ul>
+<li>Check usage with <code>/context</code> (what fills the window), <code>/usage</code> and <code>/quota</code>.</li>
+<li>Point the agent to the files it needs instead of letting it read everything.</li>
+<li>Keep <code>AGENTS.md</code> and specs short; they are read at every turn.</li>
+<li>Start a new conversation for a new task instead of continuing a very long one.</li>
+</ul>
+</section>
+<section id="slash-commands" class="slide level2" data-number="1.7">
+<h2><span class="header-section-number">1.7</span> Slash commands</h2>
+<p>In the agent’s chat box, commands that start with <code>/</code> control the agent itself instead of being sent as a prompt. Ten useful ones:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/help</code></td>
+<td>Lists commands and keyboard shortcuts</td>
+</tr>
+<tr class="even">
+<td><code>/plan</code></td>
+<td>Plan mode: investigate and propose, change nothing yet</td>
+</tr>
+<tr class="odd">
+<td><code>/grill-me</code></td>
+<td>The agent interviews you about your idea, one question at a time</td>
+</tr>
+<tr class="even">
+<td><code>/model</code></td>
+<td>Shows or switches the model (<code>/model &lt;name&gt;</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>/effort</code></td>
+<td>Sets how hard the model thinks (low to max)</td>
+</tr>
+<tr class="even">
+<td><code>/context</code></td>
+<td>Shows what fills the context window</td>
+</tr>
+<tr class="odd">
+<td><code>/usage</code></td>
+<td>Shows token use and remaining quota</td>
+</tr>
+<tr class="even">
+<td><code>/diff</code></td>
+<td>Shows the changes the agent made</td>
+</tr>
+<tr class="odd">
+<td><code>/rewind</code></td>
+<td>Goes back to an earlier point, undoing changes</td>
+</tr>
+<tr class="even">
+<td><code>/resume</code></td>
+<td>Continues an earlier conversation</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>/grill-me</code></strong> is especially useful before building an app. Instead of guessing what you mean, the agent asks you question after question — who uses the app, which data, what counts as done — until the idea is clear. Combine it with plan mode, and end by asking for a spec:</p>
+<div id="2341ac24" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>grill_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="st">/plan /grill-me I want a small app that shows word clouds and sentence sentiment for</span></span>
+<span id="cb3-3"><a aria-label="3"></a><span class="st">the text files in this folder. When you have no more questions, write the result as</span></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="st">APP-SPEC.md with purpose, data, features, constraints and acceptance checks.</span></span>
+<span id="cb3-5"><a aria-label="5"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section>
+<section>
+<section id="google-antigravity" class="title-slide slide level1 center" data-number="2">
+<h1><span class="header-section-number">2</span> Google Antigravity</h1>
+
+</section>
+<section id="three-ways-to-work-with-the-same-agent" class="slide level2" data-number="2.1">
+<h2><span class="header-section-number">2.1</span> Three ways to work with the same agent</h2>
+<p><a href="https://antigravity.google/">Google Antigravity</a> is Google’s agentic coding platform. It comes in three products that put the same kind of agent behind different interfaces. All three sign in with a Google account and are downloaded from <a href="https://antigravity.google/download">antigravity.google</a>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Product</th>
+<th>What you see</th>
+<th>Suits</th>
+<th>Start it with</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Antigravity app</td>
+<td>A desktop app for managing agents, plans and results</td>
+<td>beginners; working without reading code</td>
+<td>the app icon</td>
+</tr>
+<tr class="even">
+<td>Antigravity IDE</td>
+<td>A code editor with the agent built in</td>
+<td>reviewing code and edits closely</td>
+<td>the app icon, or <code>antigravity-ide</code></td>
+</tr>
+<tr class="odd">
+<td>Antigravity CLI</td>
+<td>The agent in a terminal window</td>
+<td>quick tasks, scripts, remote computers</td>
+<td><code>agy</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-antigravity-app" class="slide level2" data-number="2.2">
+<h2><span class="header-section-number">2.2</span> The Antigravity app</h2>
+<p>The desktop app is the most beginner-friendly: an <strong>agent manager</strong>. You open a project, describe what you want, and the agent works on it while you follow its plan, its steps and the results — documents, plans and screenshots it calls <em>artifacts</em>. You can run several conversations side by side and review what changed, without ever opening a code editor.</p>
+</section>
+<section id="the-antigravity-ide" class="slide level2" data-number="2.3">
+<h2><span class="header-section-number">2.3</span> The Antigravity IDE</h2>
+<p>The IDE is a full <strong>code editor</strong> with the agent built in, in the style of Visual Studio Code. The files sit on the left, the code in the middle and the agent in a side panel. You see each edit the agent makes in context and can accept, change or reject it line by line — the best choice once you want to understand and steer the code itself.</p>
+</section>
+<section id="the-antigravity-cli" class="slide level2" data-number="2.4">
+<h2><span class="header-section-number">2.4</span> The Antigravity CLI</h2>
+<p>The CLI, <code>agy</code>, runs the agent in a <strong>terminal</strong>. It has the same tools, rules and slash commands, in a text interface. It starts fast, works on remote computers over SSH, and can run single prompts from scripts.</p>
+<div id="bcd08d0a" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Interactive session in the current folder</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="op">!</span>agy</span>
+<span id="cb4-3"><a aria-label="3"></a></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="co"># Safer starts: plan mode, sandboxed terminal, a chosen model and effort</span></span>
+<span id="cb4-5"><a aria-label="5"></a><span class="op">!</span>agy <span class="op">--</span>mode plan <span class="op">--</span>sandbox <span class="op">--</span>model gemini<span class="op">-</span><span class="fl">3.1</span><span class="op">-</span>pro<span class="op">-</span>high <span class="op">--</span>effort high</span>
+<span id="cb4-6"><a aria-label="6"></a></span>
+<span id="cb4-7"><a aria-label="7"></a><span class="co"># One prompt, no conversation: prints the answer and exits</span></span>
+<span id="cb4-8"><a aria-label="8"></a><span class="op">!</span>agy <span class="op">-</span>p <span class="st">"Summarise ANALYSIS-SPEC.md in three bullet points"</span></span>
+<span id="cb4-9"><a aria-label="9"></a></span>
+<span id="cb4-10"><a aria-label="10"></a><span class="co"># Continue the most recent conversation, list available models, update the CLI</span></span>
+<span id="cb4-11"><a aria-label="11"></a><span class="op">!</span>agy <span class="op">-</span>c</span>
+<span id="cb4-12"><a aria-label="12"></a><span class="op">!</span>agy models</span>
+<span id="cb4-13"><a aria-label="13"></a><span class="op">!</span>agy update</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The commands are written with <code>!</code> so they could run from a notebook; in a normal terminal, leave the <code>!</code> out. In Colab they do not work — the CLI runs on your own computer.</p>
+</section>
+<section id="create-a-project" class="slide level2 scrollable" data-number="2.5">
+<h2><span class="header-section-number">2.5</span> Create a project</h2>
+<p>Agents work in a <strong>project folder</strong> (the <em>workspace</em>). Everything the agent may touch lives there, so make a fresh one for each task:</p>
+<pre><code>komp014-analysis/
+├── AGENTS.md          rules: environment, packages, where it may write
+└── ANALYSIS-SPEC.md   the task: data, analyses, output</code></pre>
+<ol type="1">
+<li>Create an empty folder, for example <code>komp014-analysis</code>.</li>
+<li>Save <code>AGENTS.md</code> (section 1.3) and <code>ANALYSIS-SPEC.md</code> (next section) in it.</li>
+<li>Open the folder in the Antigravity app or IDE and confirm that you trust it — or open a terminal in the folder and run <code>agy</code>.</li>
+</ol>
+</section>
+<section id="run-the-data-analysis-spec" class="slide level2" data-number="2.6">
+<h2><span class="header-section-number">2.6</span> Run the data analysis spec</h2>
+<p>This is the same specification as the recap in session 2. Run the cell in Colab to save it as <code>ANALYSIS-SPEC.md</code>, download it, and put it in the project folder.</p>
+<div id="3f6dd303" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>analysis_spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb6-2"><a aria-label="2"></a><span class="st"># Analysis spec: komp014 toy dataset</span></span>
+<span id="cb6-3"><a aria-label="3"></a></span>
+<span id="cb6-4"><a aria-label="4"></a><span class="st">## Data</span></span>
+<span id="cb6-5"><a aria-label="5"></a><span class="st">- URL: https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
+<span id="cb6-6"><a aria-label="6"></a><span class="st">  (tab-separated, 100 rows, no missing values)</span></span>
+<span id="cb6-7"><a aria-label="7"></a><span class="st">- IV_CAT_GROUP: category1 / category2</span></span>
+<span id="cb6-8"><a aria-label="8"></a><span class="st">- Six items 1-5: IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2</span></span>
+<span id="cb6-9"><a aria-label="9"></a><span class="st">- Indices = item means: IV_INDEX1, IV_INDEX2, DV_INDEX (outcome)</span></span>
+<span id="cb6-10"><a aria-label="10"></a></span>
+<span id="cb6-11"><a aria-label="11"></a><span class="st">## Analyses</span></span>
+<span id="cb6-12"><a aria-label="12"></a><span class="st">1. Load: check rows, columns and missing values.</span></span>
+<span id="cb6-13"><a aria-label="13"></a><span class="st">2. Describe: descriptives with skew and kurtosis for all numeric variables;</span></span>
+<span id="cb6-14"><a aria-label="14"></a><span class="st">   frequencies of IV_CAT_GROUP and the six items.</span></span>
+<span id="cb6-15"><a aria-label="15"></a><span class="st">3. Visualise: histogram with density curve per numeric variable;</span></span>
+<span id="cb6-16"><a aria-label="16"></a><span class="st">   bar chart of IV_CAT_GROUP.</span></span>
+<span id="cb6-17"><a aria-label="17"></a><span class="st">4. Relate DV_INDEX to each predictor: group means and SDs; Pearson correlations;</span></span>
+<span id="cb6-18"><a aria-label="18"></a><span class="st">   box plot by group; scatter plots with fitted lines.</span></span>
+<span id="cb6-19"><a aria-label="19"></a><span class="st">5. Test: Welch t-test with Cohen's d for the group; Pearson r with p for each index.</span></span>
+<span id="cb6-20"><a aria-label="20"></a></span>
+<span id="cb6-21"><a aria-label="21"></a><span class="st">## Output</span></span>
+<span id="cb6-22"><a aria-label="22"></a><span class="st">- One file, komp014-analysis.qmd, with Python code cells (pandas, seaborn, scipy).</span></span>
+<span id="cb6-23"><a aria-label="23"></a><span class="st">- One section per analysis step, each result followed by a short plain-language</span></span>
+<span id="cb6-24"><a aria-label="24"></a><span class="st">  interpretation.</span></span>
+<span id="cb6-25"><a aria-label="25"></a><span class="st">- It must render with `quarto render komp014-analysis.qmd` without errors.</span></span>
+<span id="cb6-26"><a aria-label="26"></a><span class="st">"""</span></span>
+<span id="cb6-27"><a aria-label="27"></a></span>
+<span id="cb6-28"><a aria-label="28"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"ANALYSIS-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb6-29"><a aria-label="29"></a>    f.write(analysis_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then give the agent a short prompt — the details are in the spec. Start in plan mode, read the plan, and approve it:</p>
+<div id="f60f261d" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>run_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a aria-label="2"></a><span class="st">/plan Read AGENTS.md and ANALYSIS-SPEC.md. Follow the spec step by step: write</span></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="st">komp014-analysis.qmd, render it with quarto, and fix any errors. Finally report Cohen's d</span></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="st">for the group difference and Pearson's r for both indices.</span></span>
+<span id="cb7-5"><a aria-label="5"></a><span class="st">"""</span></span>
+<span id="cb7-6"><a aria-label="6"></a></span>
+<span id="cb7-7"><a aria-label="7"></a><span class="co"># The same as a single command in the CLI</span></span>
+<span id="cb7-8"><a aria-label="8"></a><span class="op">!</span>agy <span class="op">--</span>mode plan <span class="op">-</span>p <span class="st">"Read AGENTS.md and ANALYSIS-SPEC.md and follow the spec."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Check the agent’s numbers against session 1: Cohen’s <em>d</em> ≈ 0.58 and <em>r</em> ≈ .41 for both indices. If they differ, ask the agent why — and decide who is right.</p>
+</section></section>
+<section>
+<section id="write-an-app-spec" class="title-slide slide level1 center" data-number="3">
+<h1><span class="header-section-number">3</span> Write an app spec</h1>
+
+</section>
+<section id="a-basic-app-spec" class="slide level2" data-number="3.1">
+<h2><span class="header-section-number">3.1</span> A basic app spec</h2>
+<p>A useful app spec has the same parts as in session 3, kept short: <strong>purpose</strong>, <strong>data</strong>, <strong>features</strong>, <strong>constraints</strong> and <strong>acceptance checks</strong>. The two examples below add one new constraint: the app must <strong>run inside a Jupyter notebook</strong>, so it works in Colab and in the Antigravity IDE alike.</p>
+<p>Both use <a href="https://www.gradio.app/">Gradio</a>, a Python package that builds a small web interface — uploads, sliders, images, tables — and shows it directly in the notebook with <code>demo.launch()</code>. The specs are stored in cells; run them in Colab to save each as a file for the agent.</p>
+</section>
+<section id="an-nlp-app-word-cloud-and-sentence-sentiment" class="slide level2" data-number="3.2">
+<h2><span class="header-section-number">3.2</span> An NLP app: word cloud and sentence sentiment</h2>
+<p>Natural language processing (NLP) apps turn text into something you can see and count. This one cleans and tokenises text files with <a href="https://spacy.io/">spaCy</a>, draws a word cloud for each file, and scores the sentiment of every sentence. spaCy has no sentiment model of its own, so the spec names one: NLTK’s VADER, which works well on short English sentences.</p>
+<div id="eae7c47f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>nlp_spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="st"># SPEC: Text explorer (word cloud and sentence sentiment)</span></span>
+<span id="cb8-3"><a aria-label="3"></a></span>
+<span id="cb8-4"><a aria-label="4"></a><span class="st">## 1. Purpose</span></span>
+<span id="cb8-5"><a aria-label="5"></a><span class="st">Explore a folder of English text files: which words dominate each text, and how</span></span>
+<span id="cb8-6"><a aria-label="6"></a><span class="st">positive or negative each sentence is.</span></span>
+<span id="cb8-7"><a aria-label="7"></a></span>
+<span id="cb8-8"><a aria-label="8"></a><span class="st">## 2. Data</span></span>
+<span id="cb8-9"><a aria-label="9"></a><span class="st">- Read every *.txt file in the current working folder (UTF-8).</span></span>
+<span id="cb8-10"><a aria-label="10"></a><span class="st">- If there are none, first create three short sample files (a review, a news item,</span></span>
+<span id="cb8-11"><a aria-label="11"></a><span class="st">  a diary entry; 5-8 sentences each) so the app always has something to show.</span></span>
+<span id="cb8-12"><a aria-label="12"></a></span>
+<span id="cb8-13"><a aria-label="13"></a><span class="st">## 3. Processing</span></span>
+<span id="cb8-14"><a aria-label="14"></a><span class="st">- spaCy with en_core_web_sm: split each text into sentences; tokenise and lemmatise;</span></span>
+<span id="cb8-15"><a aria-label="15"></a><span class="st">  keep lowercase alphabetic lemmas; drop stop words, punctuation, numbers and spaces.</span></span>
+<span id="cb8-16"><a aria-label="16"></a><span class="st">- Word cloud (wordcloud package) from the cleaned lemmas, per file and for all files.</span></span>
+<span id="cb8-17"><a aria-label="17"></a><span class="st">- Sentiment per sentence with NLTK VADER (SentimentIntensityAnalyzer): the compound</span></span>
+<span id="cb8-18"><a aria-label="18"></a><span class="st">  score from -1 to 1, and a label: positive &gt;= 0.05, negative &lt;= -0.05, else neutral.</span></span>
+<span id="cb8-19"><a aria-label="19"></a></span>
+<span id="cb8-20"><a aria-label="20"></a><span class="st">## 4. Interface (Gradio, shown in the notebook)</span></span>
+<span id="cb8-21"><a aria-label="21"></a><span class="st">- A dropdown with "All files" and each file name.</span></span>
+<span id="cb8-22"><a aria-label="22"></a><span class="st">- The word cloud image for the selection.</span></span>
+<span id="cb8-23"><a aria-label="23"></a><span class="st">- A table: file, sentence number, sentence, compound score, label.</span></span>
+<span id="cb8-24"><a aria-label="24"></a><span class="st">- A short summary line: number of sentences and share positive / neutral / negative.</span></span>
+<span id="cb8-25"><a aria-label="25"></a><span class="st">- A button to download the table as CSV.</span></span>
+<span id="cb8-26"><a aria-label="26"></a></span>
+<span id="cb8-27"><a aria-label="27"></a><span class="st">## 5. Constraints</span></span>
+<span id="cb8-28"><a aria-label="28"></a><span class="st">- One notebook cell that installs what is missing, then builds and launches the app:</span></span>
+<span id="cb8-29"><a aria-label="29"></a><span class="st">  %pip install spacy wordcloud nltk gradio</span></span>
+<span id="cb8-30"><a aria-label="30"></a><span class="st">  python -m spacy download en_core_web_sm</span></span>
+<span id="cb8-31"><a aria-label="31"></a><span class="st">- Download the VADER lexicon with nltk.download("vader_lexicon").</span></span>
+<span id="cb8-32"><a aria-label="32"></a><span class="st">- Run with demo.launch() so the interface appears below the cell.</span></span>
+<span id="cb8-33"><a aria-label="33"></a></span>
+<span id="cb8-34"><a aria-label="34"></a><span class="st">## 6. Acceptance checks</span></span>
+<span id="cb8-35"><a aria-label="35"></a><span class="st">- A1 With no text files present, three sample files are created and shown.</span></span>
+<span id="cb8-36"><a aria-label="36"></a><span class="st">- A2 Each word cloud contains no stop words such as "the", "and" or "is".</span></span>
+<span id="cb8-37"><a aria-label="37"></a><span class="st">- A3 The table has one row per sentence; scores lie between -1 and 1.</span></span>
+<span id="cb8-38"><a aria-label="38"></a><span class="st">- A4 Choosing a file updates the word cloud, table and summary.</span></span>
+<span id="cb8-39"><a aria-label="39"></a><span class="st">- A5 The downloaded CSV has the same rows as the table.</span></span>
+<span id="cb8-40"><a aria-label="40"></a><span class="st">"""</span></span>
+<span id="cb8-41"><a aria-label="41"></a></span>
+<span id="cb8-42"><a aria-label="42"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"NLP-APP-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-43"><a aria-label="43"></a>    f.write(nlp_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a197f6c5" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>nlp_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb9-2"><a aria-label="2"></a><span class="st">Read AGENTS.md and NLP-APP-SPEC.md. Plan first, then write the app as one Jupyter</span></span>
+<span id="cb9-3"><a aria-label="3"></a><span class="st">notebook cell in text_explorer.ipynb, run it, and check every acceptance criterion.</span></span>
+<span id="cb9-4"><a aria-label="4"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="a-computer-vision-app-edge-detection" class="slide level2" data-number="3.3">
+<h2><span class="header-section-number">3.3</span> A computer vision app: edge detection</h2>
+<p>Computer vision apps work on images. <strong>Edge detection</strong> finds the outlines in a picture — where brightness changes sharply — and is a classic first step before recognising shapes or objects. This spec uses <a href="https://opencv.org/">OpenCV</a> and the Canny edge detector, with two sliders so you can see how its thresholds change the result.</p>
+<div id="6ee0efcc" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>cv_spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb10-2"><a aria-label="2"></a><span class="st"># SPEC: Edge detector</span></span>
+<span id="cb10-3"><a aria-label="3"></a></span>
+<span id="cb10-4"><a aria-label="4"></a><span class="st">## 1. Purpose</span></span>
+<span id="cb10-5"><a aria-label="5"></a><span class="st">Show how edge detection works: upload a picture, adjust two thresholds, and see the</span></span>
+<span id="cb10-6"><a aria-label="6"></a><span class="st">edges appear.</span></span>
+<span id="cb10-7"><a aria-label="7"></a></span>
+<span id="cb10-8"><a aria-label="8"></a><span class="st">## 2. Input</span></span>
+<span id="cb10-9"><a aria-label="9"></a><span class="st">- An image uploaded by the user (JPG or PNG).</span></span>
+<span id="cb10-10"><a aria-label="10"></a><span class="st">- If none is uploaded, a sample image drawn in code (shapes and text on a gradient),</span></span>
+<span id="cb10-11"><a aria-label="11"></a><span class="st">  so the app works without any files.</span></span>
+<span id="cb10-12"><a aria-label="12"></a></span>
+<span id="cb10-13"><a aria-label="13"></a><span class="st">## 3. Processing (OpenCV)</span></span>
+<span id="cb10-14"><a aria-label="14"></a><span class="st">1. Convert to grayscale.</span></span>
+<span id="cb10-15"><a aria-label="15"></a><span class="st">2. Smooth with a Gaussian blur (kernel size from a slider: 1, 3, 5 or 7).</span></span>
+<span id="cb10-16"><a aria-label="16"></a><span class="st">3. Canny edge detection with a low and a high threshold (sliders, 0-255).</span></span>
+<span id="cb10-17"><a aria-label="17"></a><span class="st">4. Optionally draw the edges in colour on top of the original image.</span></span>
+<span id="cb10-18"><a aria-label="18"></a></span>
+<span id="cb10-19"><a aria-label="19"></a><span class="st">## 4. Interface (Gradio, shown in the notebook)</span></span>
+<span id="cb10-20"><a aria-label="20"></a><span class="st">- Image upload, three sliders (blur, low threshold, high threshold), an overlay checkbox.</span></span>
+<span id="cb10-21"><a aria-label="21"></a><span class="st">- The original and the edge image side by side, updated when a slider moves.</span></span>
+<span id="cb10-22"><a aria-label="22"></a><span class="st">- The share of edge pixels shown as a percentage.</span></span>
+<span id="cb10-23"><a aria-label="23"></a><span class="st">- A button to download the edge image as PNG.</span></span>
+<span id="cb10-24"><a aria-label="24"></a></span>
+<span id="cb10-25"><a aria-label="25"></a><span class="st">## 5. Constraints</span></span>
+<span id="cb10-26"><a aria-label="26"></a><span class="st">- One notebook cell: %pip install opencv-python-headless gradio</span></span>
+<span id="cb10-27"><a aria-label="27"></a><span class="st">- Use opencv-python-headless (no desktop windows) so it runs in Colab.</span></span>
+<span id="cb10-28"><a aria-label="28"></a><span class="st">- Run with demo.launch() so the interface appears below the cell.</span></span>
+<span id="cb10-29"><a aria-label="29"></a></span>
+<span id="cb10-30"><a aria-label="30"></a><span class="st">## 6. Acceptance checks</span></span>
+<span id="cb10-31"><a aria-label="31"></a><span class="st">- A1 Without an upload, the sample image and its edges are shown.</span></span>
+<span id="cb10-32"><a aria-label="32"></a><span class="st">- A2 Raising the low threshold gives fewer edge pixels.</span></span>
+<span id="cb10-33"><a aria-label="33"></a><span class="st">- A3 If the low threshold is above the high one, the app explains the problem instead</span></span>
+<span id="cb10-34"><a aria-label="34"></a><span class="st">  of failing.</span></span>
+<span id="cb10-35"><a aria-label="35"></a><span class="st">- A4 The downloaded PNG matches the edge image shown.</span></span>
+<span id="cb10-36"><a aria-label="36"></a><span class="st">"""</span></span>
+<span id="cb10-37"><a aria-label="37"></a></span>
+<span id="cb10-38"><a aria-label="38"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"CV-APP-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb10-39"><a aria-label="39"></a>    f.write(cv_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="46603eac" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a>cv_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb11-2"><a aria-label="2"></a><span class="st">Read AGENTS.md and CV-APP-SPEC.md. Plan first, then write the app as one Jupyter</span></span>
+<span id="cb11-3"><a aria-label="3"></a><span class="st">notebook cell in edge_detector.ipynb, run it, and check every acceptance criterion.</span></span>
+<span id="cb11-4"><a aria-label="4"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="your-turn" class="slide level2 scrollable" data-number="3.4">
+<h2><span class="header-section-number">3.4</span> Your turn</h2>
+<p>Pick one of the two specs and make it yours:</p>
+<ol type="1">
+<li>Change one feature — for example word clouds by sentence sentiment, or a second edge detector (Sobel) to compare with Canny.</li>
+<li>Add an acceptance check for the new feature.</li>
+<li>Give the spec to an Antigravity agent in a fresh project folder, in plan mode.</li>
+<li>Test the app against every acceptance check. When something fails, improve the spec and run the agent again.</li>
 </ol>
 
 
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../assets/avatar-256.svg" class="slide-logo"></p>
@@ -219,7 +869,7 @@ nils.holmberg@iko.lu.se
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': false,
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,

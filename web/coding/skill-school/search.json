@@ -263,14 +263,21 @@
     "href": "sessions/02-data-generation.html",
     "title": "Session 2 · de-code data generation",
     "section": "",
-    "text": "1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
+    "text": "Recap: session 1\n\nData analysis specification\n\n1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/02-data-generation.html#topics",
     "href": "sessions/02-data-generation.html#topics",
     "title": "Session 2 · de-code data generation",
     "section": "",
-    "text": "1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
+    "text": "Recap: session 1\n\nData analysis specification\n\n1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
+  },
+  {
+    "objectID": "sessions/02-data-generation.html#data-analysis-specification",
+    "href": "sessions/02-data-generation.html#data-analysis-specification",
+    "title": "Session 2 · de-code data generation",
+    "section": "Data analysis specification",
+    "text": "Data analysis specification\nThe spec has three parts: Data (where the file is and what the columns mean), Analyses (the steps, in order) and Output (what the result must look like). It says what to do, not how, so it stays short. Give it to an AI agent — Antigravity, or Gemini in Colab — with the instruction “Follow ANALYSIS-SPEC.md”, and it can redo the whole analysis and write it up as a Quarto report.\n\nanalysis_spec = \"\"\"\n# Analysis spec: komp014 toy dataset\n\n## Data\n- URL: https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\n  (tab-separated, 100 rows, no missing values)\n- IV_CAT_GROUP: category1 / category2\n- Six items 1-5: IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2\n- Indices = item means: IV_INDEX1, IV_INDEX2, DV_INDEX (outcome)\n\n## Analyses\n1. Load: check rows, columns and missing values.\n2. Describe: descriptives with skew and kurtosis for all numeric variables;\n   frequencies of IV_CAT_GROUP and the six items.\n3. Visualise: histogram with density curve per numeric variable;\n   bar chart of IV_CAT_GROUP.\n4. Relate DV_INDEX to each predictor: group means and SDs; Pearson correlations;\n   box plot by group; scatter plots with fitted lines.\n5. Test: Welch t-test with Cohen's d for the group; Pearson r with p for each index.\n\n## Output\n- One file, komp014-analysis.qmd, with Python code cells (pandas, seaborn, scipy).\n- One section per analysis step, each result followed by a short plain-language\n  interpretation.\n- It must render with `quarto render komp014-analysis.qmd` without errors.\n\"\"\"\n\nwith open(\"ANALYSIS-SPEC.md\", \"w\") as f:\n    f.write(analysis_spec)\n\nThen check the agent’s work against yesterday’s results — for example Cohen’s d ≈ 0.58 for the group difference and r ≈ .41 for both indices. Do the numbers match?"
   },
   {
     "objectID": "sessions/02-data-generation.html#the-prompt",
@@ -347,7 +354,14 @@
     "href": "sessions/02-data-generation-slides.html#topics",
     "title": "Session 2 · de-code data generation",
     "section": "Topics",
-    "text": "Topics\n\n\n\n\n1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
+    "text": "Topics\n\n\n\n\nRecap: session 1\n\nData analysis specification\n\n1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
+  },
+  {
+    "objectID": "sessions/02-data-generation-slides.html#data-analysis-specification",
+    "href": "sessions/02-data-generation-slides.html#data-analysis-specification",
+    "title": "Session 2 · de-code data generation",
+    "section": "Data analysis specification",
+    "text": "Data analysis specification\nThe spec has three parts: Data (where the file is and what the columns mean), Analyses (the steps, in order) and Output (what the result must look like). It says what to do, not how, so it stays short. Give it to an AI agent — Antigravity, or Gemini in Colab — with the instruction “Follow ANALYSIS-SPEC.md”, and it can redo the whole analysis and write it up as a Quarto report.\n\nanalysis_spec = \"\"\"\n# Analysis spec: komp014 toy dataset\n\n## Data\n- URL: https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\n  (tab-separated, 100 rows, no missing values)\n- IV_CAT_GROUP: category1 / category2\n- Six items 1-5: IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2\n- Indices = item means: IV_INDEX1, IV_INDEX2, DV_INDEX (outcome)\n\n## Analyses\n1. Load: check rows, columns and missing values.\n2. Describe: descriptives with skew and kurtosis for all numeric variables;\n   frequencies of IV_CAT_GROUP and the six items.\n3. Visualise: histogram with density curve per numeric variable;\n   bar chart of IV_CAT_GROUP.\n4. Relate DV_INDEX to each predictor: group means and SDs; Pearson correlations;\n   box plot by group; scatter plots with fitted lines.\n5. Test: Welch t-test with Cohen's d for the group; Pearson r with p for each index.\n\n## Output\n- One file, komp014-analysis.qmd, with Python code cells (pandas, seaborn, scipy).\n- One section per analysis step, each result followed by a short plain-language\n  interpretation.\n- It must render with `quarto render komp014-analysis.qmd` without errors.\n\"\"\"\n\nwith open(\"ANALYSIS-SPEC.md\", \"w\") as f:\n    f.write(analysis_spec)\n\nThen check the agent’s work against yesterday’s results — for example Cohen’s d ≈ 0.58 for the group difference and r ≈ .41 for both indices. Do the numbers match?"
   },
   {
     "objectID": "sessions/02-data-generation-slides.html#the-prompt",
@@ -774,20 +788,258 @@
     "href": "sessions/04-agentic-coding-slides.html#topics",
     "title": "Session 4 · de-code agentic coding",
     "section": "Topics",
-    "text": "Topics\n\n\n\nFrom single prompts to agents\nPlanning, tools, and iteration\nDelegating multi-step tasks\nReviewing agent output safely\nVersion control as a safety net\nSlides\nNotebook"
+    "text": "Topics\n\n\n\n\n1 Safety first!\n\n1.1 From chat to agents\n1.2 Common agent tools\n1.3 AGENTS.md: rules the agent reads first\n1.4 Other guardrails\n1.5 Choosing a model\n1.6 Tokens and the context window\n1.7 Slash commands\n\n2 Google Antigravity\n\n2.1 Three ways to work with the same agent\n2.2 The Antigravity app\n2.3 The Antigravity IDE\n2.4 The Antigravity CLI\n2.5 Create a project\n2.6 Run the data analysis spec\n\n3 Write an app spec\n\n3.1 A basic app spec\n3.2 An NLP app: word cloud and sentence sentiment\n3.3 A computer vision app: edge detection\n3.4 Your turn\n\nSlides\nNotebook"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#from-chat-to-agents",
+    "href": "sessions/04-agentic-coding-slides.html#from-chat-to-agents",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.1 From chat to agents",
+    "text": "1.1 From chat to agents\nA language model such as Gemini works by predicting the next word, over and over, based on everything written so far. In a chat, that produces an answer — but only text: you copy the code, run it, and paste back the result.\nAn AI agent adds two things:\n\nTools — functions the model can call to act outside the chat: read and write files, search a folder, run a command in a terminal, look something up on the web.\nA loop — the agent plans a step, calls a tool, reads the result, and decides the next step, until the task is done or it needs your input.\n\nThat makes agents powerful: you describe the goal, and the agent does the work in a folder on your computer. It also makes them risky: a tool that can write a file can overwrite one, and a tool that can run a command can delete things. So we start with safety."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#common-agent-tools",
+    "href": "sessions/04-agentic-coding-slides.html#common-agent-tools",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.2 Common agent tools",
+    "text": "1.2 Common agent tools\nMost coding agents — Antigravity included — offer a similar set of tools. The last column is a rough guide to how much damage a mistake could do.\n\n\n\n\n\n\n\n\n\nTool\nWhat it does\nExample\nRisk\n\n\n\n\nRead file\nReads the contents of a file\nread ANALYSIS-SPEC.md\nlow\n\n\nList / find files\nLists folders or finds files by name\nfind all *.csv files\nlow\n\n\nSearch in files\nFinds text inside files\nwhere is DV_INDEX used?\nlow\n\n\nCreate / write file\nCreates a new file or replaces one\nwrite app.py\nmedium — can overwrite\n\n\nEdit file\nChanges part of an existing file\nrename a variable in app.py\nmedium\n\n\nRun terminal command\nRuns a command in a shell\nquarto render report.qmd\nhigh — can do anything you can\n\n\nWeb search\nSearches the internet\n“Gradio slider example”\nlow — but results can be wrong\n\n\nFetch web page\nDownloads a page or file\nread a library’s documentation\nlow–medium\n\n\nAsk the user\nPauses and asks you a question\n“Which column is the outcome?”\nnone — this is a good sign\n\n\nPlan / to-do list\nWrites and updates its own task list\n1. load data 2. describe …\nnone\n\n\n\nReading is safe; writing, editing and running commands are where you want guardrails."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#agents.md-rules-the-agent-reads-first",
+    "href": "sessions/04-agentic-coding-slides.html#agents.md-rules-the-agent-reads-first",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.3 AGENTS.md: rules the agent reads first",
+    "text": "1.3 AGENTS.md: rules the agent reads first\nAn AGENTS.md file is a plain Markdown file of standing instructions. The agent reads it at the start of every conversation, before your prompt, so the rules apply without you repeating them. Put one in a project folder for that project; Antigravity also reads global rules from ~/.gemini/AGENTS.md (or GEMINI.md) for all your projects.\nHere is a real example, used while building this course. It stores the text; save it as AGENTS.md in your project folder.\n\nagents_md = \"\"\"\n## Local Python Environment\n\nThis repository uses the Python virtual environment:\n~/lib/python/uv-osm\n\n---\n\n### Environment Activation\n\nWhen running any Python-related command (python, pytest, quarto render with python, etc.),\nALWAYS prefix the command with:\n\nsource ~/lib/python/uv-osm/bin/activate && &lt;command&gt;\n\nIf multiple commands are needed, prefer a single bash -lc invocation that activates once and runs all steps.\n\n---\n\n### Package Management Policy (IMPORTANT)\n\nThis environment uses **uv** for dependency management.\n\nDO NOT install, upgrade, or remove any Python packages without explicitly asking first.\n\nIf a dependency is required:\n\n1. Explain why the package is needed.\n2. Confirm with the user.\n3. Install it using:\n\n   source ~/lib/python/uv-osm/bin/activate && uv pip install &lt;package&gt;\n\nRules:\n\n- Prefer `uv pip install` over `pip install`.\n- Never use plain `pip install`.\n- Never install packages globally.\n- Never modify requirements files or pyproject.toml without confirmation.\n- If a package is missing, check first before proposing installation.\n\n---\n\n### File System Safety Policy (IMPORTANT)\n\nYou may read and inspect files anywhere.\n\nYou may create, modify, or delete files ONLY inside:\n\n    /tmp/\n    ~/tmp/\n\nThis includes any subdirectory under /tmp/ or ~/tmp/ (e.g., /tmp/project/, /tmp/test/output.txt, ~/tmp/project/).\n\nYou must NEVER modify files outside /tmp/ or ~/tmp/ without explicit confirmation.\n\nIf changes to project files are required:\n1. Write the proposed version to /tmp/ or ~/tmp/.\n2. Show or explain the changes.\n3. Ask for approval before modifying the original file.\n\nTreat everything outside /tmp/ and ~/tmp/ as read-only unless explicitly approved.\n\"\"\"\n\nwith open(\"AGENTS.md\", \"w\") as f:\n    f.write(agents_md)\n\nThe file has three policies, each closing a typical risk:\n\nEnvironment: always use one specific Python environment, so the agent does not run code with the wrong setup.\nPackages: never install or remove software without asking first — installs change your computer beyond the project.\nFile system: read anything, but write only in scratch folders; changes to real files are proposed first and need your approval.\n\nNote the style: short, direct, with the important parts marked IMPORTANT and concrete examples. Write rules the way you would brief a new colleague."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#other-guardrails",
+    "href": "sessions/04-agentic-coding-slides.html#other-guardrails",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.4 Other guardrails",
+    "text": "1.4 Other guardrails\nRules are one layer. Combine them with these:\n\nApprove actions. By default the agent asks before writing files or running commands. Keep it that way; never start it with --dangerously-skip-permissions.\nPlan first. In plan mode (/plan, or agy --mode plan) the agent only investigates and proposes a plan; nothing changes until you approve it.\nUse the sandbox. agy --sandbox restricts what terminal commands can reach.\nWork in a copy. Give the agent a project folder with copies of your data, never the only copy.\nKeep checkpoints. Version control (git) or the agent’s own /rewind lets you go back; /diff shows exactly what changed.\nNo secrets. Keep passwords, API keys and personal data out of the project folder.\n\n\n# Start the CLI agent in a project folder, in plan mode, inside the sandbox\n!cd ~/projects/komp014-analysis && agy --mode plan --sandbox"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#choosing-a-model",
+    "href": "sessions/04-agentic-coding-slides.html#choosing-a-model",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.5 Choosing a model",
+    "text": "1.5 Choosing a model\nAn agent can run on different models, and you can switch between them. The trade-off is always speed and cost against capability:\n\n\n\n\n\n\n\n\nModel family\nGood for\nNote\n\n\n\n\nGemini Flash (low / medium / high)\neveryday tasks, quick edits, most course work\nfast and cheap; start here\n\n\nGemini Pro\nharder problems, bigger plans, tricky bugs\nslower, uses more quota\n\n\nClaude (Sonnet, Opus)\na second opinion, long careful reasoning\nalso available in Antigravity\n\n\nGPT-OSS\nan open-weight alternative\nuseful for comparison\n\n\n\nThe effort level (low to max) sets how long the model thinks before acting: more effort helps on hard tasks and wastes time on easy ones. Switch with /model and /effort, or ask another model once without switching: /model &lt;name&gt; &lt;prompt&gt;. In the CLI, agy models lists what your account can use."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#tokens-and-the-context-window",
+    "href": "sessions/04-agentic-coding-slides.html#tokens-and-the-context-window",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.6 Tokens and the context window",
+    "text": "1.6 Tokens and the context window\nModels read and write tokens — pieces of words, roughly ¾ of a word each. Everything the agent sees counts: your prompt, AGENTS.md, every file it reads, every command output, and its own replies. All of it must fit in the model’s context window, its working memory.\nWhen a long conversation fills the window, the agent compacts it — it replaces older parts with a summary — and details can get lost. Tokens also cost quota.\n\nCheck usage with /context (what fills the window), /usage and /quota.\nPoint the agent to the files it needs instead of letting it read everything.\nKeep AGENTS.md and specs short; they are read at every turn.\nStart a new conversation for a new task instead of continuing a very long one."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#slash-commands",
+    "href": "sessions/04-agentic-coding-slides.html#slash-commands",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.7 Slash commands",
+    "text": "1.7 Slash commands\nIn the agent’s chat box, commands that start with / control the agent itself instead of being sent as a prompt. Ten useful ones:\n\n\n\n\n\n\n\nCommand\nWhat it does\n\n\n\n\n/help\nLists commands and keyboard shortcuts\n\n\n/plan\nPlan mode: investigate and propose, change nothing yet\n\n\n/grill-me\nThe agent interviews you about your idea, one question at a time\n\n\n/model\nShows or switches the model (/model &lt;name&gt;)\n\n\n/effort\nSets how hard the model thinks (low to max)\n\n\n/context\nShows what fills the context window\n\n\n/usage\nShows token use and remaining quota\n\n\n/diff\nShows the changes the agent made\n\n\n/rewind\nGoes back to an earlier point, undoing changes\n\n\n/resume\nContinues an earlier conversation\n\n\n\n/grill-me is especially useful before building an app. Instead of guessing what you mean, the agent asks you question after question — who uses the app, which data, what counts as done — until the idea is clear. Combine it with plan mode, and end by asking for a spec:\n\ngrill_prompt = \"\"\"\n/plan /grill-me I want a small app that shows word clouds and sentence sentiment for\nthe text files in this folder. When you have no more questions, write the result as\nAPP-SPEC.md with purpose, data, features, constraints and acceptance checks.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#three-ways-to-work-with-the-same-agent",
+    "href": "sessions/04-agentic-coding-slides.html#three-ways-to-work-with-the-same-agent",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.1 Three ways to work with the same agent",
+    "text": "2.1 Three ways to work with the same agent\nGoogle Antigravity is Google’s agentic coding platform. It comes in three products that put the same kind of agent behind different interfaces. All three sign in with a Google account and are downloaded from antigravity.google.\n\n\n\n\n\n\n\n\n\nProduct\nWhat you see\nSuits\nStart it with\n\n\n\n\nAntigravity app\nA desktop app for managing agents, plans and results\nbeginners; working without reading code\nthe app icon\n\n\nAntigravity IDE\nA code editor with the agent built in\nreviewing code and edits closely\nthe app icon, or antigravity-ide\n\n\nAntigravity CLI\nThe agent in a terminal window\nquick tasks, scripts, remote computers\nagy"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#the-antigravity-app",
+    "href": "sessions/04-agentic-coding-slides.html#the-antigravity-app",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.2 The Antigravity app",
+    "text": "2.2 The Antigravity app\nThe desktop app is the most beginner-friendly: an agent manager. You open a project, describe what you want, and the agent works on it while you follow its plan, its steps and the results — documents, plans and screenshots it calls artifacts. You can run several conversations side by side and review what changed, without ever opening a code editor."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#the-antigravity-ide",
+    "href": "sessions/04-agentic-coding-slides.html#the-antigravity-ide",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.3 The Antigravity IDE",
+    "text": "2.3 The Antigravity IDE\nThe IDE is a full code editor with the agent built in, in the style of Visual Studio Code. The files sit on the left, the code in the middle and the agent in a side panel. You see each edit the agent makes in context and can accept, change or reject it line by line — the best choice once you want to understand and steer the code itself."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#the-antigravity-cli",
+    "href": "sessions/04-agentic-coding-slides.html#the-antigravity-cli",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.4 The Antigravity CLI",
+    "text": "2.4 The Antigravity CLI\nThe CLI, agy, runs the agent in a terminal. It has the same tools, rules and slash commands, in a text interface. It starts fast, works on remote computers over SSH, and can run single prompts from scripts.\n\n# Interactive session in the current folder\n!agy\n\n# Safer starts: plan mode, sandboxed terminal, a chosen model and effort\n!agy --mode plan --sandbox --model gemini-3.1-pro-high --effort high\n\n# One prompt, no conversation: prints the answer and exits\n!agy -p \"Summarise ANALYSIS-SPEC.md in three bullet points\"\n\n# Continue the most recent conversation, list available models, update the CLI\n!agy -c\n!agy models\n!agy update\n\nThe commands are written with ! so they could run from a notebook; in a normal terminal, leave the ! out. In Colab they do not work — the CLI runs on your own computer."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#create-a-project",
+    "href": "sessions/04-agentic-coding-slides.html#create-a-project",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.5 Create a project",
+    "text": "2.5 Create a project\nAgents work in a project folder (the workspace). Everything the agent may touch lives there, so make a fresh one for each task:\nkomp014-analysis/\n├── AGENTS.md          rules: environment, packages, where it may write\n└── ANALYSIS-SPEC.md   the task: data, analyses, output\n\nCreate an empty folder, for example komp014-analysis.\nSave AGENTS.md (section 1.3) and ANALYSIS-SPEC.md (next section) in it.\nOpen the folder in the Antigravity app or IDE and confirm that you trust it — or open a terminal in the folder and run agy."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#run-the-data-analysis-spec",
+    "href": "sessions/04-agentic-coding-slides.html#run-the-data-analysis-spec",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.6 Run the data analysis spec",
+    "text": "2.6 Run the data analysis spec\nThis is the same specification as the recap in session 2. Run the cell in Colab to save it as ANALYSIS-SPEC.md, download it, and put it in the project folder.\n\nanalysis_spec = \"\"\"\n# Analysis spec: komp014 toy dataset\n\n## Data\n- URL: https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\n  (tab-separated, 100 rows, no missing values)\n- IV_CAT_GROUP: category1 / category2\n- Six items 1-5: IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2\n- Indices = item means: IV_INDEX1, IV_INDEX2, DV_INDEX (outcome)\n\n## Analyses\n1. Load: check rows, columns and missing values.\n2. Describe: descriptives with skew and kurtosis for all numeric variables;\n   frequencies of IV_CAT_GROUP and the six items.\n3. Visualise: histogram with density curve per numeric variable;\n   bar chart of IV_CAT_GROUP.\n4. Relate DV_INDEX to each predictor: group means and SDs; Pearson correlations;\n   box plot by group; scatter plots with fitted lines.\n5. Test: Welch t-test with Cohen's d for the group; Pearson r with p for each index.\n\n## Output\n- One file, komp014-analysis.qmd, with Python code cells (pandas, seaborn, scipy).\n- One section per analysis step, each result followed by a short plain-language\n  interpretation.\n- It must render with `quarto render komp014-analysis.qmd` without errors.\n\"\"\"\n\nwith open(\"ANALYSIS-SPEC.md\", \"w\") as f:\n    f.write(analysis_spec)\n\nThen give the agent a short prompt — the details are in the spec. Start in plan mode, read the plan, and approve it:\n\nrun_prompt = \"\"\"\n/plan Read AGENTS.md and ANALYSIS-SPEC.md. Follow the spec step by step: write\nkomp014-analysis.qmd, render it with quarto, and fix any errors. Finally report Cohen's d\nfor the group difference and Pearson's r for both indices.\n\"\"\"\n\n# The same as a single command in the CLI\n!agy --mode plan -p \"Read AGENTS.md and ANALYSIS-SPEC.md and follow the spec.\"\n\nCheck the agent’s numbers against session 1: Cohen’s d ≈ 0.58 and r ≈ .41 for both indices. If they differ, ask the agent why — and decide who is right."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#a-basic-app-spec",
+    "href": "sessions/04-agentic-coding-slides.html#a-basic-app-spec",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.1 A basic app spec",
+    "text": "3.1 A basic app spec\nA useful app spec has the same parts as in session 3, kept short: purpose, data, features, constraints and acceptance checks. The two examples below add one new constraint: the app must run inside a Jupyter notebook, so it works in Colab and in the Antigravity IDE alike.\nBoth use Gradio, a Python package that builds a small web interface — uploads, sliders, images, tables — and shows it directly in the notebook with demo.launch(). The specs are stored in cells; run them in Colab to save each as a file for the agent."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#an-nlp-app-word-cloud-and-sentence-sentiment",
+    "href": "sessions/04-agentic-coding-slides.html#an-nlp-app-word-cloud-and-sentence-sentiment",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.2 An NLP app: word cloud and sentence sentiment",
+    "text": "3.2 An NLP app: word cloud and sentence sentiment\nNatural language processing (NLP) apps turn text into something you can see and count. This one cleans and tokenises text files with spaCy, draws a word cloud for each file, and scores the sentiment of every sentence. spaCy has no sentiment model of its own, so the spec names one: NLTK’s VADER, which works well on short English sentences.\n\nnlp_spec = \"\"\"\n# SPEC: Text explorer (word cloud and sentence sentiment)\n\n## 1. Purpose\nExplore a folder of English text files: which words dominate each text, and how\npositive or negative each sentence is.\n\n## 2. Data\n- Read every *.txt file in the current working folder (UTF-8).\n- If there are none, first create three short sample files (a review, a news item,\n  a diary entry; 5-8 sentences each) so the app always has something to show.\n\n## 3. Processing\n- spaCy with en_core_web_sm: split each text into sentences; tokenise and lemmatise;\n  keep lowercase alphabetic lemmas; drop stop words, punctuation, numbers and spaces.\n- Word cloud (wordcloud package) from the cleaned lemmas, per file and for all files.\n- Sentiment per sentence with NLTK VADER (SentimentIntensityAnalyzer): the compound\n  score from -1 to 1, and a label: positive &gt;= 0.05, negative &lt;= -0.05, else neutral.\n\n## 4. Interface (Gradio, shown in the notebook)\n- A dropdown with \"All files\" and each file name.\n- The word cloud image for the selection.\n- A table: file, sentence number, sentence, compound score, label.\n- A short summary line: number of sentences and share positive / neutral / negative.\n- A button to download the table as CSV.\n\n## 5. Constraints\n- One notebook cell that installs what is missing, then builds and launches the app:\n  %pip install spacy wordcloud nltk gradio\n  python -m spacy download en_core_web_sm\n- Download the VADER lexicon with nltk.download(\"vader_lexicon\").\n- Run with demo.launch() so the interface appears below the cell.\n\n## 6. Acceptance checks\n- A1 With no text files present, three sample files are created and shown.\n- A2 Each word cloud contains no stop words such as \"the\", \"and\" or \"is\".\n- A3 The table has one row per sentence; scores lie between -1 and 1.\n- A4 Choosing a file updates the word cloud, table and summary.\n- A5 The downloaded CSV has the same rows as the table.\n\"\"\"\n\nwith open(\"NLP-APP-SPEC.md\", \"w\") as f:\n    f.write(nlp_spec)\n\n\nnlp_prompt = \"\"\"\nRead AGENTS.md and NLP-APP-SPEC.md. Plan first, then write the app as one Jupyter\nnotebook cell in text_explorer.ipynb, run it, and check every acceptance criterion.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#a-computer-vision-app-edge-detection",
+    "href": "sessions/04-agentic-coding-slides.html#a-computer-vision-app-edge-detection",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.3 A computer vision app: edge detection",
+    "text": "3.3 A computer vision app: edge detection\nComputer vision apps work on images. Edge detection finds the outlines in a picture — where brightness changes sharply — and is a classic first step before recognising shapes or objects. This spec uses OpenCV and the Canny edge detector, with two sliders so you can see how its thresholds change the result.\n\ncv_spec = \"\"\"\n# SPEC: Edge detector\n\n## 1. Purpose\nShow how edge detection works: upload a picture, adjust two thresholds, and see the\nedges appear.\n\n## 2. Input\n- An image uploaded by the user (JPG or PNG).\n- If none is uploaded, a sample image drawn in code (shapes and text on a gradient),\n  so the app works without any files.\n\n## 3. Processing (OpenCV)\n1. Convert to grayscale.\n2. Smooth with a Gaussian blur (kernel size from a slider: 1, 3, 5 or 7).\n3. Canny edge detection with a low and a high threshold (sliders, 0-255).\n4. Optionally draw the edges in colour on top of the original image.\n\n## 4. Interface (Gradio, shown in the notebook)\n- Image upload, three sliders (blur, low threshold, high threshold), an overlay checkbox.\n- The original and the edge image side by side, updated when a slider moves.\n- The share of edge pixels shown as a percentage.\n- A button to download the edge image as PNG.\n\n## 5. Constraints\n- One notebook cell: %pip install opencv-python-headless gradio\n- Use opencv-python-headless (no desktop windows) so it runs in Colab.\n- Run with demo.launch() so the interface appears below the cell.\n\n## 6. Acceptance checks\n- A1 Without an upload, the sample image and its edges are shown.\n- A2 Raising the low threshold gives fewer edge pixels.\n- A3 If the low threshold is above the high one, the app explains the problem instead\n  of failing.\n- A4 The downloaded PNG matches the edge image shown.\n\"\"\"\n\nwith open(\"CV-APP-SPEC.md\", \"w\") as f:\n    f.write(cv_spec)\n\n\ncv_prompt = \"\"\"\nRead AGENTS.md and CV-APP-SPEC.md. Plan first, then write the app as one Jupyter\nnotebook cell in edge_detector.ipynb, run it, and check every acceptance criterion.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding-slides.html#your-turn",
+    "href": "sessions/04-agentic-coding-slides.html#your-turn",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.4 Your turn",
+    "text": "3.4 Your turn\nPick one of the two specs and make it yours:\n\nChange one feature — for example word clouds by sentence sentiment, or a second edge detector (Sobel) to compare with Canny.\nAdd an acceptance check for the new feature.\nGive the spec to an Antigravity agent in a fresh project folder, in plan mode.\nTest the app against every acceptance check. When something fails, improve the spec and run the agent again."
   },
   {
     "objectID": "sessions/04-agentic-coding.html",
     "href": "sessions/04-agentic-coding.html",
     "title": "Session 4 · de-code agentic coding",
     "section": "",
-    "text": "From single prompts to agents\nPlanning, tools, and iteration\nDelegating multi-step tasks\nReviewing agent output safely\nVersion control as a safety net\nSlides\nNotebook"
+    "text": "1 Safety first!\n\n1.1 From chat to agents\n1.2 Common agent tools\n1.3 AGENTS.md: rules the agent reads first\n1.4 Other guardrails\n1.5 Choosing a model\n1.6 Tokens and the context window\n1.7 Slash commands\n\n2 Google Antigravity\n\n2.1 Three ways to work with the same agent\n2.2 The Antigravity app\n2.3 The Antigravity IDE\n2.4 The Antigravity CLI\n2.5 Create a project\n2.6 Run the data analysis spec\n\n3 Write an app spec\n\n3.1 A basic app spec\n3.2 An NLP app: word cloud and sentence sentiment\n3.3 A computer vision app: edge detection\n3.4 Your turn\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/04-agentic-coding.html#topics",
     "href": "sessions/04-agentic-coding.html#topics",
     "title": "Session 4 · de-code agentic coding",
     "section": "",
-    "text": "From single prompts to agents\nPlanning, tools, and iteration\nDelegating multi-step tasks\nReviewing agent output safely\nVersion control as a safety net\nSlides\nNotebook"
+    "text": "1 Safety first!\n\n1.1 From chat to agents\n1.2 Common agent tools\n1.3 AGENTS.md: rules the agent reads first\n1.4 Other guardrails\n1.5 Choosing a model\n1.6 Tokens and the context window\n1.7 Slash commands\n\n2 Google Antigravity\n\n2.1 Three ways to work with the same agent\n2.2 The Antigravity app\n2.3 The Antigravity IDE\n2.4 The Antigravity CLI\n2.5 Create a project\n2.6 Run the data analysis spec\n\n3 Write an app spec\n\n3.1 A basic app spec\n3.2 An NLP app: word cloud and sentence sentiment\n3.3 A computer vision app: edge detection\n3.4 Your turn\n\nSlides\nNotebook"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#from-chat-to-agents",
+    "href": "sessions/04-agentic-coding.html#from-chat-to-agents",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.1 From chat to agents",
+    "text": "1.1 From chat to agents\nA language model such as Gemini works by predicting the next word, over and over, based on everything written so far. In a chat, that produces an answer — but only text: you copy the code, run it, and paste back the result.\nAn AI agent adds two things:\n\nTools — functions the model can call to act outside the chat: read and write files, search a folder, run a command in a terminal, look something up on the web.\nA loop — the agent plans a step, calls a tool, reads the result, and decides the next step, until the task is done or it needs your input.\n\nThat makes agents powerful: you describe the goal, and the agent does the work in a folder on your computer. It also makes them risky: a tool that can write a file can overwrite one, and a tool that can run a command can delete things. So we start with safety."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#common-agent-tools",
+    "href": "sessions/04-agentic-coding.html#common-agent-tools",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.2 Common agent tools",
+    "text": "1.2 Common agent tools\nMost coding agents — Antigravity included — offer a similar set of tools. The last column is a rough guide to how much damage a mistake could do.\n\n\n\n\n\n\n\n\n\nTool\nWhat it does\nExample\nRisk\n\n\n\n\nRead file\nReads the contents of a file\nread ANALYSIS-SPEC.md\nlow\n\n\nList / find files\nLists folders or finds files by name\nfind all *.csv files\nlow\n\n\nSearch in files\nFinds text inside files\nwhere is DV_INDEX used?\nlow\n\n\nCreate / write file\nCreates a new file or replaces one\nwrite app.py\nmedium — can overwrite\n\n\nEdit file\nChanges part of an existing file\nrename a variable in app.py\nmedium\n\n\nRun terminal command\nRuns a command in a shell\nquarto render report.qmd\nhigh — can do anything you can\n\n\nWeb search\nSearches the internet\n“Gradio slider example”\nlow — but results can be wrong\n\n\nFetch web page\nDownloads a page or file\nread a library’s documentation\nlow–medium\n\n\nAsk the user\nPauses and asks you a question\n“Which column is the outcome?”\nnone — this is a good sign\n\n\nPlan / to-do list\nWrites and updates its own task list\n1. load data 2. describe …\nnone\n\n\n\nReading is safe; writing, editing and running commands are where you want guardrails."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#agents.md-rules-the-agent-reads-first",
+    "href": "sessions/04-agentic-coding.html#agents.md-rules-the-agent-reads-first",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.3 AGENTS.md: rules the agent reads first",
+    "text": "1.3 AGENTS.md: rules the agent reads first\nAn AGENTS.md file is a plain Markdown file of standing instructions. The agent reads it at the start of every conversation, before your prompt, so the rules apply without you repeating them. Put one in a project folder for that project; Antigravity also reads global rules from ~/.gemini/AGENTS.md (or GEMINI.md) for all your projects.\nHere is a real example, used while building this course. It stores the text; save it as AGENTS.md in your project folder.\n\nagents_md = \"\"\"\n## Local Python Environment\n\nThis repository uses the Python virtual environment:\n~/lib/python/uv-osm\n\n---\n\n### Environment Activation\n\nWhen running any Python-related command (python, pytest, quarto render with python, etc.),\nALWAYS prefix the command with:\n\nsource ~/lib/python/uv-osm/bin/activate && &lt;command&gt;\n\nIf multiple commands are needed, prefer a single bash -lc invocation that activates once and runs all steps.\n\n---\n\n### Package Management Policy (IMPORTANT)\n\nThis environment uses **uv** for dependency management.\n\nDO NOT install, upgrade, or remove any Python packages without explicitly asking first.\n\nIf a dependency is required:\n\n1. Explain why the package is needed.\n2. Confirm with the user.\n3. Install it using:\n\n   source ~/lib/python/uv-osm/bin/activate && uv pip install &lt;package&gt;\n\nRules:\n\n- Prefer `uv pip install` over `pip install`.\n- Never use plain `pip install`.\n- Never install packages globally.\n- Never modify requirements files or pyproject.toml without confirmation.\n- If a package is missing, check first before proposing installation.\n\n---\n\n### File System Safety Policy (IMPORTANT)\n\nYou may read and inspect files anywhere.\n\nYou may create, modify, or delete files ONLY inside:\n\n    /tmp/\n    ~/tmp/\n\nThis includes any subdirectory under /tmp/ or ~/tmp/ (e.g., /tmp/project/, /tmp/test/output.txt, ~/tmp/project/).\n\nYou must NEVER modify files outside /tmp/ or ~/tmp/ without explicit confirmation.\n\nIf changes to project files are required:\n1. Write the proposed version to /tmp/ or ~/tmp/.\n2. Show or explain the changes.\n3. Ask for approval before modifying the original file.\n\nTreat everything outside /tmp/ and ~/tmp/ as read-only unless explicitly approved.\n\"\"\"\n\nwith open(\"AGENTS.md\", \"w\") as f:\n    f.write(agents_md)\n\nThe file has three policies, each closing a typical risk:\n\nEnvironment: always use one specific Python environment, so the agent does not run code with the wrong setup.\nPackages: never install or remove software without asking first — installs change your computer beyond the project.\nFile system: read anything, but write only in scratch folders; changes to real files are proposed first and need your approval.\n\nNote the style: short, direct, with the important parts marked IMPORTANT and concrete examples. Write rules the way you would brief a new colleague."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#other-guardrails",
+    "href": "sessions/04-agentic-coding.html#other-guardrails",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.4 Other guardrails",
+    "text": "1.4 Other guardrails\nRules are one layer. Combine them with these:\n\nApprove actions. By default the agent asks before writing files or running commands. Keep it that way; never start it with --dangerously-skip-permissions.\nPlan first. In plan mode (/plan, or agy --mode plan) the agent only investigates and proposes a plan; nothing changes until you approve it.\nUse the sandbox. agy --sandbox restricts what terminal commands can reach.\nWork in a copy. Give the agent a project folder with copies of your data, never the only copy.\nKeep checkpoints. Version control (git) or the agent’s own /rewind lets you go back; /diff shows exactly what changed.\nNo secrets. Keep passwords, API keys and personal data out of the project folder.\n\n\n# Start the CLI agent in a project folder, in plan mode, inside the sandbox\n!cd ~/projects/komp014-analysis && agy --mode plan --sandbox"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#choosing-a-model",
+    "href": "sessions/04-agentic-coding.html#choosing-a-model",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.5 Choosing a model",
+    "text": "1.5 Choosing a model\nAn agent can run on different models, and you can switch between them. The trade-off is always speed and cost against capability:\n\n\n\n\n\n\n\n\nModel family\nGood for\nNote\n\n\n\n\nGemini Flash (low / medium / high)\neveryday tasks, quick edits, most course work\nfast and cheap; start here\n\n\nGemini Pro\nharder problems, bigger plans, tricky bugs\nslower, uses more quota\n\n\nClaude (Sonnet, Opus)\na second opinion, long careful reasoning\nalso available in Antigravity\n\n\nGPT-OSS\nan open-weight alternative\nuseful for comparison\n\n\n\nThe effort level (low to max) sets how long the model thinks before acting: more effort helps on hard tasks and wastes time on easy ones. Switch with /model and /effort, or ask another model once without switching: /model &lt;name&gt; &lt;prompt&gt;. In the CLI, agy models lists what your account can use."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#tokens-and-the-context-window",
+    "href": "sessions/04-agentic-coding.html#tokens-and-the-context-window",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.6 Tokens and the context window",
+    "text": "1.6 Tokens and the context window\nModels read and write tokens — pieces of words, roughly ¾ of a word each. Everything the agent sees counts: your prompt, AGENTS.md, every file it reads, every command output, and its own replies. All of it must fit in the model’s context window, its working memory.\nWhen a long conversation fills the window, the agent compacts it — it replaces older parts with a summary — and details can get lost. Tokens also cost quota.\n\nCheck usage with /context (what fills the window), /usage and /quota.\nPoint the agent to the files it needs instead of letting it read everything.\nKeep AGENTS.md and specs short; they are read at every turn.\nStart a new conversation for a new task instead of continuing a very long one."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#slash-commands",
+    "href": "sessions/04-agentic-coding.html#slash-commands",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "1.7 Slash commands",
+    "text": "1.7 Slash commands\nIn the agent’s chat box, commands that start with / control the agent itself instead of being sent as a prompt. Ten useful ones:\n\n\n\n\n\n\n\nCommand\nWhat it does\n\n\n\n\n/help\nLists commands and keyboard shortcuts\n\n\n/plan\nPlan mode: investigate and propose, change nothing yet\n\n\n/grill-me\nThe agent interviews you about your idea, one question at a time\n\n\n/model\nShows or switches the model (/model &lt;name&gt;)\n\n\n/effort\nSets how hard the model thinks (low to max)\n\n\n/context\nShows what fills the context window\n\n\n/usage\nShows token use and remaining quota\n\n\n/diff\nShows the changes the agent made\n\n\n/rewind\nGoes back to an earlier point, undoing changes\n\n\n/resume\nContinues an earlier conversation\n\n\n\n/grill-me is especially useful before building an app. Instead of guessing what you mean, the agent asks you question after question — who uses the app, which data, what counts as done — until the idea is clear. Combine it with plan mode, and end by asking for a spec:\n\ngrill_prompt = \"\"\"\n/plan /grill-me I want a small app that shows word clouds and sentence sentiment for\nthe text files in this folder. When you have no more questions, write the result as\nAPP-SPEC.md with purpose, data, features, constraints and acceptance checks.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#three-ways-to-work-with-the-same-agent",
+    "href": "sessions/04-agentic-coding.html#three-ways-to-work-with-the-same-agent",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.1 Three ways to work with the same agent",
+    "text": "2.1 Three ways to work with the same agent\nGoogle Antigravity is Google’s agentic coding platform. It comes in three products that put the same kind of agent behind different interfaces. All three sign in with a Google account and are downloaded from antigravity.google.\n\n\n\n\n\n\n\n\n\nProduct\nWhat you see\nSuits\nStart it with\n\n\n\n\nAntigravity app\nA desktop app for managing agents, plans and results\nbeginners; working without reading code\nthe app icon\n\n\nAntigravity IDE\nA code editor with the agent built in\nreviewing code and edits closely\nthe app icon, or antigravity-ide\n\n\nAntigravity CLI\nThe agent in a terminal window\nquick tasks, scripts, remote computers\nagy"
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#the-antigravity-app",
+    "href": "sessions/04-agentic-coding.html#the-antigravity-app",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.2 The Antigravity app",
+    "text": "2.2 The Antigravity app\nThe desktop app is the most beginner-friendly: an agent manager. You open a project, describe what you want, and the agent works on it while you follow its plan, its steps and the results — documents, plans and screenshots it calls artifacts. You can run several conversations side by side and review what changed, without ever opening a code editor."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#the-antigravity-ide",
+    "href": "sessions/04-agentic-coding.html#the-antigravity-ide",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.3 The Antigravity IDE",
+    "text": "2.3 The Antigravity IDE\nThe IDE is a full code editor with the agent built in, in the style of Visual Studio Code. The files sit on the left, the code in the middle and the agent in a side panel. You see each edit the agent makes in context and can accept, change or reject it line by line — the best choice once you want to understand and steer the code itself."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#the-antigravity-cli",
+    "href": "sessions/04-agentic-coding.html#the-antigravity-cli",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.4 The Antigravity CLI",
+    "text": "2.4 The Antigravity CLI\nThe CLI, agy, runs the agent in a terminal. It has the same tools, rules and slash commands, in a text interface. It starts fast, works on remote computers over SSH, and can run single prompts from scripts.\n\n# Interactive session in the current folder\n!agy\n\n# Safer starts: plan mode, sandboxed terminal, a chosen model and effort\n!agy --mode plan --sandbox --model gemini-3.1-pro-high --effort high\n\n# One prompt, no conversation: prints the answer and exits\n!agy -p \"Summarise ANALYSIS-SPEC.md in three bullet points\"\n\n# Continue the most recent conversation, list available models, update the CLI\n!agy -c\n!agy models\n!agy update\n\nThe commands are written with ! so they could run from a notebook; in a normal terminal, leave the ! out. In Colab they do not work — the CLI runs on your own computer."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#create-a-project",
+    "href": "sessions/04-agentic-coding.html#create-a-project",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.5 Create a project",
+    "text": "2.5 Create a project\nAgents work in a project folder (the workspace). Everything the agent may touch lives there, so make a fresh one for each task:\nkomp014-analysis/\n├── AGENTS.md          rules: environment, packages, where it may write\n└── ANALYSIS-SPEC.md   the task: data, analyses, output\n\nCreate an empty folder, for example komp014-analysis.\nSave AGENTS.md (section 1.3) and ANALYSIS-SPEC.md (next section) in it.\nOpen the folder in the Antigravity app or IDE and confirm that you trust it — or open a terminal in the folder and run agy."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#run-the-data-analysis-spec",
+    "href": "sessions/04-agentic-coding.html#run-the-data-analysis-spec",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "2.6 Run the data analysis spec",
+    "text": "2.6 Run the data analysis spec\nThis is the same specification as the recap in session 2. Run the cell in Colab to save it as ANALYSIS-SPEC.md, download it, and put it in the project folder.\n\nanalysis_spec = \"\"\"\n# Analysis spec: komp014 toy dataset\n\n## Data\n- URL: https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv\n  (tab-separated, 100 rows, no missing values)\n- IV_CAT_GROUP: category1 / category2\n- Six items 1-5: IV1_ITEM1, IV1_ITEM2, IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2\n- Indices = item means: IV_INDEX1, IV_INDEX2, DV_INDEX (outcome)\n\n## Analyses\n1. Load: check rows, columns and missing values.\n2. Describe: descriptives with skew and kurtosis for all numeric variables;\n   frequencies of IV_CAT_GROUP and the six items.\n3. Visualise: histogram with density curve per numeric variable;\n   bar chart of IV_CAT_GROUP.\n4. Relate DV_INDEX to each predictor: group means and SDs; Pearson correlations;\n   box plot by group; scatter plots with fitted lines.\n5. Test: Welch t-test with Cohen's d for the group; Pearson r with p for each index.\n\n## Output\n- One file, komp014-analysis.qmd, with Python code cells (pandas, seaborn, scipy).\n- One section per analysis step, each result followed by a short plain-language\n  interpretation.\n- It must render with `quarto render komp014-analysis.qmd` without errors.\n\"\"\"\n\nwith open(\"ANALYSIS-SPEC.md\", \"w\") as f:\n    f.write(analysis_spec)\n\nThen give the agent a short prompt — the details are in the spec. Start in plan mode, read the plan, and approve it:\n\nrun_prompt = \"\"\"\n/plan Read AGENTS.md and ANALYSIS-SPEC.md. Follow the spec step by step: write\nkomp014-analysis.qmd, render it with quarto, and fix any errors. Finally report Cohen's d\nfor the group difference and Pearson's r for both indices.\n\"\"\"\n\n# The same as a single command in the CLI\n!agy --mode plan -p \"Read AGENTS.md and ANALYSIS-SPEC.md and follow the spec.\"\n\nCheck the agent’s numbers against session 1: Cohen’s d ≈ 0.58 and r ≈ .41 for both indices. If they differ, ask the agent why — and decide who is right."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#a-basic-app-spec",
+    "href": "sessions/04-agentic-coding.html#a-basic-app-spec",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.1 A basic app spec",
+    "text": "3.1 A basic app spec\nA useful app spec has the same parts as in session 3, kept short: purpose, data, features, constraints and acceptance checks. The two examples below add one new constraint: the app must run inside a Jupyter notebook, so it works in Colab and in the Antigravity IDE alike.\nBoth use Gradio, a Python package that builds a small web interface — uploads, sliders, images, tables — and shows it directly in the notebook with demo.launch(). The specs are stored in cells; run them in Colab to save each as a file for the agent."
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#an-nlp-app-word-cloud-and-sentence-sentiment",
+    "href": "sessions/04-agentic-coding.html#an-nlp-app-word-cloud-and-sentence-sentiment",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.2 An NLP app: word cloud and sentence sentiment",
+    "text": "3.2 An NLP app: word cloud and sentence sentiment\nNatural language processing (NLP) apps turn text into something you can see and count. This one cleans and tokenises text files with spaCy, draws a word cloud for each file, and scores the sentiment of every sentence. spaCy has no sentiment model of its own, so the spec names one: NLTK’s VADER, which works well on short English sentences.\n\nnlp_spec = \"\"\"\n# SPEC: Text explorer (word cloud and sentence sentiment)\n\n## 1. Purpose\nExplore a folder of English text files: which words dominate each text, and how\npositive or negative each sentence is.\n\n## 2. Data\n- Read every *.txt file in the current working folder (UTF-8).\n- If there are none, first create three short sample files (a review, a news item,\n  a diary entry; 5-8 sentences each) so the app always has something to show.\n\n## 3. Processing\n- spaCy with en_core_web_sm: split each text into sentences; tokenise and lemmatise;\n  keep lowercase alphabetic lemmas; drop stop words, punctuation, numbers and spaces.\n- Word cloud (wordcloud package) from the cleaned lemmas, per file and for all files.\n- Sentiment per sentence with NLTK VADER (SentimentIntensityAnalyzer): the compound\n  score from -1 to 1, and a label: positive &gt;= 0.05, negative &lt;= -0.05, else neutral.\n\n## 4. Interface (Gradio, shown in the notebook)\n- A dropdown with \"All files\" and each file name.\n- The word cloud image for the selection.\n- A table: file, sentence number, sentence, compound score, label.\n- A short summary line: number of sentences and share positive / neutral / negative.\n- A button to download the table as CSV.\n\n## 5. Constraints\n- One notebook cell that installs what is missing, then builds and launches the app:\n  %pip install spacy wordcloud nltk gradio\n  python -m spacy download en_core_web_sm\n- Download the VADER lexicon with nltk.download(\"vader_lexicon\").\n- Run with demo.launch() so the interface appears below the cell.\n\n## 6. Acceptance checks\n- A1 With no text files present, three sample files are created and shown.\n- A2 Each word cloud contains no stop words such as \"the\", \"and\" or \"is\".\n- A3 The table has one row per sentence; scores lie between -1 and 1.\n- A4 Choosing a file updates the word cloud, table and summary.\n- A5 The downloaded CSV has the same rows as the table.\n\"\"\"\n\nwith open(\"NLP-APP-SPEC.md\", \"w\") as f:\n    f.write(nlp_spec)\n\n\nnlp_prompt = \"\"\"\nRead AGENTS.md and NLP-APP-SPEC.md. Plan first, then write the app as one Jupyter\nnotebook cell in text_explorer.ipynb, run it, and check every acceptance criterion.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#a-computer-vision-app-edge-detection",
+    "href": "sessions/04-agentic-coding.html#a-computer-vision-app-edge-detection",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.3 A computer vision app: edge detection",
+    "text": "3.3 A computer vision app: edge detection\nComputer vision apps work on images. Edge detection finds the outlines in a picture — where brightness changes sharply — and is a classic first step before recognising shapes or objects. This spec uses OpenCV and the Canny edge detector, with two sliders so you can see how its thresholds change the result.\n\ncv_spec = \"\"\"\n# SPEC: Edge detector\n\n## 1. Purpose\nShow how edge detection works: upload a picture, adjust two thresholds, and see the\nedges appear.\n\n## 2. Input\n- An image uploaded by the user (JPG or PNG).\n- If none is uploaded, a sample image drawn in code (shapes and text on a gradient),\n  so the app works without any files.\n\n## 3. Processing (OpenCV)\n1. Convert to grayscale.\n2. Smooth with a Gaussian blur (kernel size from a slider: 1, 3, 5 or 7).\n3. Canny edge detection with a low and a high threshold (sliders, 0-255).\n4. Optionally draw the edges in colour on top of the original image.\n\n## 4. Interface (Gradio, shown in the notebook)\n- Image upload, three sliders (blur, low threshold, high threshold), an overlay checkbox.\n- The original and the edge image side by side, updated when a slider moves.\n- The share of edge pixels shown as a percentage.\n- A button to download the edge image as PNG.\n\n## 5. Constraints\n- One notebook cell: %pip install opencv-python-headless gradio\n- Use opencv-python-headless (no desktop windows) so it runs in Colab.\n- Run with demo.launch() so the interface appears below the cell.\n\n## 6. Acceptance checks\n- A1 Without an upload, the sample image and its edges are shown.\n- A2 Raising the low threshold gives fewer edge pixels.\n- A3 If the low threshold is above the high one, the app explains the problem instead\n  of failing.\n- A4 The downloaded PNG matches the edge image shown.\n\"\"\"\n\nwith open(\"CV-APP-SPEC.md\", \"w\") as f:\n    f.write(cv_spec)\n\n\ncv_prompt = \"\"\"\nRead AGENTS.md and CV-APP-SPEC.md. Plan first, then write the app as one Jupyter\nnotebook cell in edge_detector.ipynb, run it, and check every acceptance criterion.\n\"\"\""
+  },
+  {
+    "objectID": "sessions/04-agentic-coding.html#your-turn",
+    "href": "sessions/04-agentic-coding.html#your-turn",
+    "title": "Session 4 · de-code agentic coding",
+    "section": "3.4 Your turn",
+    "text": "3.4 Your turn\nPick one of the two specs and make it yours:\n\nChange one feature — for example word clouds by sentence sentiment, or a second edge detector (Sobel) to compare with Canny.\nAdd an acceptance check for the new feature.\nGive the spec to an Antigravity agent in a fresh project folder, in plan mode.\nTest the app against every acceptance check. When something fails, improve the spec and run the agent again."
   }
 ]
