@@ -10,6 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
+  <meta name="author" content="nils.holmberg@iko.lu.se">
   <title>de-code – Session 2 · de-code data generation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -204,6 +205,11 @@
   <p class="subtitle">Democratizing Coding with AI — Tue 6 Oct</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+nils.holmberg@iko.lu.se
+</div>
+</div>
 </div>
 
 </section>
@@ -211,17 +217,32 @@
 <h2>Topics</h2>
 <div class="columns">
 <div class="column" style="width:42%;">
+<!-- table of contents: update when a section heading is renamed or moved -->
 <ul>
-<li>Why synthetic data matters</li>
-<li>Generate examples from prompts</li>
-<li>Simulations and test cases</li>
-<li>Teaching datasets on demand</li>
-<li>Validate generated distributions</li>
+<li><a href="#/generate-a-toy-dataset-from-a-prompt">1 Generate a toy dataset from a prompt</a>
+<ul>
+<li><a href="#/the-prompt">1.1 The prompt</a></li>
+<li><a href="#/anatomy-of-the-prompt">1.2 Anatomy of the prompt</a></li>
+<li><a href="#/run-the-generated-code">1.3 Run the generated code</a></li>
+</ul></li>
+<li><a href="#/make-it-realistic-a-tpb-survey-experiment">2 Make it realistic: a TPB survey experiment</a>
+<ul>
+<li><a href="#/background">2.1 Background</a></li>
+<li><a href="#/update-the-prompt">2.2 Update the prompt</a></li>
+<li><a href="#/the-generated-code">2.3 The generated code</a></li>
+<li><a href="#/your-own-dataset">2.4 Your own dataset</a></li>
+</ul></li>
+<li><a href="#/persona-engineering">3 Persona engineering</a>
+<ul>
+<li><a href="#/from-numbers-to-respondents">3.1 From numbers to respondents</a></li>
+<li><a href="#/key-concepts">3.2 Key concepts</a></li>
+<li><a href="#/a-persona-prompt">3.3 A persona prompt</a></li>
+</ul></li>
 <li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/02-data-generation-slides.html" target="_blank">Slides</a></li>
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="7fa7fb90" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="68e89ca2" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -240,7 +261,7 @@
 <section id="the-prompt" class="slide level2" data-number="1.1">
 <h2><span class="header-section-number">1.1</span> The prompt</h2>
 <p>In session 1 we analysed a small simulated survey. Here we see how a dataset like that is made: we describe the data we want in words, and an AI model writes the Python code that generates it. The prompt below was given to Gemini — <a href="https://share.gemini.google/GUJjiP3uJVBB">open the Gemini chat</a> to see the answer, or paste the prompt into a chat of your own. The cell only stores the text; it is not run.</p>
-<div id="004cf90f" class="cell" data-execution_count="2">
+<div id="6934c408" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a aria-label="2"></a><span class="st">Write a complete, reproducible Jupyter notebook Python code cell as code snippet using</span></span>
 <span id="cb1-3"><a aria-label="3"></a><span class="st">numpy, pandas, scipy, and statsmodels that generates and validates a synthetic dataset of</span></span>
@@ -329,7 +350,7 @@
 <section id="run-the-generated-code" class="slide level2" data-number="1.3">
 <h2><span class="header-section-number">1.3</span> Run the generated code</h2>
 <p>This is the code Gemini returned. Run it in the <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/02-data-generation.ipynb">session notebook in Colab</a> to test it: it searches for a seed, saves <code>komp014-simulated-data-n100.tsv</code> and prints the validation report. The result is a dataset like the one from session 1 — same design, different random draw.</p>
-<div id="3515e1a6" class="cell" data-execution_count="3">
+<div id="00619a5d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a aria-label="2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-3"><a aria-label="3"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -570,7 +591,7 @@ R-squared: 0.3580</code></pre>
 <section id="update-the-prompt" class="slide level2" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> Update the prompt</h2>
 <p>Instead of writing a new prompt from scratch, we ask the model to <em>revise</em> the previous one. Send this in the <strong>same</strong> <a href="https://share.gemini.google/GUJjiP3uJVBB">Gemini chat</a>, so it can reuse the code it already wrote.</p>
-<div id="8df5b21e" class="cell" data-execution_count="4">
+<div id="89a279b4" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>update_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="st">Rewrite the previous code so that it generates a realistic synthetic dataset for a</span></span>
 <span id="cb4-3"><a aria-label="3"></a><span class="st">Theory of Planned Behavior (TPB) survey experiment instead of the generic one. Keep the</span></span>
@@ -613,7 +634,7 @@ R-squared: 0.3580</code></pre>
 <section id="the-generated-code" class="slide level2" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> The generated code</h2>
 <p>A version of the code the model returns. It follows the same pattern as before: a function that generates one candidate dataset from a seed, a function that checks every target from the prompt, and a loop that keeps the first seed that passes.</p>
-<div id="7054abd0" class="cell" data-execution_count="5">
+<div id="3f840ff6" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a aria-label="2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-3"><a aria-label="3"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -797,7 +818,7 @@ PBC_index                               0.0072  </code></pre>
 <li><strong>Details:</strong> number of cases (100 is plenty), effect sizes (|r| around .20–.40 looks realistic), no missing values, and a file name.</li>
 </ol>
 <p>Fill in the brackets below and send it in the <a href="https://share.gemini.google/GUJjiP3uJVBB">same Gemini chat</a>:</p>
-<div id="6067db66" class="cell" data-execution_count="6">
+<div id="7eaac45e" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>my_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a aria-label="2"></a><span class="st">Rewrite the previous code for a new synthetic dataset. Keep the same approach (latent</span></span>
 <span id="cb7-3"><a aria-label="3"></a><span class="st">scores, Likert thresholds, mean indices, bounded seed search, printed validation).</span></span>
@@ -816,7 +837,7 @@ PBC_index                               0.0072  </code></pre>
 <span id="cb7-16"><a aria-label="16"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Paste the code you get back into the empty cell below and run it. Does the validation output match what you asked for?</p>
-<div id="47b72356" class="cell" data-execution_count="7">
+<div id="5a085c8e" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="co"># paste the code Gemini wrote for your dataset here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section></section>
@@ -845,7 +866,7 @@ PBC_index                               0.0072  </code></pre>
 <section id="a-persona-prompt" class="slide level2" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> A persona prompt</h2>
 <p>This prompt grounds one persona from the TPB study, describes the study situation, and asks for a short answer in the person’s own words before each rating — models are better at writing than at picking numbers. The cell only stores the text; paste it into <a href="https://gemini.google.com/">Gemini</a>.</p>
-<div id="4ca7de72" class="cell" data-execution_count="8">
+<div id="c468d9e7" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>persona_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb9-2"><a aria-label="2"></a><span class="st">You are taking part in a research study as a survey respondent. Stay in role and answer</span></span>
 <span id="cb9-3"><a aria-label="3"></a><span class="st">as this person would, not as an AI assistant.</span></span>
@@ -871,7 +892,7 @@ PBC_index                               0.0072  </code></pre>
 <span id="cb9-23"><a aria-label="23"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then test how durable the answers are. Send this follow-up in the same chat, and in a <strong>new</strong> chat paste the persona prompt again with the statements in reverse order. Do the ratings hold?</p>
-<div id="1f125737" class="cell" data-execution_count="9">
+<div id="0299460d" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>durability_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb10-2"><a aria-label="2"></a><span class="st">Your teacher says that most children in your class thought the text about the violin was</span></span>
 <span id="cb10-3"><a aria-label="3"></a><span class="st">boring. Answer statement 4 again, first in your own words, then with a number from 1 to 5.</span></span>

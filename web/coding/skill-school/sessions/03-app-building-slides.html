@@ -10,6 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
+  <meta name="author" content="nils.holmberg@iko.lu.se">
   <title>de-code – Session 3 · de-code app building</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -207,6 +208,11 @@
   <p class="subtitle">Democratizing Coding with AI — Wed 7 Oct</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+nils.holmberg@iko.lu.se
+</div>
+</div>
 </div>
 
 </section>
@@ -214,17 +220,44 @@
 <h2>Topics</h2>
 <div class="columns">
 <div class="column" style="width:42%;">
+<!-- table of contents: update when a section heading is renamed or moved -->
 <ul>
-<li>From notebook to shareable app</li>
-<li>Low-code dashboards and forms</li>
-<li>Layouts, inputs, reactivity</li>
-<li>Deploying lightweight tools</li>
-<li>Iterating with AI assistance</li>
+<li><a href="#/what-is-an-app">1 What is an app?</a>
+<ul>
+<li><a href="#/a-flexible-definition">1.1 A flexible definition</a></li>
+<li><a href="#/a-toy-app-prompt">1.2 A toy app prompt</a></li>
+<li><a href="#/the-generated-app">1.3 The generated app</a></li>
+</ul></li>
+<li><a href="#/spec-for-a-shiny-data-app">2 Spec for a Shiny data app</a>
+<ul>
+<li><a href="#/how-a-spec-works">2.1 How a spec works</a></li>
+<li><a href="#/purpose-and-users">2.2 Purpose and users</a></li>
+<li><a href="#/data">2.3 Data</a></li>
+<li><a href="#/features-and-layout">2.4 Features and layout</a></li>
+<li><a href="#/behaviour">2.5 Behaviour</a></li>
+<li><a href="#/technical-constraints">2.6 Technical constraints</a></li>
+<li><a href="#/acceptance-checks">2.7 Acceptance checks</a></li>
+<li><a href="#/putting-it-online">2.8 Putting it online</a></li>
+<li><a href="#/save-the-spec">2.9 Save the spec</a></li>
+</ul></li>
+<li><a href="#/spec-for-a-local-note-taking-web-app">3 Spec for a local note-taking web app</a>
+<ul>
+<li><a href="#/why-a-local-web-app">3.1 Why a local web app</a></li>
+<li><a href="#/purpose-and-users-1">3.2 Purpose and users</a></li>
+<li><a href="#/files-and-constraints">3.3 Files and constraints</a></li>
+<li><a href="#/data-model-and-storage">3.4 Data model and storage</a></li>
+<li><a href="#/features-and-layout-1">3.5 Features and layout</a></li>
+<li><a href="#/look-and-accessibility">3.6 Look and accessibility</a></li>
+<li><a href="#/acceptance-checks-1">3.7 Acceptance checks</a></li>
+<li><a href="#/how-to-run">3.8 How to run</a></li>
+<li><a href="#/save-the-spec-1">3.9 Save the spec</a></li>
+<li><a href="#/your-turn">3.10 Your turn</a></li>
+</ul></li>
 <li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/03-app-building-slides.html" target="_blank">Slides</a></li>
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="f33847a8" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="95a964fe" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -324,7 +357,7 @@
 <section id="a-toy-app-prompt" class="slide level2" data-number="1.2">
 <h2><span class="header-section-number">1.2</span> A toy app prompt</h2>
 <p>This prompt asks Gemini for a tiny <em>report app</em>: one Colab cell with its settings at the top. Paste the prompt into <a href="https://gemini.google.com/">Gemini</a>, then paste the code it returns into a new cell in Colab. The cell below only stores the text.</p>
-<div id="76071aa3" class="cell" data-execution_count="2">
+<div id="58ad5399" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a aria-label="2"></a><span class="st">Write one Google Colab Python code cell that works as a small report app.</span></span>
 <span id="cb1-3"><a aria-label="3"></a></span>
@@ -350,7 +383,7 @@
 <section id="the-generated-app" class="slide level2" data-number="1.3">
 <h2><span class="header-section-number">1.3</span> The generated app</h2>
 <p>A version of the code the model returns. Run it in the <a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/03-app-building.ipynb">session notebook in Colab</a>, then open the <strong>Files</strong> panel (the folder icon on the left) to see the six new files. Right-click a file to download it; open <code>app-report.html</code> in your browser.</p>
-<div id="33789a51" class="cell" data-execution_count="3">
+<div id="735703c0" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a><span class="co"># ---- Settings: change these and run the cell again ----</span></span>
 <span id="cb2-2"><a aria-label="2"></a>DATA_URL <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv"</span></span>
 <span id="cb2-3"><a aria-label="3"></a>OUTCOME <span class="op">=</span> <span class="st">"DV_INDEX"</span></span>
@@ -526,7 +559,7 @@
 <section id="purpose-and-users" class="slide level2" data-number="2.2">
 <h2><span class="header-section-number">2.2</span> Purpose and users</h2>
 <p>Start with <em>why</em> and <em>for whom</em>. One clear sentence of purpose keeps the agent from adding features nobody asked for.</p>
-<div id="db0aa678" class="cell" data-execution_count="4">
+<div id="be8d0178" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>spec <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="st"># SPEC: TPB explorer (Shiny for Python)</span></span>
 <span id="cb4-3"><a aria-label="3"></a></span>
@@ -545,7 +578,7 @@
 <section id="data" class="slide level2" data-number="2.3">
 <h2><span class="header-section-number">2.3</span> Data</h2>
 <p>Describe the data precisely: where it is, every column and its role. The agent then writes correct loading code on the first try, and the checks at the end tell it whether it did.</p>
-<div id="68e60023" class="cell" data-execution_count="5">
+<div id="a44e956a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb5-2"><a aria-label="2"></a><span class="st">## 2. Data</span></span>
 <span id="cb5-3"><a aria-label="3"></a></span>
@@ -572,7 +605,7 @@
 <section id="features-and-layout" class="slide level2" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> Features and layout</h2>
 <p>Describe what the user sees and can do, screen by screen. Numbered requirements give the agent a to-do list and give you something concrete to check.</p>
-<div id="3f6949b8" class="cell" data-execution_count="6">
+<div id="67f8720f" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb6-2"><a aria-label="2"></a><span class="st">## 3. Features and layout</span></span>
 <span id="cb6-3"><a aria-label="3"></a></span>
@@ -597,7 +630,7 @@
 <section id="behaviour" class="slide level2" data-number="2.5">
 <h2><span class="header-section-number">2.5</span> Behaviour</h2>
 <p>Say how the app should <em>behave</em>, not just what it shows: what reacts to what, and what happens in edge cases such as an empty selection.</p>
-<div id="641afff0" class="cell" data-execution_count="7">
+<div id="669d6143" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a aria-label="2"></a><span class="st">## 4. Behaviour</span></span>
 <span id="cb7-3"><a aria-label="3"></a></span>
@@ -615,7 +648,7 @@
 <section id="technical-constraints" class="slide level2" data-number="2.6">
 <h2><span class="header-section-number">2.6</span> Technical constraints</h2>
 <p>Constraints decide <em>how</em> it is built. Fixing the framework, files and libraries keeps the result small, runnable and easy to put online.</p>
-<div id="57592bcb" class="cell" data-execution_count="8">
+<div id="29e2c158" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb8-2"><a aria-label="2"></a><span class="st">## 5. Technical constraints</span></span>
 <span id="cb8-3"><a aria-label="3"></a></span>
@@ -631,7 +664,7 @@
 <section id="acceptance-checks" class="slide level2" data-number="2.7">
 <h2><span class="header-section-number">2.7</span> Acceptance checks</h2>
 <p>The checks are the <em>definition of done</em>. Each one is a statement that is either true or false, so the agent can test its own work — and so can you.</p>
-<div id="1c4b84a9" class="cell" data-execution_count="9">
+<div id="f3e6c3c8" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb9-2"><a aria-label="2"></a><span class="st">## 6. Acceptance checks</span></span>
 <span id="cb9-3"><a aria-label="3"></a></span>
@@ -655,7 +688,7 @@
 <li><strong>shinyapps.io</strong> uploads from your computer with a command-line tool.</li>
 <li><strong>Shinylive</strong> turns the app into a static website that runs entirely in the visitor’s browser — it can be hosted on Netlify or GitHub Pages, like this course site.</li>
 </ul>
-<div id="e4a05d27" class="cell" data-execution_count="10">
+<div id="729ba92d" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb10-2"><a aria-label="2"></a><span class="st">## 7. Putting it online</span></span>
 <span id="cb10-3"><a aria-label="3"></a></span>
@@ -691,7 +724,7 @@
 <section id="save-the-spec" class="slide level2" data-number="2.9">
 <h2><span class="header-section-number">2.9</span> Save the spec</h2>
 <p>The last cell joins all parts into one file. In Colab, run all spec cells, then download <code>SPEC.md</code> from the Files panel and give it to Antigravity.</p>
-<div id="0ec3a3cf" class="cell" data-execution_count="11">
+<div id="ee2095f4" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
 <span id="cb11-2"><a aria-label="2"></a>    f.write(spec)</span>
 <span id="cb11-3"><a aria-label="3"></a><span class="bu">print</span>(spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -709,7 +742,7 @@
 </section>
 <section id="purpose-and-users-1" class="slide level2" data-number="3.2">
 <h2><span class="header-section-number">3.2</span> Purpose and users</h2>
-<div id="771f79d0" class="cell" data-execution_count="12">
+<div id="88df05ea" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a>notes_spec <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb12-2"><a aria-label="2"></a><span class="st"># SPEC: Course notes (local web app)</span></span>
 <span id="cb12-3"><a aria-label="3"></a></span>
@@ -723,7 +756,7 @@
 <section id="files-and-constraints" class="slide level2" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> Files and constraints</h2>
 <p>These constraints are what make the app <em>local</em>: no frameworks to install, nothing loaded from the internet, and it must work when opened straight from a folder.</p>
-<div id="733ba1ee" class="cell" data-execution_count="13">
+<div id="03be2a3d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb13-2"><a aria-label="2"></a><span class="st">## 2. Files and constraints</span></span>
 <span id="cb13-3"><a aria-label="3"></a></span>
@@ -738,7 +771,7 @@
 <section id="data-model-and-storage" class="slide level2" data-number="3.4">
 <h2><span class="header-section-number">3.4</span> Data model and storage</h2>
 <p>A data model says exactly what one note <em>is</em>. Storage says where notes are kept — here <code>localStorage</code>, a small database that every browser has for each page.</p>
-<div id="4bcec2d1" class="cell" data-execution_count="14">
+<div id="27283e91" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb14-2"><a aria-label="2"></a><span class="st">## 3. Data model and storage</span></span>
 <span id="cb14-3"><a aria-label="3"></a></span>
@@ -754,7 +787,7 @@
 </section>
 <section id="features-and-layout-1" class="slide level2" data-number="3.5">
 <h2><span class="header-section-number">3.5</span> Features and layout</h2>
-<div id="48cca376" class="cell" data-execution_count="15">
+<div id="27b52754" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb15-2"><a aria-label="2"></a><span class="st">## 4. Features and layout</span></span>
 <span id="cb15-3"><a aria-label="3"></a></span>
@@ -775,7 +808,7 @@
 <section id="look-and-accessibility" class="slide level2" data-number="3.6">
 <h2><span class="header-section-number">3.6</span> Look and accessibility</h2>
 <p>Saying how the app should look and who must be able to use it avoids an app that only works for its builder.</p>
-<div id="32201b50" class="cell" data-execution_count="16">
+<div id="0cdd8463" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb16-2"><a aria-label="2"></a><span class="st">## 5. Look and accessibility</span></span>
 <span id="cb16-3"><a aria-label="3"></a></span>
@@ -788,7 +821,7 @@
 </section>
 <section id="acceptance-checks-1" class="slide level2" data-number="3.7">
 <h2><span class="header-section-number">3.7</span> Acceptance checks</h2>
-<div id="20045c6e" class="cell" data-execution_count="17">
+<div id="2c3e2629" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb17-2"><a aria-label="2"></a><span class="st">## 6. Acceptance checks</span></span>
 <span id="cb17-3"><a aria-label="3"></a></span>
@@ -805,7 +838,7 @@
 </section>
 <section id="how-to-run" class="slide level2" data-number="3.8">
 <h2><span class="header-section-number">3.8</span> How to run</h2>
-<div id="7e92e81e" class="cell" data-execution_count="18">
+<div id="3d6fd194" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a aria-label="1"></a>notes_spec <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb18-2"><a aria-label="2"></a><span class="st">## 7. How to run</span></span>
 <span id="cb18-3"><a aria-label="3"></a></span>
@@ -819,7 +852,7 @@
 </section>
 <section id="save-the-spec-1" class="slide level2" data-number="3.9">
 <h2><span class="header-section-number">3.9</span> Save the spec</h2>
-<div id="67ad5af3" class="cell" data-execution_count="19">
+<div id="2a8a6d8e" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a aria-label="1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"NOTES-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
 <span id="cb19-2"><a aria-label="2"></a>    f.write(notes_spec)</span>
 <span id="cb19-3"><a aria-label="3"></a><span class="bu">print</span>(notes_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

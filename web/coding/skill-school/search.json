@@ -32,14 +32,14 @@
     "href": "sessions/01-data-analysis.html",
     "title": "Session 1 · de-code data analysis",
     "section": "",
-    "text": "Ask questions in natural language\nTurn prompts into analysis workflows\nClean and explore tabular data\nDescribe, summarize, visualize\nCritically assess AI output\nSlides\nNotebook"
+    "text": "1 Loading data\n\n1.1 Load from GitHub\n1.2 Alternative: upload the file to Colab\n1.3 Colab: install pyreadstat\n1.4 Same data, four formats\n1.5 Compare the formats\n1.6 Give an LLM context\n\n2 Describing each variable\n\n2.1 Descriptive statistics\n2.2 Frequencies\n2.3 Distributions\n2.4 Categorical variable\n\n3 Relating the outcome to the predictors\n\n3.1 Group comparison table\n3.2 Correlation table\n3.3 Visualizations\n3.4 Significance tests\n3.5 Check the AI\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/01-data-analysis.html#topics",
     "href": "sessions/01-data-analysis.html#topics",
     "title": "Session 1 · de-code data analysis",
     "section": "",
-    "text": "Ask questions in natural language\nTurn prompts into analysis workflows\nClean and explore tabular data\nDescribe, summarize, visualize\nCritically assess AI output\nSlides\nNotebook"
+    "text": "1 Loading data\n\n1.1 Load from GitHub\n1.2 Alternative: upload the file to Colab\n1.3 Colab: install pyreadstat\n1.4 Same data, four formats\n1.5 Compare the formats\n1.6 Give an LLM context\n\n2 Describing each variable\n\n2.1 Descriptive statistics\n2.2 Frequencies\n2.3 Distributions\n2.4 Categorical variable\n\n3 Relating the outcome to the predictors\n\n3.1 Group comparison table\n3.2 Correlation table\n3.3 Visualizations\n3.4 Significance tests\n3.5 Check the AI\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/01-data-analysis.html#load-from-github",
@@ -74,7 +74,7 @@
     "href": "sessions/01-data-analysis.html#compare-the-formats",
     "title": "Session 1 · de-code data analysis",
     "section": "1.5 Compare the formats",
-    "text": "1.5 Compare the formats\nNow we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?\n\nreaders = {\n    \"csv\": lambda p: pd.read_csv(p),\n    \"tsv\": lambda p: pd.read_csv(p, sep=\"\\t\"),\n    \"xlsx\": lambda p: pd.read_excel(p),\n    \"sav\": lambda p: pyreadstat.read_sav(p)[0],\n}\n\nrows = []\nfor fmt, read in readers.items():\n    path = out / f\"komp014.{fmt}\"\n    back = read(path)\n    rows.append({\n        \"format\": fmt,\n        \"bytes\": path.stat().st_size,\n        # cast the original to the read-back types, then compare cell by cell\n        \"same values\": back.equals(df.astype(back.dtypes.to_dict())),\n        \"same types\": back.dtypes.astype(str).equals(df.dtypes.astype(str)),\n        \"text file\": fmt in (\"csv\", \"tsv\"),\n    })\n\npd.DataFrame(rows)\n\n\n\n\n\n\n\n\nformat\nbytes\nsame values\nsame types\ntext file\n\n\n\n\n0\ncsv\n3500\nTrue\nTrue\nTrue\n\n\n1\ntsv\n3500\nTrue\nTrue\nTrue\n\n\n2\nxlsx\n8662\nTrue\nTrue\nFalse\n\n\n3\nsav\n10037\nTrue\nFalse\nFalse\n\n\n\n\n\n\n\n\nCSV / TSV are plain text: open them in any editor, small, universal. Column types are guessed again on every read, and there is no place for labels.\nExcel is a zipped binary format: handy for people, larger on disk, keeps types.\nSPSS .sav is binary and stores metadata with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:\n\n\n_, meta = pyreadstat.read_sav(out / \"komp014.sav\")\ndict(zip(meta.column_names, meta.column_labels))\n\n{'IV_CAT_GROUP': 'Group (category1 / category2)',\n 'IV1_ITEM1': 'IV1 item 1 (1-5)',\n 'IV1_ITEM2': 'IV1 item 2 (1-5)',\n 'IV2_ITEM1': 'IV2 item 1 (1-5)',\n 'IV2_ITEM2': 'IV2 item 2 (1-5)',\n 'DV_ITEM1': 'DV item 1 (1-5)',\n 'DV_ITEM2': 'DV item 2 (1-5)',\n 'IV_INDEX1': 'IV1 index, mean of IV1 items',\n 'IV_INDEX2': 'IV2 index, mean of IV2 items',\n 'DV_INDEX': 'DV index, mean of DV items'}"
+    "text": "1.5 Compare the formats\nNow we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?\n\nreaders = {\n    \"csv\": lambda p: pd.read_csv(p),\n    \"tsv\": lambda p: pd.read_csv(p, sep=\"\\t\"),\n    \"xlsx\": lambda p: pd.read_excel(p),\n    \"sav\": lambda p: pyreadstat.read_sav(p)[0],\n}\n\nrows = []\nfor fmt, read in readers.items():\n    path = out / f\"komp014.{fmt}\"\n    back = read(path)\n    rows.append({\n        \"format\": fmt,\n        \"bytes\": path.stat().st_size,\n        # cast the original to the read-back types, then compare cell by cell\n        \"same values\": back.equals(df.astype(back.dtypes.to_dict())),\n        \"same types\": back.dtypes.astype(str).equals(df.dtypes.astype(str)),\n        \"text file\": fmt in (\"csv\", \"tsv\"),\n    })\n\npd.DataFrame(rows)\n\n\n\n\n\n\n\n\nformat\nbytes\nsame values\nsame types\ntext file\n\n\n\n\n0\ncsv\n3500\nTrue\nTrue\nTrue\n\n\n1\ntsv\n3500\nTrue\nTrue\nTrue\n\n\n2\nxlsx\n8663\nTrue\nTrue\nFalse\n\n\n3\nsav\n10037\nTrue\nFalse\nFalse\n\n\n\n\n\n\n\n\nCSV / TSV are plain text: open them in any editor, small, universal. Column types are guessed again on every read, and there is no place for labels.\nExcel is a zipped binary format: handy for people, larger on disk, keeps types.\nSPSS .sav is binary and stores metadata with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:\n\n\n_, meta = pyreadstat.read_sav(out / \"komp014.sav\")\ndict(zip(meta.column_names, meta.column_labels))\n\n{'IV_CAT_GROUP': 'Group (category1 / category2)',\n 'IV1_ITEM1': 'IV1 item 1 (1-5)',\n 'IV1_ITEM2': 'IV1 item 2 (1-5)',\n 'IV2_ITEM1': 'IV2 item 1 (1-5)',\n 'IV2_ITEM2': 'IV2 item 2 (1-5)',\n 'DV_ITEM1': 'DV item 1 (1-5)',\n 'DV_ITEM2': 'DV item 2 (1-5)',\n 'IV_INDEX1': 'IV1 index, mean of IV1 items',\n 'IV_INDEX2': 'IV2 index, mean of IV2 items',\n 'DV_INDEX': 'DV index, mean of DV items'}"
   },
   {
     "objectID": "sessions/01-data-analysis.html#give-an-llm-context",
@@ -151,7 +151,7 @@
     "href": "sessions/01-data-analysis-slides.html#topics",
     "title": "Session 1 · de-code data analysis",
     "section": "Topics",
-    "text": "Topics\n\n\n\nAsk questions in natural language\nTurn prompts into analysis workflows\nClean and explore tabular data\nDescribe, summarize, visualize\nCritically assess AI output\nSlides\nNotebook"
+    "text": "Topics\n\n\n\n\n1 Loading data\n\n1.1 Load from GitHub\n1.2 Alternative: upload the file to Colab\n1.3 Colab: install pyreadstat\n1.4 Same data, four formats\n1.5 Compare the formats\n1.6 Give an LLM context\n\n2 Describing each variable\n\n2.1 Descriptive statistics\n2.2 Frequencies\n2.3 Distributions\n2.4 Categorical variable\n\n3 Relating the outcome to the predictors\n\n3.1 Group comparison table\n3.2 Correlation table\n3.3 Visualizations\n3.4 Significance tests\n3.5 Check the AI\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/01-data-analysis-slides.html#load-from-github",
@@ -186,7 +186,7 @@
     "href": "sessions/01-data-analysis-slides.html#compare-the-formats",
     "title": "Session 1 · de-code data analysis",
     "section": "1.5 Compare the formats",
-    "text": "1.5 Compare the formats\nNow we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?\n\nreaders = {\n    \"csv\": lambda p: pd.read_csv(p),\n    \"tsv\": lambda p: pd.read_csv(p, sep=\"\\t\"),\n    \"xlsx\": lambda p: pd.read_excel(p),\n    \"sav\": lambda p: pyreadstat.read_sav(p)[0],\n}\n\nrows = []\nfor fmt, read in readers.items():\n    path = out / f\"komp014.{fmt}\"\n    back = read(path)\n    rows.append({\n        \"format\": fmt,\n        \"bytes\": path.stat().st_size,\n        # cast the original to the read-back types, then compare cell by cell\n        \"same values\": back.equals(df.astype(back.dtypes.to_dict())),\n        \"same types\": back.dtypes.astype(str).equals(df.dtypes.astype(str)),\n        \"text file\": fmt in (\"csv\", \"tsv\"),\n    })\n\npd.DataFrame(rows)\n\n\n\n\n\n\n\n\nformat\nbytes\nsame values\nsame types\ntext file\n\n\n\n\n0\ncsv\n3500\nTrue\nTrue\nTrue\n\n\n1\ntsv\n3500\nTrue\nTrue\nTrue\n\n\n2\nxlsx\n8662\nTrue\nTrue\nFalse\n\n\n3\nsav\n10037\nTrue\nFalse\nFalse\n\n\n\n\n\n\n\n\nCSV / TSV are plain text: open them in any editor, small, universal. Column types are guessed again on every read, and there is no place for labels.\nExcel is a zipped binary format: handy for people, larger on disk, keeps types.\nSPSS .sav is binary and stores metadata with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:\n\n\n_, meta = pyreadstat.read_sav(out / \"komp014.sav\")\ndict(zip(meta.column_names, meta.column_labels))\n\n{'IV_CAT_GROUP': 'Group (category1 / category2)',\n 'IV1_ITEM1': 'IV1 item 1 (1-5)',\n 'IV1_ITEM2': 'IV1 item 2 (1-5)',\n 'IV2_ITEM1': 'IV2 item 1 (1-5)',\n 'IV2_ITEM2': 'IV2 item 2 (1-5)',\n 'DV_ITEM1': 'DV item 1 (1-5)',\n 'DV_ITEM2': 'DV item 2 (1-5)',\n 'IV_INDEX1': 'IV1 index, mean of IV1 items',\n 'IV_INDEX2': 'IV2 index, mean of IV2 items',\n 'DV_INDEX': 'DV index, mean of DV items'}"
+    "text": "1.5 Compare the formats\nNow we read each file back and compare it with the original: how big is the file, are the values the same, and did the column types (whole numbers, decimals, text) survive?\n\nreaders = {\n    \"csv\": lambda p: pd.read_csv(p),\n    \"tsv\": lambda p: pd.read_csv(p, sep=\"\\t\"),\n    \"xlsx\": lambda p: pd.read_excel(p),\n    \"sav\": lambda p: pyreadstat.read_sav(p)[0],\n}\n\nrows = []\nfor fmt, read in readers.items():\n    path = out / f\"komp014.{fmt}\"\n    back = read(path)\n    rows.append({\n        \"format\": fmt,\n        \"bytes\": path.stat().st_size,\n        # cast the original to the read-back types, then compare cell by cell\n        \"same values\": back.equals(df.astype(back.dtypes.to_dict())),\n        \"same types\": back.dtypes.astype(str).equals(df.dtypes.astype(str)),\n        \"text file\": fmt in (\"csv\", \"tsv\"),\n    })\n\npd.DataFrame(rows)\n\n\n\n\n\n\n\n\nformat\nbytes\nsame values\nsame types\ntext file\n\n\n\n\n0\ncsv\n3500\nTrue\nTrue\nTrue\n\n\n1\ntsv\n3500\nTrue\nTrue\nTrue\n\n\n2\nxlsx\n8663\nTrue\nTrue\nFalse\n\n\n3\nsav\n10037\nTrue\nFalse\nFalse\n\n\n\n\n\n\n\n\nCSV / TSV are plain text: open them in any editor, small, universal. Column types are guessed again on every read, and there is no place for labels.\nExcel is a zipped binary format: handy for people, larger on disk, keeps types.\nSPSS .sav is binary and stores metadata with the data. Whole numbers come back as decimals (SPSS has one numeric type), but the variable labels travel with the file:\n\n\n_, meta = pyreadstat.read_sav(out / \"komp014.sav\")\ndict(zip(meta.column_names, meta.column_labels))\n\n{'IV_CAT_GROUP': 'Group (category1 / category2)',\n 'IV1_ITEM1': 'IV1 item 1 (1-5)',\n 'IV1_ITEM2': 'IV1 item 2 (1-5)',\n 'IV2_ITEM1': 'IV2 item 1 (1-5)',\n 'IV2_ITEM2': 'IV2 item 2 (1-5)',\n 'DV_ITEM1': 'DV item 1 (1-5)',\n 'DV_ITEM2': 'DV item 2 (1-5)',\n 'IV_INDEX1': 'IV1 index, mean of IV1 items',\n 'IV_INDEX2': 'IV2 index, mean of IV2 items',\n 'DV_INDEX': 'DV index, mean of DV items'}"
   },
   {
     "objectID": "sessions/01-data-analysis-slides.html#give-an-llm-context",
@@ -263,14 +263,14 @@
     "href": "sessions/02-data-generation.html",
     "title": "Session 2 · de-code data generation",
     "section": "",
-    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions\nSlides\nNotebook"
+    "text": "1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/02-data-generation.html#topics",
     "href": "sessions/02-data-generation.html#topics",
     "title": "Session 2 · de-code data generation",
     "section": "",
-    "text": "Why synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions\nSlides\nNotebook"
+    "text": "1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/02-data-generation.html#the-prompt",
@@ -347,7 +347,7 @@
     "href": "sessions/02-data-generation-slides.html#topics",
     "title": "Session 2 · de-code data generation",
     "section": "Topics",
-    "text": "Topics\n\n\n\nWhy synthetic data matters\nGenerate examples from prompts\nSimulations and test cases\nTeaching datasets on demand\nValidate generated distributions\nSlides\nNotebook"
+    "text": "Topics\n\n\n\n\n1 Generate a toy dataset from a prompt\n\n1.1 The prompt\n1.2 Anatomy of the prompt\n1.3 Run the generated code\n\n2 Make it realistic: a TPB survey experiment\n\n2.1 Background\n2.2 Update the prompt\n2.3 The generated code\n2.4 Your own dataset\n\n3 Persona engineering\n\n3.1 From numbers to respondents\n3.2 Key concepts\n3.3 A persona prompt\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/02-data-generation-slides.html#the-prompt",
@@ -424,7 +424,7 @@
     "href": "sessions/03-app-building-slides.html#topics",
     "title": "Session 3 · de-code app building",
     "section": "Topics",
-    "text": "Topics\n\n\n\nFrom notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance\nSlides\nNotebook"
+    "text": "Topics\n\n\n\n\n1 What is an app?\n\n1.1 A flexible definition\n1.2 A toy app prompt\n1.3 The generated app\n\n2 Spec for a Shiny data app\n\n2.1 How a spec works\n2.2 Purpose and users\n2.3 Data\n2.4 Features and layout\n2.5 Behaviour\n2.6 Technical constraints\n2.7 Acceptance checks\n2.8 Putting it online\n2.9 Save the spec\n\n3 Spec for a local note-taking web app\n\n3.1 Why a local web app\n3.2 Purpose and users\n3.3 Files and constraints\n3.4 Data model and storage\n3.5 Features and layout\n3.6 Look and accessibility\n3.7 Acceptance checks\n3.8 How to run\n3.9 Save the spec\n3.10 Your turn\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/03-app-building-slides.html#a-flexible-definition",
@@ -585,14 +585,14 @@
     "href": "sessions/03-app-building.html",
     "title": "Session 3 · de-code app building",
     "section": "",
-    "text": "From notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance\nSlides\nNotebook"
+    "text": "1 What is an app?\n\n1.1 A flexible definition\n1.2 A toy app prompt\n1.3 The generated app\n\n2 Spec for a Shiny data app\n\n2.1 How a spec works\n2.2 Purpose and users\n2.3 Data\n2.4 Features and layout\n2.5 Behaviour\n2.6 Technical constraints\n2.7 Acceptance checks\n2.8 Putting it online\n2.9 Save the spec\n\n3 Spec for a local note-taking web app\n\n3.1 Why a local web app\n3.2 Purpose and users\n3.3 Files and constraints\n3.4 Data model and storage\n3.5 Features and layout\n3.6 Look and accessibility\n3.7 Acceptance checks\n3.8 How to run\n3.9 Save the spec\n3.10 Your turn\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/03-app-building.html#topics",
     "href": "sessions/03-app-building.html#topics",
     "title": "Session 3 · de-code app building",
     "section": "",
-    "text": "From notebook to shareable app\nLow-code dashboards and forms\nLayouts, inputs, reactivity\nDeploying lightweight tools\nIterating with AI assistance\nSlides\nNotebook"
+    "text": "1 What is an app?\n\n1.1 A flexible definition\n1.2 A toy app prompt\n1.3 The generated app\n\n2 Spec for a Shiny data app\n\n2.1 How a spec works\n2.2 Purpose and users\n2.3 Data\n2.4 Features and layout\n2.5 Behaviour\n2.6 Technical constraints\n2.7 Acceptance checks\n2.8 Putting it online\n2.9 Save the spec\n\n3 Spec for a local note-taking web app\n\n3.1 Why a local web app\n3.2 Purpose and users\n3.3 Files and constraints\n3.4 Data model and storage\n3.5 Features and layout\n3.6 Look and accessibility\n3.7 Acceptance checks\n3.8 How to run\n3.9 Save the spec\n3.10 Your turn\n\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/03-app-building.html#a-flexible-definition",
