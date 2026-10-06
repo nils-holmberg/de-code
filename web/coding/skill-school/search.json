@@ -18,7 +18,7 @@
     "href": "index.html#sessions",
     "title": "Democratizing Coding with AI (5–9 October)",
     "section": "Sessions",
-    "text": "Sessions\nEach session comes in three versions of the same content: a web page to read, slides to follow in class, and a notebook that opens in Google Colab so you can run the code yourself. With a Google account you can also ask Gemini for help in the browser, and in the later sessions we try the agentic coding app Google Antigravity.\n\n\n\nDay\nSession\nMaterials\n\n\n\n\nMon 5 Oct\n1 · de-code data analysis\nslides · notebook\n\n\nTue 6 Oct\n2 · de-code data generation\nslides · notebook\n\n\nWed 7 Oct\n3 · de-code app building\nslides · notebook\n\n\nThu 8 Oct\n4 · de-code agentic coding\nslides · notebook\n\n\nFri 9 Oct\n5 · de-code mcp and skills\nslides · notebook"
+    "text": "Sessions\nEach session comes in three versions of the same content: a web page to read, slides to follow in class, and a notebook that opens in Google Colab so you can run the code yourself. With a Google account you can also ask Gemini for help in the browser, and in the later sessions we try the agentic coding app Google Antigravity.\n\n\n\nDay\nSession\nMaterials\n\n\n\n\nMon 5 Oct\n1 · de-code data analysis\nslides · notebook\n\n\nTue 6 Oct\n2 · de-code data generation\nslides · notebook\n\n\nWed 7 Oct\n3 · de-code app building\nslides · notebook\n\n\nThu 8 Oct\n4 · de-code agentic coding\nslides · notebook\n\n\nFri 9 Oct\n5 · de-code skills and MCP\nslides · notebook"
   },
   {
     "objectID": "index.html#about-the-instructor",
@@ -791,25 +791,25 @@
     "text": "3.10 Your turn\nPick an app idea of your own — a reading list, a habit tracker, a quiz for your students, a dashboard for your own data. Copy one of the specs, then:\n\nRewrite Purpose and users for your idea.\nReplace Data (or the data model) and Features with what your app needs.\nKeep the constraints that make it easy to run, and write acceptance checks you could test yourself.\nGive the spec to Antigravity, check the result against your acceptance checks, and improve the spec — not the code — until it passes."
   },
   {
-    "objectID": "sessions/05-mcp-skills-slides.html#topics",
-    "href": "sessions/05-mcp-skills-slides.html#topics",
-    "title": "Session 5 · de-code mcp and skills",
+    "objectID": "sessions/05-skills-mcp-slides.html#topics",
+    "href": "sessions/05-skills-mcp-slides.html#topics",
+    "title": "Session 5 · de-code skills and MCP",
     "section": "Topics",
-    "text": "Topics\n\n\n\nWhat MCP servers provide\nConnecting AI to your tools\nReusable skills and workflows\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
+    "text": "Topics\n\n\n\nReusable skills and workflows\nWhat MCP servers provide\nConnecting AI to your tools\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
   },
   {
-    "objectID": "sessions/05-mcp-skills.html",
-    "href": "sessions/05-mcp-skills.html",
-    "title": "Session 5 · de-code mcp and skills",
+    "objectID": "sessions/05-skills-mcp.html",
+    "href": "sessions/05-skills-mcp.html",
+    "title": "Session 5 · de-code skills and MCP",
     "section": "",
-    "text": "What MCP servers provide\nConnecting AI to your tools\nReusable skills and workflows\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
+    "text": "Reusable skills and workflows\nWhat MCP servers provide\nConnecting AI to your tools\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
   },
   {
-    "objectID": "sessions/05-mcp-skills.html#topics",
-    "href": "sessions/05-mcp-skills.html#topics",
-    "title": "Session 5 · de-code mcp and skills",
+    "objectID": "sessions/05-skills-mcp.html#topics",
+    "href": "sessions/05-skills-mcp.html#topics",
+    "title": "Session 5 · de-code skills and MCP",
     "section": "",
-    "text": "What MCP servers provide\nConnecting AI to your tools\nReusable skills and workflows\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
+    "text": "Reusable skills and workflows\nWhat MCP servers provide\nConnecting AI to your tools\nComposing capabilities safely\nCourse wrap-up and next steps\nSlides\nNotebook"
   },
   {
     "objectID": "sessions/04-agentic-coding-slides.html#topics",
