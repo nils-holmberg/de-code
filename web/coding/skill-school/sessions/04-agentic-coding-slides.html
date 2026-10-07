@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="nils.holmberg@iko.lu.se">
   <title>de-code – Session 4 · de-code agentic coding</title>
@@ -241,7 +241,7 @@ nils.holmberg@iko.lu.se
 <li><a href="#/write-an-app-spec">3 Write an app spec</a>
 <ul>
 <li><a href="#/a-basic-app-spec">3.1 A basic app spec</a></li>
-<li><a href="#/an-nlp-app-word-cloud-and-sentence-sentiment">3.2 An NLP app: word cloud and sentence sentiment</a></li>
+<li><a href="#/a-local-web-app-course-notes">3.2 A local web app: course notes</a></li>
 <li><a href="#/a-computer-vision-app-edge-detection">3.3 A computer vision app: edge detection</a></li>
 <li><a href="#/your-turn">3.4 Your turn</a></li>
 </ul></li>
@@ -249,7 +249,7 @@ nils.holmberg@iko.lu.se
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/04-agentic-coding.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="6fded8f1" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="0f4ae382" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -362,7 +362,7 @@ nils.holmberg@iko.lu.se
 <h2><span class="header-section-number">1.3</span> AGENTS.md: rules the agent reads first</h2>
 <p>An <code>AGENTS.md</code> file is a plain Markdown file of <strong>standing instructions</strong>. The agent reads it at the start of every conversation, before your prompt, so the rules apply without you repeating them. Put one in a project folder for that project; Antigravity also reads global rules from <code>~/.gemini/AGENTS.md</code> (or <code>GEMINI.md</code>) for all your projects.</p>
 <p>Here is a real example, used while building this course. It stores the text; save it as <code>AGENTS.md</code> in your project folder.</p>
-<div id="885e4482" class="cell" data-execution_count="2">
+<div id="6f88a844" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a aria-label="1"></a>agents_md <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb1-2"><a aria-label="2"></a><span class="st">## Local Python Environment</span></span>
 <span id="cb1-3"><a aria-label="3"></a></span>
@@ -449,7 +449,7 @@ nils.holmberg@iko.lu.se
 <li><strong>Keep checkpoints.</strong> Version control (git) or the agent’s own <code>/rewind</code> lets you go back; <code>/diff</code> shows exactly what changed.</li>
 <li><strong>No secrets.</strong> Keep passwords, API keys and personal data out of the project folder.</li>
 </ul>
-<div id="9110fe49" class="cell" data-execution_count="3">
+<div id="10f00b28" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a><span class="co"># Start the CLI agent in a project folder, in plan mode, inside the sandbox</span></span>
 <span id="cb2-2"><a aria-label="2"></a><span class="op">!</span>cd <span class="op">~/</span>projects<span class="op">/</span>komp014<span class="op">-</span>analysis <span class="op">&amp;&amp;</span> agy <span class="op">--</span>mode plan <span class="op">--</span>sandbox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -564,7 +564,7 @@ nils.holmberg@iko.lu.se
 </tbody>
 </table>
 <p><strong><code>/grill-me</code></strong> is especially useful before building an app. Instead of guessing what you mean, the agent asks you question after question — who uses the app, which data, what counts as done — until the idea is clear. Combine it with plan mode, and end by asking for a spec:</p>
-<div id="2341ac24" class="cell" data-execution_count="4">
+<div id="9e1045bb" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>grill_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb3-2"><a aria-label="2"></a><span class="st">/plan /grill-me I want a small app that shows word clouds and sentence sentiment for</span></span>
 <span id="cb3-3"><a aria-label="3"></a><span class="st">the text files in this folder. When you have no more questions, write the result as</span></span>
@@ -628,7 +628,7 @@ nils.holmberg@iko.lu.se
 <section id="the-antigravity-cli" class="slide level2" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> The Antigravity CLI</h2>
 <p>The CLI, <code>agy</code>, runs the agent in a <strong>terminal</strong>. It has the same tools, rules and slash commands, in a text interface. It starts fast, works on remote computers over SSH, and can run single prompts from scripts.</p>
-<div id="bcd08d0a" class="cell" data-execution_count="5">
+<div id="197af9bc" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Interactive session in the current folder</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="op">!</span>agy</span>
 <span id="cb4-3"><a aria-label="3"></a></span>
@@ -660,7 +660,7 @@ nils.holmberg@iko.lu.se
 <section id="run-the-data-analysis-spec" class="slide level2" data-number="2.6">
 <h2><span class="header-section-number">2.6</span> Run the data analysis spec</h2>
 <p>This is the same specification as the recap in session 2. Run the cell in Colab to save it as <code>ANALYSIS-SPEC.md</code>, download it, and put it in the project folder.</p>
-<div id="3f6dd303" class="cell" data-execution_count="6">
+<div id="49e673b6" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>analysis_spec <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb6-2"><a aria-label="2"></a><span class="st"># Analysis spec: komp014 toy dataset</span></span>
 <span id="cb6-3"><a aria-label="3"></a></span>
@@ -692,7 +692,7 @@ nils.holmberg@iko.lu.se
 <span id="cb6-29"><a aria-label="29"></a>    f.write(analysis_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then give the agent a short prompt — the details are in the spec. Start in plan mode, read the plan, and approve it:</p>
-<div id="f60f261d" class="cell" data-execution_count="7">
+<div id="c174d2b3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>run_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a aria-label="2"></a><span class="st">/plan Read AGENTS.md and ANALYSIS-SPEC.md. Follow the spec step by step: write</span></span>
 <span id="cb7-3"><a aria-label="3"></a><span class="st">komp014-analysis.qmd, render it with quarto, and fix any errors. Finally report Cohen's d</span></span>
@@ -711,68 +711,104 @@ nils.holmberg@iko.lu.se
 </section>
 <section id="a-basic-app-spec" class="slide level2" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> A basic app spec</h2>
-<p>A useful app spec has the same parts as in session 3, kept short: <strong>purpose</strong>, <strong>data</strong>, <strong>features</strong>, <strong>constraints</strong> and <strong>acceptance checks</strong>. The two examples below add one new constraint: the app must <strong>run inside a Jupyter notebook</strong>, so it works in Colab and in the Antigravity IDE alike.</p>
-<p>Both use <a href="https://www.gradio.app/">Gradio</a>, a Python package that builds a small web interface — uploads, sliders, images, tables — and shows it directly in the notebook with <code>demo.launch()</code>. The specs are stored in cells; run them in Colab to save each as a file for the agent.</p>
+<p>A useful app spec has the same parts as in session 3, kept short: <strong>purpose</strong>, <strong>data</strong>, <strong>features</strong>, <strong>constraints</strong> and <strong>acceptance checks</strong>. The two examples below run in two different places:</p>
+<ul>
+<li>a <strong>local web app</strong> that runs in the browser, made of plain HTML, CSS and JavaScript;</li>
+<li>an <strong>app inside a Jupyter notebook</strong>, so it works in Colab and in the Antigravity IDE alike. It uses <a href="https://www.gradio.app/">Gradio</a>, a Python package that builds a small web interface — uploads, sliders, images — and shows it directly in the notebook with <code>demo.launch()</code>.</li>
+</ul>
+<p>The specs are stored in cells; run them in Colab to save each as a file for the agent.</p>
 </section>
-<section id="an-nlp-app-word-cloud-and-sentence-sentiment" class="slide level2" data-number="3.2">
-<h2><span class="header-section-number">3.2</span> An NLP app: word cloud and sentence sentiment</h2>
-<p>Natural language processing (NLP) apps turn text into something you can see and count. This one cleans and tokenises text files with <a href="https://spacy.io/">spaCy</a>, draws a word cloud for each file, and scores the sentiment of every sentence. spaCy has no sentiment model of its own, so the spec names one: NLTK’s VADER, which works well on short English sentences.</p>
-<div id="eae7c47f" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>nlp_spec <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb8-2"><a aria-label="2"></a><span class="st"># SPEC: Text explorer (word cloud and sentence sentiment)</span></span>
+<section id="a-local-web-app-course-notes" class="slide level2" data-number="3.2">
+<h2><span class="header-section-number">3.2</span> A local web app: course notes</h2>
+<p>Not every app needs a server. A web browser can run an app made of three plain files — HTML for the structure, CSS for the look, and JavaScript for the behaviour. You open <code>index.html</code> by double-clicking it, and the app runs on your own computer: no install, no account, no internet connection. There is no data file to load; instead the app <em>creates</em> data — your notes — and stores it in the browser.</p>
+<p>What the parts of this spec do:</p>
+<ul>
+<li><strong>Files and constraints</strong> make the app <em>local</em>: no frameworks to install, nothing loaded from the internet, and it must work when opened straight from a folder.</li>
+<li><strong>Data model and storage</strong>: a data model says exactly what one note <em>is</em>; storage says where notes are kept — here <code>localStorage</code>, a small database that every browser has for each page.</li>
+<li><strong>Look and accessibility</strong>: saying how the app should look and who must be able to use it avoids an app that only works for its builder.</li>
+</ul>
+<div id="c7218ace" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>notes_spec <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="st"># SPEC: Course notes (local web app)</span></span>
 <span id="cb8-3"><a aria-label="3"></a></span>
-<span id="cb8-4"><a aria-label="4"></a><span class="st">## 1. Purpose</span></span>
-<span id="cb8-5"><a aria-label="5"></a><span class="st">Explore a folder of English text files: which words dominate each text, and how</span></span>
-<span id="cb8-6"><a aria-label="6"></a><span class="st">positive or negative each sentence is.</span></span>
-<span id="cb8-7"><a aria-label="7"></a></span>
-<span id="cb8-8"><a aria-label="8"></a><span class="st">## 2. Data</span></span>
-<span id="cb8-9"><a aria-label="9"></a><span class="st">- Read every *.txt file in the current working folder (UTF-8).</span></span>
-<span id="cb8-10"><a aria-label="10"></a><span class="st">- If there are none, first create three short sample files (a review, a news item,</span></span>
-<span id="cb8-11"><a aria-label="11"></a><span class="st">  a diary entry; 5-8 sentences each) so the app always has something to show.</span></span>
-<span id="cb8-12"><a aria-label="12"></a></span>
-<span id="cb8-13"><a aria-label="13"></a><span class="st">## 3. Processing</span></span>
-<span id="cb8-14"><a aria-label="14"></a><span class="st">- spaCy with en_core_web_sm: split each text into sentences; tokenise and lemmatise;</span></span>
-<span id="cb8-15"><a aria-label="15"></a><span class="st">  keep lowercase alphabetic lemmas; drop stop words, punctuation, numbers and spaces.</span></span>
-<span id="cb8-16"><a aria-label="16"></a><span class="st">- Word cloud (wordcloud package) from the cleaned lemmas, per file and for all files.</span></span>
-<span id="cb8-17"><a aria-label="17"></a><span class="st">- Sentiment per sentence with NLTK VADER (SentimentIntensityAnalyzer): the compound</span></span>
-<span id="cb8-18"><a aria-label="18"></a><span class="st">  score from -1 to 1, and a label: positive &gt;= 0.05, negative &lt;= -0.05, else neutral.</span></span>
-<span id="cb8-19"><a aria-label="19"></a></span>
-<span id="cb8-20"><a aria-label="20"></a><span class="st">## 4. Interface (Gradio, shown in the notebook)</span></span>
-<span id="cb8-21"><a aria-label="21"></a><span class="st">- A dropdown with "All files" and each file name.</span></span>
-<span id="cb8-22"><a aria-label="22"></a><span class="st">- The word cloud image for the selection.</span></span>
-<span id="cb8-23"><a aria-label="23"></a><span class="st">- A table: file, sentence number, sentence, compound score, label.</span></span>
-<span id="cb8-24"><a aria-label="24"></a><span class="st">- A short summary line: number of sentences and share positive / neutral / negative.</span></span>
-<span id="cb8-25"><a aria-label="25"></a><span class="st">- A button to download the table as CSV.</span></span>
+<span id="cb8-4"><a aria-label="4"></a><span class="st">## 1. Purpose and users</span></span>
+<span id="cb8-5"><a aria-label="5"></a></span>
+<span id="cb8-6"><a aria-label="6"></a><span class="st">A simple note-taking app for course participants to write down ideas, prompts and</span></span>
+<span id="cb8-7"><a aria-label="7"></a><span class="st">results during the sessions. One user, one computer, no account.</span></span>
+<span id="cb8-8"><a aria-label="8"></a></span>
+<span id="cb8-9"><a aria-label="9"></a><span class="st">## 2. Files and constraints</span></span>
+<span id="cb8-10"><a aria-label="10"></a></span>
+<span id="cb8-11"><a aria-label="11"></a><span class="st">- Exactly three files in one folder: index.html, style.css, app.js.</span></span>
+<span id="cb8-12"><a aria-label="12"></a><span class="st">- Plain HTML, CSS and JavaScript. No frameworks, no libraries, no CDN links, no build</span></span>
+<span id="cb8-13"><a aria-label="13"></a><span class="st">  step, no server.</span></span>
+<span id="cb8-14"><a aria-label="14"></a><span class="st">- Must work when index.html is opened directly from the folder (a file:// address),</span></span>
+<span id="cb8-15"><a aria-label="15"></a><span class="st">  also without an internet connection, in current Chrome, Firefox, Edge and Safari.</span></span>
+<span id="cb8-16"><a aria-label="16"></a></span>
+<span id="cb8-17"><a aria-label="17"></a><span class="st">## 3. Data model and storage</span></span>
+<span id="cb8-18"><a aria-label="18"></a></span>
+<span id="cb8-19"><a aria-label="19"></a><span class="st">- A note has: id (unique text), title (text), body (text), tags (list of words),</span></span>
+<span id="cb8-20"><a aria-label="20"></a><span class="st">  created and updated (date and time).</span></span>
+<span id="cb8-21"><a aria-label="21"></a><span class="st">- All notes are saved in the browser's localStorage under the key "course-notes" as</span></span>
+<span id="cb8-22"><a aria-label="22"></a><span class="st">  JSON, after every change.</span></span>
+<span id="cb8-23"><a aria-label="23"></a><span class="st">- Export: a button that downloads all notes as course-notes-&lt;date&gt;.json.</span></span>
+<span id="cb8-24"><a aria-label="24"></a><span class="st">- Import: a button that reads such a file and adds its notes, skipping ids that already</span></span>
+<span id="cb8-25"><a aria-label="25"></a><span class="st">  exist.</span></span>
 <span id="cb8-26"><a aria-label="26"></a></span>
-<span id="cb8-27"><a aria-label="27"></a><span class="st">## 5. Constraints</span></span>
-<span id="cb8-28"><a aria-label="28"></a><span class="st">- One notebook cell that installs what is missing, then builds and launches the app:</span></span>
-<span id="cb8-29"><a aria-label="29"></a><span class="st">  %pip install spacy wordcloud nltk gradio</span></span>
-<span id="cb8-30"><a aria-label="30"></a><span class="st">  python -m spacy download en_core_web_sm</span></span>
-<span id="cb8-31"><a aria-label="31"></a><span class="st">- Download the VADER lexicon with nltk.download("vader_lexicon").</span></span>
-<span id="cb8-32"><a aria-label="32"></a><span class="st">- Run with demo.launch() so the interface appears below the cell.</span></span>
-<span id="cb8-33"><a aria-label="33"></a></span>
-<span id="cb8-34"><a aria-label="34"></a><span class="st">## 6. Acceptance checks</span></span>
-<span id="cb8-35"><a aria-label="35"></a><span class="st">- A1 With no text files present, three sample files are created and shown.</span></span>
-<span id="cb8-36"><a aria-label="36"></a><span class="st">- A2 Each word cloud contains no stop words such as "the", "and" or "is".</span></span>
-<span id="cb8-37"><a aria-label="37"></a><span class="st">- A3 The table has one row per sentence; scores lie between -1 and 1.</span></span>
-<span id="cb8-38"><a aria-label="38"></a><span class="st">- A4 Choosing a file updates the word cloud, table and summary.</span></span>
-<span id="cb8-39"><a aria-label="39"></a><span class="st">- A5 The downloaded CSV has the same rows as the table.</span></span>
-<span id="cb8-40"><a aria-label="40"></a><span class="st">"""</span></span>
-<span id="cb8-41"><a aria-label="41"></a></span>
-<span id="cb8-42"><a aria-label="42"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"NLP-APP-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb8-43"><a aria-label="43"></a>    f.write(nlp_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-27"><a aria-label="27"></a><span class="st">## 4. Features and layout</span></span>
+<span id="cb8-28"><a aria-label="28"></a></span>
+<span id="cb8-29"><a aria-label="29"></a><span class="st">- N1 Two columns: a list of notes on the left, the selected note in an editor on the</span></span>
+<span id="cb8-30"><a aria-label="30"></a><span class="st">  right. On narrow screens (below 700 px), show one column at a time.</span></span>
+<span id="cb8-31"><a aria-label="31"></a><span class="st">- N2 "New note" button; the new note opens in the editor with the title selected.</span></span>
+<span id="cb8-32"><a aria-label="32"></a><span class="st">- N3 Edit title, body and tags (comma-separated); changes save automatically.</span></span>
+<span id="cb8-33"><a aria-label="33"></a><span class="st">- N4 Delete a note after a confirmation question.</span></span>
+<span id="cb8-34"><a aria-label="34"></a><span class="st">- N5 Search box that filters the list by title and body as you type.</span></span>
+<span id="cb8-35"><a aria-label="35"></a><span class="st">- N6 Click a tag to show only notes with that tag; click again to show all.</span></span>
+<span id="cb8-36"><a aria-label="36"></a><span class="st">- N7 The list is sorted by last updated, newest first, and shows title, date and the</span></span>
+<span id="cb8-37"><a aria-label="37"></a><span class="st">  first line of the body.</span></span>
+<span id="cb8-38"><a aria-label="38"></a><span class="st">- N8 Keyboard shortcuts: Ctrl/Cmd+N new note, Ctrl/Cmd+F focus search, Esc clears the</span></span>
+<span id="cb8-39"><a aria-label="39"></a><span class="st">  search.</span></span>
+<span id="cb8-40"><a aria-label="40"></a></span>
+<span id="cb8-41"><a aria-label="41"></a><span class="st">## 5. Look and accessibility</span></span>
+<span id="cb8-42"><a aria-label="42"></a></span>
+<span id="cb8-43"><a aria-label="43"></a><span class="st">- Clean, readable design: system font, comfortable line length, enough contrast.</span></span>
+<span id="cb8-44"><a aria-label="44"></a><span class="st">- Follow the computer's light or dark mode (prefers-color-scheme).</span></span>
+<span id="cb8-45"><a aria-label="45"></a><span class="st">- Every control has a visible label or an accessible name; everything works with the</span></span>
+<span id="cb8-46"><a aria-label="46"></a><span class="st">  keyboard, with a visible focus outline.</span></span>
+<span id="cb8-47"><a aria-label="47"></a></span>
+<span id="cb8-48"><a aria-label="48"></a><span class="st">## 6. Acceptance checks</span></span>
+<span id="cb8-49"><a aria-label="49"></a></span>
+<span id="cb8-50"><a aria-label="50"></a><span class="st">- A1 Opening index.html from the folder shows the app with no errors in the browser</span></span>
+<span id="cb8-51"><a aria-label="51"></a><span class="st">  console.</span></span>
+<span id="cb8-52"><a aria-label="52"></a><span class="st">- A2 A new note with a title, body and two tags is still there after closing and</span></span>
+<span id="cb8-53"><a aria-label="53"></a><span class="st">  reopening the browser.</span></span>
+<span id="cb8-54"><a aria-label="54"></a><span class="st">- A3 Searching for a word in a body shows only notes containing that word.</span></span>
+<span id="cb8-55"><a aria-label="55"></a><span class="st">- A4 Export, delete all notes, import the exported file: every note is back.</span></span>
+<span id="cb8-56"><a aria-label="56"></a><span class="st">- A5 The app works with the computer offline.</span></span>
+<span id="cb8-57"><a aria-label="57"></a><span class="st">- A6 At 400 px width, all features are reachable.</span></span>
+<span id="cb8-58"><a aria-label="58"></a></span>
+<span id="cb8-59"><a aria-label="59"></a><span class="st">## 7. How to run</span></span>
+<span id="cb8-60"><a aria-label="60"></a></span>
+<span id="cb8-61"><a aria-label="61"></a><span class="st">Write this into a short README.md:</span></span>
+<span id="cb8-62"><a aria-label="62"></a><span class="st">1. Keep index.html, style.css and app.js together in one folder.</span></span>
+<span id="cb8-63"><a aria-label="63"></a><span class="st">2. Double-click index.html, or drag it into a browser window.</span></span>
+<span id="cb8-64"><a aria-label="64"></a><span class="st">3. Notes are stored in that browser on that computer only. Use Export regularly as a</span></span>
+<span id="cb8-65"><a aria-label="65"></a><span class="st">   backup, and Import to move notes to another browser or computer.</span></span>
+<span id="cb8-66"><a aria-label="66"></a><span class="st">"""</span></span>
+<span id="cb8-67"><a aria-label="67"></a></span>
+<span id="cb8-68"><a aria-label="68"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"NOTES-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-69"><a aria-label="69"></a>    f.write(notes_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a197f6c5" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>nlp_prompt <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb9-2"><a aria-label="2"></a><span class="st">Read AGENTS.md and NLP-APP-SPEC.md. Plan first, then write the app as one Jupyter</span></span>
-<span id="cb9-3"><a aria-label="3"></a><span class="st">notebook cell in text_explorer.ipynb, run it, and check every acceptance criterion.</span></span>
+<div id="5ce51db4" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>notes_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb9-2"><a aria-label="2"></a><span class="st">Read AGENTS.md and NOTES-SPEC.md. Plan first, then build the three files, open</span></span>
+<span id="cb9-3"><a aria-label="3"></a><span class="st">index.html in a browser, and check every acceptance criterion.</span></span>
 <span id="cb9-4"><a aria-label="4"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="a-computer-vision-app-edge-detection" class="slide level2" data-number="3.3">
 <h2><span class="header-section-number">3.3</span> A computer vision app: edge detection</h2>
 <p>Computer vision apps work on images. <strong>Edge detection</strong> finds the outlines in a picture — where brightness changes sharply — and is a classic first step before recognising shapes or objects. This spec uses <a href="https://opencv.org/">OpenCV</a> and the Canny edge detector, with two sliders so you can see how its thresholds change the result.</p>
-<div id="6ee0efcc" class="cell" data-execution_count="10">
+<div id="d8bb595c" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>cv_spec <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb10-2"><a aria-label="2"></a><span class="st"># SPEC: Edge detector</span></span>
 <span id="cb10-3"><a aria-label="3"></a></span>
@@ -813,7 +849,7 @@ nils.holmberg@iko.lu.se
 <span id="cb10-38"><a aria-label="38"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"CV-APP-SPEC.md"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
 <span id="cb10-39"><a aria-label="39"></a>    f.write(cv_spec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="46603eac" class="cell" data-execution_count="11">
+<div id="a12a6a11" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a>cv_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb11-2"><a aria-label="2"></a><span class="st">Read AGENTS.md and CV-APP-SPEC.md. Plan first, then write the app as one Jupyter</span></span>
 <span id="cb11-3"><a aria-label="3"></a><span class="st">notebook cell in edge_detector.ipynb, run it, and check every acceptance criterion.</span></span>
@@ -824,7 +860,7 @@ nils.holmberg@iko.lu.se
 <h2><span class="header-section-number">3.4</span> Your turn</h2>
 <p>Pick one of the two specs and make it yours:</p>
 <ol type="1">
-<li>Change one feature — for example word clouds by sentence sentiment, or a second edge detector (Sobel) to compare with Canny.</li>
+<li>Change one feature — for example a Markdown preview for the notes, or a second edge detector (Sobel) to compare with Canny.</li>
 <li>Add an acceptance check for the new feature.</li>
 <li>Give the spec to an Antigravity agent in a fresh project folder, in plan mode.</li>
 <li>Test the app against every acceptance check. When something fails, improve the spec and run the agent again.</li>

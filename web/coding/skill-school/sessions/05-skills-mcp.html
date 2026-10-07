@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -44,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-216636c46c1a1f775748b38585b663f4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -117,7 +152,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span class="menu-text">2 · Generation</span></a>
   </li>  
   <li class="nav-item">
-    <a aria-disabled="true" tabindex="-1" class="nav-link disabled"> 
+    <a class="nav-link" href="../sessions/03-app-building.html"> 
 <span class="menu-text">3 · Apps</span></a>
   </li>  
   <li class="nav-item">
@@ -180,21 +215,40 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <h2 class="smaller unnumbered anchored" data-anchor-id="topics">Topics</h2>
 <div class="columns">
 <div class="column" style="width:42%;">
+<!-- table of contents: update when a section heading is renamed or moved -->
 <ul>
-<li>Reusable skills and workflows</li>
-<li>What MCP servers provide</li>
-<li>Connecting AI to your tools</li>
-<li>Composing capabilities safely</li>
-<li>Course wrap-up and next steps</li>
+<li><a href="#skills">1 Skills</a>
+<ul>
+<li><a href="#from-prompts-to-skills">1.1 From prompts to skills</a></li>
+<li><a href="#anatomy-of-a-skill">1.2 Anatomy of a skill</a></li>
+<li><a href="#how-agents-use-skills">1.3 How agents use skills</a></li>
+<li><a href="#official-and-custom-skills">1.4 Official and custom skills</a></li>
+<li><a href="#a-data-analysis-skill">1.5 A data analysis skill</a></li>
+<li><a href="#use-the-skill">1.6 Use the skill</a></li>
+</ul></li>
+<li><a href="#mcp-model-context-protocol">2 MCP: Model Context Protocol</a>
+<ul>
+<li><a href="#why-mcp">2.1 Why MCP</a></li>
+<li><a href="#anatomy-of-mcp">2.2 Anatomy of MCP</a></li>
+<li><a href="#skills-and-mcp">2.3 Skills and MCP</a></li>
+<li><a href="#build-a-minimal-mcp-server">2.4 Build a minimal MCP server</a></li>
+<li><a href="#existing-mcp-servers">2.5 Existing MCP servers</a></li>
+</ul></li>
+<li><a href="#putting-it-together">3 Putting it together</a>
+<ul>
+<li><a href="#a-skill-that-uses-mcp">3.1 A skill that uses MCP</a></li>
+<li><a href="#the-week-in-one-table">3.2 The week in one table</a></li>
+<li><a href="#your-turn">3.3 Your turn</a></li>
+</ul></li>
 <li><a href="https://de-code-ai.netlify.app/coding/skill-school/sessions/05-skills-mcp-slides.html" target="_blank">Slides</a></li>
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-skills-mcp.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="654769cf" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="6bbe35fa" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-skills-mcp_files/figure-html/cell-2-output-1.png" width="662" height="470" class="figure-img"></p>
+<p><img src="05-skills-mcp_files/figure-html/cell-2-output-1.png" width="661" height="470" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -202,16 +256,536 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 </div>
 </div>
 </section>
-<section id="workshop-tasks-preliminary" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Workshop tasks (preliminary)</h1>
+<section id="skills" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Skills</h1>
+<section id="from-prompts-to-skills" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="from-prompts-to-skills"><span class="header-section-number">1.1</span> From prompts to skills</h2>
+<p>This week we have given AI agents four kinds of text. Each one does a different job:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 25%">
+<col style="width: 46%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Text</th>
+<th>What it says</th>
+<th>When the agent reads it</th>
+<th>Session</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Prompt</td>
+<td>Do this, now</td>
+<td>Once, when you send it</td>
+<td>1–2</td>
+</tr>
+<tr class="even">
+<td>Spec</td>
+<td>What to build and how to check it</td>
+<td>When you point the agent to it</td>
+<td>3–4</td>
+</tr>
+<tr class="odd">
+<td>AGENTS.md</td>
+<td>Rules that always apply</td>
+<td>At the start of every task</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td><strong>Skill</strong></td>
+<td><strong>How to do a kind of task, step by step</strong></td>
+<td><strong>Only when the task needs it</strong></td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>skill</strong> is a reusable procedure: a folder with instructions, and optionally scripts and templates, that teaches an agent how to do one kind of task well — the way <em>you</em> want it done. Write it once, and every later task of that kind starts from your best practice instead of from scratch.</p>
+</section>
+<section id="anatomy-of-a-skill" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="anatomy-of-a-skill"><span class="header-section-number">1.2</span> Anatomy of a skill</h2>
+<p>A skill is a folder. Only one file is required, <code>SKILL.md</code>; the rest is optional:</p>
+<pre class="text"><code>data-analysis/
+├── SKILL.md          required: name, description, instructions
+├── scripts/          optional: code the agent can run (e.g. stats helpers)
+├── references/       optional: longer documents it reads when needed
+└── assets/           optional: templates and other files to copy</code></pre>
+<p><code>SKILL.md</code> has two parts. The <strong>front matter</strong> between the <code>---</code> lines holds the skill’s <code>name</code> and a <code>description</code> of what it does and when to use it. The <strong>body</strong> is plain Markdown: the steps, rules and checks.</p>
+<div id="3c835027" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>minimal_skill <span class="op">=</span> <span class="st">"""---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: tsv-summary</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Summarise a tab-separated data file. Use when the user asks what is in</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">  a .tsv file, or wants a quick overview of its columns before an analysis.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">---</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st"># TSV summary</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">1. Read the file with pandas (sep="</span><span class="ch">\\</span><span class="st">t").</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">2. Report the number of rows and columns, and the missing values per column.</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="st">3. For each numeric column: mean, SD, min and max, rounded to two decimals.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="st">4. For each text column: the five most frequent values.</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="st">5. End with two sentences on what the data seems to be about.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="how-agents-use-skills" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="how-agents-use-skills"><span class="header-section-number">1.3</span> How agents use skills</h2>
+<p>An agent may have dozens of skills, but it does not read them all. At the start it only sees each skill’s <strong>name and description</strong> — a few lines each, so they cost little of the context window (see the chart above). When your request matches a description, the agent reads that skill’s body, and opens its scripts or references only if a step needs them. This is called <em>progressive disclosure</em>.</p>
+<p>So the <strong>description is the trigger</strong>. Write it as <em>what it does</em> plus <em>“Use when …”</em>, with the words people actually use when they ask for that task. There are two ways to use a skill:</p>
+<ul>
+<li><strong>Automatically:</strong> ask in your own words (“give me an overview of survey.tsv”) and the agent picks the matching skill.</li>
+<li><strong>By name:</strong> type a slash command with the skill name, e.g.&nbsp;<code>/tsv-summary survey.tsv</code>.</li>
+</ul>
+<p>In Antigravity, a project’s skills live in <code>.agents/skills/&lt;name&gt;/SKILL.md</code> inside the project folder; skills for all your projects are configured under <code>~/.gemini/config</code>. Type <code>/skills</code> to see which skills the agent has, and <code>/skills reload</code> after adding or editing one.</p>
+</section>
+<section id="official-and-custom-skills" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="official-and-custom-skills"><span class="header-section-number">1.4</span> Official and custom skills</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Official skills</th>
+<th>Custom skills</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Written by</td>
+<td>The company behind the agent or tool</td>
+<td>You, your team or your course</td>
+</tr>
+<tr class="even">
+<td>Examples</td>
+<td>Antigravity’s built-in skills such as <code>/grill-me</code>; Anthropic’s <a href="https://github.com/anthropics/skills">public skills</a> for Word, Excel, PowerPoint and PDF files</td>
+<td>The data analysis skill below</td>
+</tr>
+<tr class="odd">
+<td>Good for</td>
+<td>General tasks that are the same for everyone</td>
+<td><em>Your</em> data, conventions, and quality checks</td>
+</tr>
+<tr class="even">
+<td>Updated</td>
+<td>By the publisher</td>
+<td>By you, when your practice changes</td>
+</tr>
+<tr class="odd">
+<td>Trust</td>
+<td>Comes from a known source</td>
+<td>You know what is in it</td>
+</tr>
+</tbody>
+</table>
+<p>Both follow the same open format, <a href="https://agentskills.io/">Agent Skills</a>, so a skill written for one agent often works in others. A skill can include scripts that run on your computer, so treat skills from others like any other software: read <code>SKILL.md</code> and its scripts before you install it (session 4, <em>Safety first!</em>).</p>
+</section>
+<section id="a-data-analysis-skill" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="a-data-analysis-skill"><span class="header-section-number">1.5</span> A data analysis skill</h2>
+<p>Now we turn the analysis steps from sessions 1 and 2 into a custom skill. It takes <strong>any tab-separated data file</strong> and an <strong>analysis spec</strong> like the one in session 2, and writes the analysis as a <strong>notebook</strong> or a <strong>web page</strong>. The steps are general, and the details come from the spec — so the same skill works for the toy dataset, the TPB experiment, or your own survey.</p>
+<div id="41b8eeef" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">=</span> <span class="st">"""---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: data-analysis</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Analyse a tab-separated data file (.tsv) following an analysis spec, and</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">  write the result as a Jupyter notebook or a stand-alone HTML page. Use when the user</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">  wants descriptives, plots, group comparisons or correlations for a .tsv file, or</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">  points to an ANALYSIS-SPEC.md.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">---</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st"># Data analysis</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">## Inputs</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">- A .tsv file: a path or a URL.</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">- An analysis spec (Markdown). If there is none, draft one from the data using</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  references/spec-template.md, show it to the user, and wait for approval.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">- Output format: notebook (.ipynb) or web page (.html). Ask if it is not given.</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">## Steps</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="st">1. Read the spec. List its variables and analysis steps.</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="st">2. Inspect the data: rows, columns, types, missing values. Check that every variable</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="st">   in the spec exists; if not, stop and report the mismatch.</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="st">3. Load: report rows, columns and missing values.</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="st">4. Describe: mean, SD, skewness and kurtosis for numeric variables; frequency</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="st">   tables for categorical variables and items.</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="st">5. Visualise: a histogram with a density curve per numeric variable; a bar chart</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="st">   per categorical variable.</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="st">6. Relate the outcome to each predictor: group means and SDs, a correlation matrix,</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="st">   box plots by group, scatter plots with a fitted line.</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="st">7. Test: Welch's t-test with Cohen's d for group differences; Pearson's r with</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="st">   p-values for numeric predictors.</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="st">Do only the steps the spec asks for, in the spec's order.</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="st">## Output</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="st">- Notebook: &lt;data-name&gt;-analysis.ipynb with Python (pandas, seaborn, scipy).</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="st">- Web page: &lt;data-name&gt;-analysis.html, one file, with Observable Plot and d3 from a</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="st">  CDN and the statistics in plain JavaScript (as in the session 2 spec).</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="st">- One section per step; under every result, two or three sentences in plain</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="st">  language on what it means.</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="st">## Checks before you finish</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="st">- The notebook runs top to bottom without errors, or the page opens without</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="st">  errors in the browser console.</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="st">- Every analysis step in the spec has a section.</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="st">- Report the key numbers (effect sizes, correlations) in your final message, so the</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="st">  user can compare them with the spec's check values.</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The reference file is the spec format from session 2, with placeholders the agent fills in when it drafts a spec for a new dataset:</p>
+<div id="31073721" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spec_template <span class="op">=</span> <span class="st">"""# Analysis spec: &lt;dataset name&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">## Data</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">- File: &lt;path or URL&gt; (tab-separated, &lt;n&gt; rows)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Grouping variable(s): &lt;name&gt;: &lt;levels&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">- Items: &lt;names and scale, e.g. 1-5&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">- Indices = item means: &lt;index names&gt; (&lt;which one is the outcome&gt;)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">## Analyses</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">1. Load: check rows, columns and missing values.</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">2. Describe: descriptives for numeric variables; frequencies for categorical ones.</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">3. Visualise: histograms; bar charts.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">4. Relate the outcome to each predictor.</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">5. Test: group differences and correlations.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">## Output</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">- Format: notebook or web page.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">- Check values (if known): &lt;e.g. Cohen's d = 0.58&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Save both files into the folder layout that Antigravity looks for. The cell also packs the folder into <code>data-analysis-skill.zip</code>: in Colab, download that file from the Files panel and unzip it in your project folder (Colab hides folders whose names start with a dot).</p>
+<div id="920b05fa" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>skill_dir <span class="op">=</span> Path(<span class="st">".agents/skills/data-analysis"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>(skill_dir <span class="op">/</span> <span class="st">"references"</span>).mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>(skill_dir <span class="op">/</span> <span class="st">"SKILL.md"</span>).write_text(skill_md)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>(skill_dir <span class="op">/</span> <span class="st">"references"</span> <span class="op">/</span> <span class="st">"spec-template.md"</span>).write_text(spec_template)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="op">*</span><span class="bu">sorted</span>(p.as_posix() <span class="cf">for</span> p <span class="kw">in</span> skill_dir.rglob(<span class="st">"*"</span>)), sep<span class="op">=</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>shutil.make_archive(<span class="st">"data-analysis-skill"</span>, <span class="st">"zip"</span>, root_dir<span class="op">=</span><span class="st">"."</span>, base_dir<span class="op">=</span><span class="st">".agents"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="use-the-skill" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="use-the-skill"><span class="header-section-number">1.6</span> Use the skill</h2>
+<p>Open the project folder in Antigravity, check that the skill is listed with <code>/skills</code>, and try it both ways — by name and in your own words:</p>
+<div id="98403f6c" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">/data-analysis https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">ANALYSIS-SPEC.md, as a notebook</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>own_words <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">I have the TPB experiment data in komp014-tpb-exp-n100.tsv. Can you analyse whether</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">the message condition affects intention, and make it a web page?</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Check the first result against session 1: Cohen’s <em>d</em> ≈ 0.58 for the group difference and <em>r</em> ≈ .41 for both indices. For the second request there is no spec yet, so the skill should first draft one from the data and ask you to approve it — that is step “Inputs” doing its job.</p>
+</section>
+</section>
+<section id="mcp-model-context-protocol" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> MCP: Model Context Protocol</h1>
+<section id="why-mcp" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="why-mcp"><span class="header-section-number">2.1</span> Why MCP</h2>
+<p>A skill teaches the agent <em>how</em> to do something with the tools it already has: reading and writing files, running commands. Some tasks need more: opening a web page in a real browser, reading issues on GitHub, querying a database, checking a calendar. The <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> (MCP) is an open standard for giving an agent such new <strong>tools and data</strong>.</p>
+<p>Before MCP, every AI app needed its own connector for every service. With MCP, a service is wrapped once as an <strong>MCP server</strong>, and every agent that speaks MCP — Antigravity, Claude, ChatGPT and many code editors — can use it. It is often compared to USB-C: one plug for everything.</p>
+</section>
+<section id="anatomy-of-mcp" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="anatomy-of-mcp"><span class="header-section-number">2.2</span> Anatomy of MCP</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 42%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>What it is</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Host</td>
+<td>The AI app you use</td>
+<td>Antigravity</td>
+</tr>
+<tr class="even">
+<td>Client</td>
+<td>The connection inside the host, one per server</td>
+<td>Antigravity’s link to the GitHub server</td>
+</tr>
+<tr class="odd">
+<td>Server</td>
+<td>A small program that offers capabilities</td>
+<td>The GitHub MCP server</td>
+</tr>
+</tbody>
+</table>
+<p>A server can offer three kinds of things:</p>
+<ul>
+<li><strong>Tools</strong> — actions the agent can call, with named inputs: <code>search_issues(query)</code>, <code>take_screenshot(url)</code>.</li>
+<li><strong>Resources</strong> — data the agent can read: a file, a database table, a codebook.</li>
+<li><strong>Prompts</strong> — ready-made prompt templates the user can pick.</li>
+</ul>
+<p>Servers run in one of two ways (the <em>transport</em>): <strong>locally</strong>, as a program on your computer that the host starts and talks to (stdio), or <strong>remotely</strong>, at a web address (HTTP). One tool call goes like this:</p>
 <ol type="1">
-<li>Placeholder — inspect which skills/MCP servers your assistant has available.</li>
-<li>Placeholder — draft a reusable skill for a workflow from this week.</li>
-<li>Placeholder — use one MCP-provided tool in a small end-to-end task.</li>
-<li>Placeholder — plan one real task from your own work to automate next week.</li>
+<li>You ask: <em>“Which issues are open in my repo?”</em></li>
+<li>The agent sees a matching tool in the server’s tool list and calls it, with inputs.</li>
+<li>Antigravity asks for your approval (unless you allowed that tool before).</li>
+<li>The server does the work and sends the result back.</li>
+<li>The agent reads the result and answers you — or calls the next tool.</li>
+</ol>
+</section>
+<section id="skills-and-mcp" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="skills-and-mcp"><span class="header-section-number">2.3</span> Skills and MCP</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Skill</th>
+<th>MCP server</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adds</td>
+<td>Know-how: steps, rules, checks</td>
+<td>Abilities and data: new tools</td>
+</tr>
+<tr class="even">
+<td>Is</td>
+<td>Text (+ optional scripts)</td>
+<td>A running program</td>
+</tr>
+<tr class="odd">
+<td>Context cost</td>
+<td>Small until used</td>
+<td>Its tool list is loaded while it is on</td>
+</tr>
+<tr class="even">
+<td>Write your own</td>
+<td>Easy: a Markdown file</td>
+<td>Some code (a few lines in Python)</td>
+</tr>
+<tr class="odd">
+<td>Use when</td>
+<td>You repeat a kind of task</td>
+<td>The agent cannot reach something it needs</td>
+</tr>
+</tbody>
+</table>
+<p>They work well together: a skill can say <em>which</em> MCP tools to use, and in what order.</p>
+</section>
+<section id="build-a-minimal-mcp-server" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="build-a-minimal-mcp-server"><span class="header-section-number">2.4</span> Build a minimal MCP server</h2>
+<p>A server in Python takes a few lines with the official <a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a>. Each tool is an ordinary function: its name, type hints and docstring tell the agent what it does and which inputs it takes. This server offers two of the session 1 analyses as tools, plus the dataset’s codebook as a resource:</p>
+<div id="a12336fe" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">from scipy import stats</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">from mcp.server import MCPServer</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">mcp = MCPServer("komp014")</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">def describe_tsv(url: str) -&gt; dict:</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">    """Rows, columns and the mean of every numeric column of a .tsv file."""</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">    means = df.select_dtypes("number").mean().round(2)</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">    return {"rows": len(df), "columns": list(df.columns), "means": means.to_dict()}</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">def group_difference(url: str, group: str, outcome: str) -&gt; dict:</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">    """Welch t-test and Cohen's d for the outcome between the two levels of group."""</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="st">    a, b = [g[outcome] for _, g in df.groupby(group)]</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">    t, p = stats.ttest_ind(a, b, equal_var=False)</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">    sd = ((a.var() * (len(a) - 1) + b.var() * (len(b) - 1)) / (len(a) + len(b) - 2)) ** 0.5</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">    d = (a.mean() - b.mean()) / sd</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">    return {"t": round(float(t), 2), "p": round(float(p), 4), "d": round(float(d), 2)}</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.resource("komp014://codebook")</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="st">def codebook() -&gt; str:</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">    """What the columns of the komp014 toy dataset mean."""</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="st">    return ("IV_CAT_GROUP: category1/category2. Items 1-5: IV1_ITEM1, IV1_ITEM2, "</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="st">            "IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2. Indices are item means: "</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="st">            "IV_INDEX1, IV_INDEX2, DV_INDEX (outcome).")</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="st">if __name__ == "__main__":</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="st">    mcp.run()  # local server: talks to the host over stdin/stdout</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"komp014_server.py"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To use it, you need Python with the <code>mcp</code> package on your own computer (MCP servers run next to the agent, not in Colab). Try the server in the <strong>MCP Inspector</strong>, a web page where you can call its tools by hand, then add it to Antigravity and check that it is listed:</p>
+<div id="7ddae776" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mcp dev komp014_server.py</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then ask the agent something only the server can answer quickly:</p>
+<div id="bbb6d101" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">Use the komp014 tools: describe</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">and test whether DV_INDEX differs between the IV_CAT_GROUP levels.</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">Explain the result in two sentences.</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The answer should report a Cohen’s <em>d</em> of size 0.58 (its sign shows which group scores higher) — the same effect as in session 1, now computed by a tool the agent called.</p>
+</section>
+<section id="existing-mcp-servers" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="existing-mcp-servers"><span class="header-section-number">2.5</span> Existing MCP servers</h2>
+<p>Many MCP servers are ready to use. Most are added with a single <code>agy mcp add</code> command (or in the Antigravity app’s MCP settings) — local ones as a command, remote ones as a URL:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Server</th>
+<th>What the agent can do</th>
+<th>Add it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/modelcontextprotocol/servers">Filesystem</a></td>
+<td>Read and write files in folders you choose</td>
+<td><code>agy mcp add fs npx -y @modelcontextprotocol/server-filesystem ~/projects</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/modelcontextprotocol/servers">Fetch</a></td>
+<td>Download a web page as text</td>
+<td><code>agy mcp add fetch uvx mcp-server-fetch</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/modelcontextprotocol/servers">Git</a></td>
+<td>Read history, diffs and branches of a repository</td>
+<td><code>agy mcp add git uvx mcp-server-git</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/modelcontextprotocol/servers">Memory</a></td>
+<td>Remember facts between conversations</td>
+<td><code>agy mcp add memory npx -y @modelcontextprotocol/server-memory</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/modelcontextprotocol/servers">Time</a></td>
+<td>Current time and time zone conversion</td>
+<td><code>agy mcp add time uvx mcp-server-time</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/microsoft/playwright-mcp">Playwright</a></td>
+<td>Open and click through web pages in a browser</td>
+<td><code>agy mcp add playwright npx -y @playwright/mcp@latest</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">Chrome DevTools</a></td>
+<td>Inspect a page in Chrome: console errors, layout, speed</td>
+<td><code>agy mcp add devtools npx -y chrome-devtools-mcp@latest</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/github/github-mcp-server">GitHub</a></td>
+<td>Issues, pull requests and code on GitHub (needs a token)</td>
+<td><code>agy mcp add --header "Authorization: Bearer &lt;token&gt;" github https://api.githubcopilot.com/mcp/</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/upstash/context7">Context7</a></td>
+<td>Up-to-date documentation for code libraries (needs a key)</td>
+<td><code>agy mcp add --header "Authorization: Bearer &lt;key&gt;" context7 https://mcp.context7.com/mcp</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>npx</code> needs <a href="https://nodejs.org/">Node.js</a> and <code>uvx</code> needs <a href="https://docs.astral.sh/uv/">uv</a> on your computer. The same safety rules as in session 4 apply, with one more: an MCP server is a program that runs with <em>your</em> permissions.</p>
+<ul>
+<li>Prefer servers from the service itself or the MCP project, and read what each tool does.</li>
+<li>Give tokens and folders the smallest access that works (read-only if you can).</li>
+<li>Keep tool approval on, and turn servers off (<code>agy mcp disable &lt;name&gt;</code>) when you do not need them — their tool lists also take up context.</li>
+</ul>
+</section>
+</section>
+<section id="putting-it-together" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Putting it together</h1>
+<section id="a-skill-that-uses-mcp" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="a-skill-that-uses-mcp"><span class="header-section-number">3.1</span> A skill that uses MCP</h2>
+<p>Skills and MCP combine naturally. Add one line to the data analysis skill’s steps, and the agent uses the komp014 server for a quick first look before it writes the full analysis:</p>
+<div id="ab54f082" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">=</span> skill_md.replace(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"2. Inspect the data:"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"2. If the komp014 MCP tools are available, call describe_tsv first.</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"   Inspect the data:"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The skill holds the <em>procedure</em>, the server provides the <em>tool</em>, and AGENTS.md still sets the <em>rules</em> — each part stays small and can be reused on its own. Antigravity can also bundle skills, rules and MCP servers into one installable <strong>plugin</strong> (<code>/plugin</code>), which is how teams share a complete setup.</p>
+</section>
+<section id="the-week-in-one-table" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-week-in-one-table"><span class="header-section-number">3.2</span> The week in one table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Session</th>
+<th>You made</th>
+<th>What the AI got from you</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 Data analysis</td>
+<td>An analysis, step by step</td>
+<td>Prompts</td>
+</tr>
+<tr class="even">
+<td>2 Data generation</td>
+<td>Simulated data and personas</td>
+<td>A detailed prompt, then an analysis spec</td>
+</tr>
+<tr class="odd">
+<td>3 App building</td>
+<td>App specs: Shiny, word clouds</td>
+<td>Specs with acceptance checks</td>
+</tr>
+<tr class="even">
+<td>4 Agentic coding</td>
+<td>Apps built by an agent</td>
+<td>AGENTS.md rules and specs</td>
+</tr>
+<tr class="odd">
+<td>5 Skills and MCP</td>
+<td>A reusable skill, a small MCP server</td>
+<td>Procedures and new tools</td>
+</tr>
+</tbody>
+</table>
+<p>The common thread is <em>specifications as code</em>: the clearer and more reusable the text you give an AI, the more you can hand over — and the easier it is to check the result.</p>
+</section>
+<section id="your-turn" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="your-turn"><span class="header-section-number">3.3</span> Your turn</h2>
+<ol type="1">
+<li>Pick a task you repeat in your own work — a report, a data check, a type of analysis.</li>
+<li>Write it as a skill: a <code>SKILL.md</code> with a clear <em>“Use when …”</em> description and five to ten steps, saved in <code>.agents/skills/&lt;name&gt;/</code> in a project folder.</li>
+<li>Use it twice in Antigravity, once by name and once in your own words, and improve the description until the agent picks it up by itself.</li>
+<li>Pick one MCP server from the table, add it, and use it in a small task — then turn it off again if you do not need it.</li>
 </ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
