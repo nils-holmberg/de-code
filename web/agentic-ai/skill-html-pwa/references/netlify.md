@@ -6,11 +6,11 @@ Read this reference when the target host is Netlify or when reviewing a Netlify 
 
 Determine the publish directory from `netlify.toml`, the Netlify UI configuration, build output, or the correspondence between repository files and live URLs. A URL such as:
 
-    https://example.netlify.app/app-building/pwa/
+    https://example.netlify.app/app-building/pwas/de-code-regex/
 
 maps to this location when `web/` is the publish root:
 
-    web/app-building/pwa/index.html
+    web/app-building/pwas/de-code-regex/index.html
 
 Netlify normally serves a directory's `index.html`; a redirect is not needed for an ordinary static app directory.
 
@@ -20,7 +20,7 @@ Netlify processes `_headers` only when it reaches the publish directory. Put it 
 
 If a `.webmanifest` file is served as `application/octet-stream`, add a narrow rule such as:
 
-    /app-building/pwa/manifest.webmanifest
+    /app-building/pwas/de-code-regex/manifest.webmanifest
       Content-Type: application/manifest+json; charset=UTF-8
 
 Merge with an existing `_headers` file rather than replacing unrelated rules. Do not add `Service-Worker-Allowed` when `sw.js` sits inside the app directory and uses the same relative scope; its default scope is already sufficient.
@@ -35,11 +35,11 @@ The response header remains the authoritative hosting fix.
 
 After the deployment finishes, verify the exact public URLs:
 
-    curl -I https://example.netlify.app/app-building/pwa/
-    curl -I https://example.netlify.app/app-building/pwa/manifest.webmanifest
-    curl -I https://example.netlify.app/app-building/pwa/sw.js
-    curl -I https://example.netlify.app/app-building/pwa/icons/icon-192.png
-    curl -I https://example.netlify.app/app-building/pwa/icons/icon-512.png
+    curl -I https://example.netlify.app/app-building/pwas/de-code-regex/
+    curl -I https://example.netlify.app/app-building/pwas/de-code-regex/manifest.webmanifest
+    curl -I https://example.netlify.app/app-building/pwas/de-code-regex/sw.js
+    curl -I https://example.netlify.app/app-building/pwas/de-code-regex/icons/icon-192.png
+    curl -I https://example.netlify.app/app-building/pwas/de-code-regex/icons/icon-512.png
 
 Expected essentials:
 

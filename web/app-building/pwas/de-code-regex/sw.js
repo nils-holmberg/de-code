@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'de-code-regex-';
-const CACHE_NAME = `${CACHE_PREFIX}v2`;
+const CACHE_NAME = `${CACHE_PREFIX}v3`;
 const APP_SHELL = [
   './',
   './index.html',

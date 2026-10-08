@@ -19,7 +19,7 @@ Before editing, inspect:
 
 Infer straightforward details from the repository and requested URL. Ask only when a missing choice would materially change the product or deployment. Preserve the original source unless the user explicitly wants it edited in place.
 
-Map the filesystem to the public URL explicitly. For example, if the publish root is `web/` and the target URL is `/app-building/pwa/`, the app belongs in `web/app-building/pwa/`.
+Map the filesystem to the public URL explicitly. For example, if the publish root is `web/` and the target URL is `/app-building/pwas/de-code-regex/`, the app belongs in `web/app-building/pwas/de-code-regex/`.
 
 ## Preserve and brand the app
 
