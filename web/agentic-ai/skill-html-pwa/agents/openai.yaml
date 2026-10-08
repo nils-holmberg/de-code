@@ -1,0 +1,6 @@
+interface:
+  display_name: "HTML to Mobile PWA"
+  short_description: "Convert one-page HTML apps into branded PWAs"
+  default_prompt: "Use $skill-html-pwa to convert this single-page HTML app into a branded, mobile-ready PWA for its live hosting path."
+policy:
+  allow_implicit_invocation: true
