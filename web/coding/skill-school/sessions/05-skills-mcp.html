@@ -156,7 +156,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span class="menu-text">3 · Apps</span></a>
   </li>  
   <li class="nav-item">
-    <a aria-disabled="true" tabindex="-1" class="nav-link disabled"> 
+    <a class="nav-link" href="../sessions/04-agentic-coding.html"> 
 <span class="menu-text">4 · Agents</span></a>
   </li>  
   <li class="nav-item">
@@ -244,7 +244,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-skills-mcp.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="6bbe35fa" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="52195dc3" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -314,7 +314,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 ├── references/       optional: longer documents it reads when needed
 └── assets/           optional: templates and other files to copy</code></pre>
 <p><code>SKILL.md</code> has two parts. The <strong>front matter</strong> between the <code>---</code> lines holds the skill’s <code>name</code> and a <code>description</code> of what it does and when to use it. The <strong>body</strong> is plain Markdown: the steps, rules and checks.</p>
-<div id="3c835027" class="cell" data-execution_count="2">
+<div id="bb6004fd" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>minimal_skill <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: tsv-summary</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Summarise a tab-separated data file. Use when the user asks what is in</span></span>
@@ -384,7 +384,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="a-data-analysis-skill" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="a-data-analysis-skill"><span class="header-section-number">1.5</span> A data analysis skill</h2>
 <p>Now we turn the analysis steps from sessions 1 and 2 into a custom skill. It takes <strong>any tab-separated data file</strong> and an <strong>analysis spec</strong> like the one in session 2, and writes the analysis as a <strong>notebook</strong> or a <strong>web page</strong>. The steps are general, and the details come from the spec — so the same skill works for the toy dataset, the TPB experiment, or your own survey.</p>
-<div id="41b8eeef" class="cell" data-execution_count="3">
+<div id="64089822" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: data-analysis</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Analyse a tab-separated data file (.tsv) following an analysis spec, and</span></span>
@@ -432,7 +432,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The reference file is the spec format from session 2, with placeholders the agent fills in when it drafts a spec for a new dataset:</p>
-<div id="31073721" class="cell" data-execution_count="4">
+<div id="f233b348" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spec_template <span class="op">=</span> <span class="st">"""# Analysis spec: &lt;dataset name&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">## Data</span></span>
@@ -454,7 +454,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Save both files into the folder layout that Antigravity looks for. The cell also packs the folder into <code>data-analysis-skill.zip</code>: in Colab, download that file from the Files panel and unzip it in your project folder (Colab hides folders whose names start with a dot).</p>
-<div id="920b05fa" class="cell" data-execution_count="5">
+<div id="9db27510" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>skill_dir <span class="op">=</span> Path(<span class="st">".agents/skills/data-analysis"</span>)</span>
@@ -470,7 +470,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="use-the-skill" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="use-the-skill"><span class="header-section-number">1.6</span> Use the skill</h2>
 <p>Open the project folder in Antigravity, check that the skill is listed with <code>/skills</code>, and try it both ways — by name and in your own words:</p>
-<div id="98403f6c" class="cell" data-execution_count="6">
+<div id="84672dc8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">/data-analysis https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">ANALYSIS-SPEC.md, as a notebook</span></span>
@@ -587,7 +587,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="build-a-minimal-mcp-server" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="build-a-minimal-mcp-server"><span class="header-section-number">2.4</span> Build a minimal MCP server</h2>
 <p>A server in Python takes a few lines with the official <a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a>. Each tool is an ordinary function: its name, type hints and docstring tell the agent what it does and which inputs it takes. This server offers two of the session 1 analyses as tools, plus the dataset’s codebook as a resource:</p>
-<div id="a12336fe" class="cell" data-execution_count="7">
+<div id="9393c425" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
@@ -632,14 +632,14 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To use it, you need Python with the <code>mcp</code> package on your own computer (MCP servers run next to the agent, not in Colab). Try the server in the <strong>MCP Inspector</strong>, a web page where you can call its tools by hand, then add it to Antigravity and check that it is listed:</p>
-<div id="7ddae776" class="cell" data-execution_count="8">
+<div id="174f5bcd" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mcp dev komp014_server.py</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then ask the agent something only the server can answer quickly:</p>
-<div id="bbb6d101" class="cell" data-execution_count="9">
+<div id="d0aa5ff1" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">Use the komp014 tools: describe</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
@@ -721,7 +721,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="a-skill-that-uses-mcp" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="a-skill-that-uses-mcp"><span class="header-section-number">3.1</span> A skill that uses MCP</h2>
 <p>Skills and MCP combine naturally. Add one line to the data analysis skill’s steps, and the agent uses the komp014 server for a quick first look before it writes the full analysis:</p>
-<div id="ab54f082" class="cell" data-execution_count="10">
+<div id="39ba49c5" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">=</span> skill_md.replace(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"2. Inspect the data:"</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"2. If the komp014 MCP tools are available, call describe_tsv first.</span><span class="ch">\n</span><span class="st">"</span></span>
@@ -763,8 +763,8 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 </tr>
 <tr class="even">
 <td>4 Agentic coding</td>
-<td>Apps built by an agent</td>
-<td>AGENTS.md rules and specs</td>
+<td>Apps built by an agent, spec by spec; a first agent in Python</td>
+<td>AGENTS.md rules and specs that it updates</td>
 </tr>
 <tr class="odd">
 <td>5 Skills and MCP</td>
