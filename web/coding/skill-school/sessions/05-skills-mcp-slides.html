@@ -225,7 +225,7 @@ nils.holmberg@iko.lu.se
 <li><a href="#/anatomy-of-a-skill">1.2 Anatomy of a skill</a></li>
 <li><a href="#/how-agents-use-skills">1.3 How agents use skills</a></li>
 <li><a href="#/official-and-custom-skills">1.4 Official and custom skills</a></li>
-<li><a href="#/a-data-analysis-skill">1.5 A data analysis skill</a></li>
+<li><a href="#/a-real-skill-from-html-app-to-pwa">1.5 A real skill: from HTML app to PWA</a></li>
 <li><a href="#/use-the-skill">1.6 Use the skill</a></li>
 </ul></li>
 <li><a href="#/mcp-model-context-protocol">2 MCP: Model Context Protocol</a>
@@ -246,7 +246,7 @@ nils.holmberg@iko.lu.se
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-skills-mcp.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="52195dc3" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="7b8a8125" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -312,13 +312,13 @@ nils.holmberg@iko.lu.se
 <section id="anatomy-of-a-skill" class="slide level2" data-number="1.2">
 <h2><span class="header-section-number">1.2</span> Anatomy of a skill</h2>
 <p>A skill is a folder. Only one file is required, <code>SKILL.md</code>; the rest is optional:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a aria-label="1"></a>data-analysis/</span>
-<span id="cb1-2"><a aria-label="2"></a>├── SKILL.md          required: name, description, instructions</span>
-<span id="cb1-3"><a aria-label="3"></a>├── scripts/          optional: code the agent can run (e.g. stats helpers)</span>
-<span id="cb1-4"><a aria-label="4"></a>├── references/       optional: longer documents it reads when needed</span>
-<span id="cb1-5"><a aria-label="5"></a>└── assets/           optional: templates and other files to copy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>SKILL.md</code> has two parts. The <strong>front matter</strong> between the <code>---</code> lines holds the skill’s <code>name</code> and a <code>description</code> of what it does and when to use it. The <strong>body</strong> is plain Markdown: the steps, rules and checks.</p>
-<div id="bb6004fd" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a aria-label="1"></a>skill-html-pwa/</span>
+<span id="cb1-2"><a aria-label="2"></a>├── SKILL.md                  required: name, description, instructions</span>
+<span id="cb1-3"><a aria-label="3"></a>├── references/netlify.md     optional: a longer document it reads only when needed</span>
+<span id="cb1-4"><a aria-label="4"></a>├── scripts/validate_pwa.py   optional: code the agent can run to check its work</span>
+<span id="cb1-5"><a aria-label="5"></a>└── agents/openai.yaml        optional: extra settings for one agent (OpenAI Codex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the real skill we look at in section 1.5. A skill can also have an <code>assets/</code> folder with templates and other files to copy. Here is a minimal <code>SKILL.md</code>:</p>
+<div id="26a47042" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>minimal_skill <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb2-2"><a aria-label="2"></a><span class="st">name: tsv-summary</span></span>
 <span id="cb2-3"><a aria-label="3"></a><span class="st">description: Summarise a tab-separated data file. Use when the user asks what is in</span></span>
@@ -334,6 +334,7 @@ nils.holmberg@iko.lu.se
 <span id="cb2-13"><a aria-label="13"></a><span class="st">5. End with two sentences on what the data seems to be about.</span></span>
 <span id="cb2-14"><a aria-label="14"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><code>SKILL.md</code> has two parts. The <strong>front matter</strong> between the <code>---</code> lines holds the skill’s <code>name</code> and a <code>description</code> of what it does and when to use it. The <strong>body</strong> is plain Markdown: the steps, rules and checks.</p>
 </section>
 <section id="how-agents-use-skills" class="slide level2" data-number="1.3">
 <h2><span class="header-section-number">1.3</span> How agents use skills</h2>
@@ -364,7 +365,7 @@ nils.holmberg@iko.lu.se
 <tr class="even">
 <td>Examples</td>
 <td>Antigravity’s built-in skills such as <code>/grill-me</code>; Anthropic’s <a href="https://github.com/anthropics/skills">public skills</a> for Word, Excel, PowerPoint and PDF files</td>
-<td>The data analysis skill below</td>
+<td>The HTML-to-PWA skill below</td>
 </tr>
 <tr class="odd">
 <td>Good for</td>
@@ -385,107 +386,133 @@ nils.holmberg@iko.lu.se
 </table>
 <p>Both follow the same open format, <a href="https://agentskills.io/">Agent Skills</a>, so a skill written for one agent often works in others. A skill can include scripts that run on your computer, so treat skills from others like any other software: read <code>SKILL.md</code> and its scripts before you install it (session 4, <em>Safety first!</em>).</p>
 </section>
-<section id="a-data-analysis-skill" class="slide level2" data-number="1.5">
-<h2><span class="header-section-number">1.5</span> A data analysis skill</h2>
-<p>Now we turn the analysis steps from sessions 1 and 2 into a custom skill. It takes <strong>any tab-separated data file</strong> and an <strong>analysis spec</strong> like the one in session 2, and writes the analysis as a <strong>notebook</strong> or a <strong>web page</strong>. The steps are general, and the details come from the spec — so the same skill works for the toy dataset, the TPB experiment, or your own survey.</p>
-<div id="64089822" class="cell" data-execution_count="3">
+<section id="a-real-skill-from-html-app-to-pwa" class="slide level2" data-number="1.5">
+<h2><span class="header-section-number">1.5</span> A real skill: from HTML app to PWA</h2>
+<p>A <strong>progressive web app</strong> (PWA) is a web page you can install like an app: it gets an icon on your phone or computer, opens in its own window, and keeps working offline after the first visit. The skill below turns an existing single-page HTML app — like the ones we built in sessions 3 and 4 — into a PWA, and prepares it for a static web host such as Netlify.</p>
+<p>An agent used this skill to turn a regex trainer page into the <a href="https://de-code-ai.netlify.app/app-building/pwa/">de-code regex trainer</a> — open it on your phone and try <em>Add to home screen</em>. This is its <code>SKILL.md</code>, unchanged:</p>
+<div id="0f7882b6" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>skill_md <span class="op">=</span> <span class="st">"""---</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="st">name: data-analysis</span></span>
-<span id="cb3-3"><a aria-label="3"></a><span class="st">description: Analyse a tab-separated data file (.tsv) following an analysis spec, and</span></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="st">  write the result as a Jupyter notebook or a stand-alone HTML page. Use when the user</span></span>
-<span id="cb3-5"><a aria-label="5"></a><span class="st">  wants descriptives, plots, group comparisons or correlations for a .tsv file, or</span></span>
-<span id="cb3-6"><a aria-label="6"></a><span class="st">  points to an ANALYSIS-SPEC.md.</span></span>
-<span id="cb3-7"><a aria-label="7"></a><span class="st">---</span></span>
-<span id="cb3-8"><a aria-label="8"></a></span>
-<span id="cb3-9"><a aria-label="9"></a><span class="st"># Data analysis</span></span>
-<span id="cb3-10"><a aria-label="10"></a></span>
-<span id="cb3-11"><a aria-label="11"></a><span class="st">## Inputs</span></span>
-<span id="cb3-12"><a aria-label="12"></a><span class="st">- A .tsv file: a path or a URL.</span></span>
-<span id="cb3-13"><a aria-label="13"></a><span class="st">- An analysis spec (Markdown). If there is none, draft one from the data using</span></span>
-<span id="cb3-14"><a aria-label="14"></a><span class="st">  references/spec-template.md, show it to the user, and wait for approval.</span></span>
-<span id="cb3-15"><a aria-label="15"></a><span class="st">- Output format: notebook (.ipynb) or web page (.html). Ask if it is not given.</span></span>
-<span id="cb3-16"><a aria-label="16"></a></span>
-<span id="cb3-17"><a aria-label="17"></a><span class="st">## Steps</span></span>
-<span id="cb3-18"><a aria-label="18"></a><span class="st">1. Read the spec. List its variables and analysis steps.</span></span>
-<span id="cb3-19"><a aria-label="19"></a><span class="st">2. Inspect the data: rows, columns, types, missing values. Check that every variable</span></span>
-<span id="cb3-20"><a aria-label="20"></a><span class="st">   in the spec exists; if not, stop and report the mismatch.</span></span>
-<span id="cb3-21"><a aria-label="21"></a><span class="st">3. Load: report rows, columns and missing values.</span></span>
-<span id="cb3-22"><a aria-label="22"></a><span class="st">4. Describe: mean, SD, skewness and kurtosis for numeric variables; frequency</span></span>
-<span id="cb3-23"><a aria-label="23"></a><span class="st">   tables for categorical variables and items.</span></span>
-<span id="cb3-24"><a aria-label="24"></a><span class="st">5. Visualise: a histogram with a density curve per numeric variable; a bar chart</span></span>
-<span id="cb3-25"><a aria-label="25"></a><span class="st">   per categorical variable.</span></span>
-<span id="cb3-26"><a aria-label="26"></a><span class="st">6. Relate the outcome to each predictor: group means and SDs, a correlation matrix,</span></span>
-<span id="cb3-27"><a aria-label="27"></a><span class="st">   box plots by group, scatter plots with a fitted line.</span></span>
-<span id="cb3-28"><a aria-label="28"></a><span class="st">7. Test: Welch's t-test with Cohen's d for group differences; Pearson's r with</span></span>
-<span id="cb3-29"><a aria-label="29"></a><span class="st">   p-values for numeric predictors.</span></span>
-<span id="cb3-30"><a aria-label="30"></a><span class="st">Do only the steps the spec asks for, in the spec's order.</span></span>
-<span id="cb3-31"><a aria-label="31"></a></span>
-<span id="cb3-32"><a aria-label="32"></a><span class="st">## Output</span></span>
-<span id="cb3-33"><a aria-label="33"></a><span class="st">- Notebook: &lt;data-name&gt;-analysis.ipynb with Python (pandas, seaborn, scipy).</span></span>
-<span id="cb3-34"><a aria-label="34"></a><span class="st">- Web page: &lt;data-name&gt;-analysis.html, one file, with Observable Plot and d3 from a</span></span>
-<span id="cb3-35"><a aria-label="35"></a><span class="st">  CDN and the statistics in plain JavaScript (as in the session 2 spec).</span></span>
-<span id="cb3-36"><a aria-label="36"></a><span class="st">- One section per step; under every result, two or three sentences in plain</span></span>
-<span id="cb3-37"><a aria-label="37"></a><span class="st">  language on what it means.</span></span>
-<span id="cb3-38"><a aria-label="38"></a></span>
-<span id="cb3-39"><a aria-label="39"></a><span class="st">## Checks before you finish</span></span>
-<span id="cb3-40"><a aria-label="40"></a><span class="st">- The notebook runs top to bottom without errors, or the page opens without</span></span>
-<span id="cb3-41"><a aria-label="41"></a><span class="st">  errors in the browser console.</span></span>
-<span id="cb3-42"><a aria-label="42"></a><span class="st">- Every analysis step in the spec has a section.</span></span>
-<span id="cb3-43"><a aria-label="43"></a><span class="st">- Report the key numbers (effect sizes, correlations) in your final message, so the</span></span>
-<span id="cb3-44"><a aria-label="44"></a><span class="st">  user can compare them with the spec's check values.</span></span>
-<span id="cb3-45"><a aria-label="45"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-2"><a aria-label="2"></a><span class="st">name: skill-html-pwa</span></span>
+<span id="cb3-3"><a aria-label="3"></a><span class="st">description: Convert an existing single-page HTML web app into a branded, installable, mobile-compatible PWA and prepare or verify it on a static live host such as Netlify. Use when adapting a supplied HTML app rather than building an unrelated site from scratch.</span></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="st">---</span></span>
+<span id="cb3-5"><a aria-label="5"></a></span>
+<span id="cb3-6"><a aria-label="6"></a><span class="st"># HTML app to hosted PWA</span></span>
+<span id="cb3-7"><a aria-label="7"></a></span>
+<span id="cb3-8"><a aria-label="8"></a><span class="st">Turn the supplied single-page app into a real progressive web app while preserving its purpose and behavior. Treat branding, mobile usability, installability, offline behavior, host path, and live verification as one delivery problem.</span></span>
+<span id="cb3-9"><a aria-label="9"></a></span>
+<span id="cb3-10"><a aria-label="10"></a><span class="st">## Establish the deployment shape</span></span>
+<span id="cb3-11"><a aria-label="11"></a></span>
+<span id="cb3-12"><a aria-label="12"></a><span class="st">Before editing, inspect:</span></span>
+<span id="cb3-13"><a aria-label="13"></a></span>
+<span id="cb3-14"><a aria-label="14"></a><span class="st">- the source HTML and its scripts, styles, assets, and existing behavior;</span></span>
+<span id="cb3-15"><a aria-label="15"></a><span class="st">- supplied brand names, copy, colors, logos, favicons, and icons;</span></span>
+<span id="cb3-16"><a aria-label="16"></a><span class="st">- the requested output directory;</span></span>
+<span id="cb3-17"><a aria-label="17"></a><span class="st">- the host's publish root and the app's public URL path; and</span></span>
+<span id="cb3-18"><a aria-label="18"></a><span class="st">- existing manifests, service workers, redirects, headers, and host configuration.</span></span>
+<span id="cb3-19"><a aria-label="19"></a></span>
+<span id="cb3-20"><a aria-label="20"></a><span class="st">Infer straightforward details from the repository and requested URL. Ask only when a missing choice would materially change the product or deployment. Preserve the original source unless the user explicitly wants it edited in place.</span></span>
+<span id="cb3-21"><a aria-label="21"></a></span>
+<span id="cb3-22"><a aria-label="22"></a><span class="st">Map the filesystem to the public URL explicitly. For example, if the publish root is `web/` and the target URL is `/app-building/pwa/`, the app belongs in `web/app-building/pwa/`.</span></span>
+<span id="cb3-23"><a aria-label="23"></a></span>
+<span id="cb3-24"><a aria-label="24"></a><span class="st">## Preserve and brand the app</span></span>
+<span id="cb3-25"><a aria-label="25"></a></span>
+<span id="cb3-26"><a aria-label="26"></a><span class="st">Keep the original app's useful interactions, content, saved state, and accessibility semantics unless the user requests a change. Apply requested branding consistently to:</span></span>
+<span id="cb3-27"><a aria-label="27"></a></span>
+<span id="cb3-28"><a aria-label="28"></a><span class="st">- the document title, description, theme color, and mobile metadata;</span></span>
+<span id="cb3-29"><a aria-label="29"></a><span class="st">- the visible primary title and subtitle;</span></span>
+<span id="cb3-30"><a aria-label="30"></a><span class="st">- the header or app chrome;</span></span>
+<span id="cb3-31"><a aria-label="31"></a><span class="st">- the favicon, application icons, and installed-app name; and</span></span>
+<span id="cb3-32"><a aria-label="32"></a><span class="st">- focus, selection, match, and other primary highlight states.</span></span>
+<span id="cb3-33"><a aria-label="33"></a></span>
+<span id="cb3-34"><a aria-label="34"></a><span class="st">Prefer supplied brand assets. Inspect them before use. Generate raster sizes from the supplied vector or highest-quality source when needed; do not merely rename a small bitmap as a larger icon.</span></span>
+<span id="cb3-35"><a aria-label="35"></a></span>
+<span id="cb3-36"><a aria-label="36"></a><span class="st">## Build a real PWA</span></span>
+<span id="cb3-37"><a aria-label="37"></a></span>
+<span id="cb3-38"><a aria-label="38"></a><span class="st">Create physical, host-served files rather than Blob URLs:</span></span>
+<span id="cb3-39"><a aria-label="39"></a></span>
+<span id="cb3-40"><a aria-label="40"></a><span class="st">- `index.html`</span></span>
+<span id="cb3-41"><a aria-label="41"></a><span class="st">- `manifest.webmanifest` (or a correctly linked JSON manifest)</span></span>
+<span id="cb3-42"><a aria-label="42"></a><span class="st">- `sw.js`</span></span>
+<span id="cb3-43"><a aria-label="43"></a><span class="st">- at least actual 192×192 and 512×512 PNG icons</span></span>
+<span id="cb3-44"><a aria-label="44"></a><span class="st">- the supplied SVG or other logo assets used by the page</span></span>
+<span id="cb3-45"><a aria-label="45"></a></span>
+<span id="cb3-46"><a aria-label="46"></a><span class="st">For an app hosted below the domain root, default to relative paths:</span></span>
+<span id="cb3-47"><a aria-label="47"></a></span>
+<span id="cb3-48"><a aria-label="48"></a><span class="st">    {</span></span>
+<span id="cb3-49"><a aria-label="49"></a><span class="st">      "id": "./",</span></span>
+<span id="cb3-50"><a aria-label="50"></a><span class="st">      "start_url": "./",</span></span>
+<span id="cb3-51"><a aria-label="51"></a><span class="st">      "scope": "./"</span></span>
+<span id="cb3-52"><a aria-label="52"></a><span class="st">    }</span></span>
+<span id="cb3-53"><a aria-label="53"></a></span>
+<span id="cb3-54"><a aria-label="54"></a><span class="st">Link resources with `./...` and register `./sw.js` with scope `./`. Avoid root-relative paths such as `/icons/icon.png` unless the asset intentionally lives at the origin root. A service worker cannot be registered from a `blob:` URL.</span></span>
+<span id="cb3-55"><a aria-label="55"></a></span>
+<span id="cb3-56"><a aria-label="56"></a><span class="st">The manifest should include the requested name, a short name that fits launcher UI, description, `standalone` display mode, theme and background colors, and valid icon entries. Use `purpose: "any maskable"` only when the artwork stays legible inside the maskable safe area.</span></span>
+<span id="cb3-57"><a aria-label="57"></a></span>
+<span id="cb3-58"><a aria-label="58"></a><span class="st">## Design offline behavior safely</span></span>
+<span id="cb3-59"><a aria-label="59"></a></span>
+<span id="cb3-60"><a aria-label="60"></a><span class="st">Cache the local application shell during service-worker installation and provide a cached navigation fallback. Use a site-specific cache namespace and increment its version when shell files change.</span></span>
+<span id="cb3-61"><a aria-label="61"></a></span>
+<span id="cb3-62"><a aria-label="62"></a><span class="st">When removing old caches, delete only caches owned by this app. Cache storage is origin-wide even though service-worker control is scoped; never delete every cache on a host that may contain sibling apps.</span></span>
+<span id="cb3-63"><a aria-label="63"></a></span>
+<span id="cb3-64"><a aria-label="64"></a><span class="st">Browser storage is origin-wide as well: `localStorage`, `sessionStorage` and IndexedDB are shared by every app on the host. Give new keys and database names an app-specific prefix, such as `regexcraft_pattern`, and never clear all storage. Keep the source app's existing keys unless you also migrate their values, so users do not lose saved state.</span></span>
+<span id="cb3-65"><a aria-label="65"></a></span>
+<span id="cb3-66"><a aria-label="66"></a><span class="st">Prefer local CSS, JavaScript, fonts, and icons for dependable offline startup. If the source relies on CDNs and retaining them is proportionate, explain that the first visit must be online and use runtime caching deliberately. Do not claim complete offline behavior until it has been tested with network access disabled.</span></span>
+<span id="cb3-67"><a aria-label="67"></a></span>
+<span id="cb3-68"><a aria-label="68"></a><span class="st">## Make the existing UI mobile-compatible</span></span>
+<span id="cb3-69"><a aria-label="69"></a></span>
+<span id="cb3-70"><a aria-label="70"></a><span class="st">Use a responsive viewport without disabling zoom. Keep primary body text readable, controls touch-friendly, focus visible, and text selectable where useful. Verify that:</span></span>
+<span id="cb3-71"><a aria-label="71"></a></span>
+<span id="cb3-72"><a aria-label="72"></a><span class="st">- the title and essential brand copy remain visible;</span></span>
+<span id="cb3-73"><a aria-label="73"></a><span class="st">- navigation condenses without becoming ambiguous;</span></span>
+<span id="cb3-74"><a aria-label="74"></a><span class="st">- controls do not clip or overlap;</span></span>
+<span id="cb3-75"><a aria-label="75"></a><span class="st">- intentional horizontal toolbars scroll without causing page-wide overflow;</span></span>
+<span id="cb3-76"><a aria-label="76"></a><span class="st">- editors and results remain usable on a narrow portrait screen; and</span></span>
+<span id="cb3-77"><a aria-label="77"></a><span class="st">- the layout also remains coherent at desktop width and 200% text enlargement.</span></span>
+<span id="cb3-78"><a aria-label="78"></a></span>
+<span id="cb3-79"><a aria-label="79"></a><span class="st">Do not replace a functioning app with a landing page or put promotional content ahead of its primary activity.</span></span>
+<span id="cb3-80"><a aria-label="80"></a></span>
+<span id="cb3-81"><a aria-label="81"></a><span class="st">## Prepare the host</span></span>
+<span id="cb3-82"><a aria-label="82"></a></span>
+<span id="cb3-83"><a aria-label="83"></a><span class="st">The app requires HTTPS in production. Preserve the user's hosting provider and deployment workflow. Do not publish, push, or mutate a live host unless requested.</span></span>
+<span id="cb3-84"><a aria-label="84"></a></span>
+<span id="cb3-85"><a aria-label="85"></a><span class="st">For Netlify-specific placement, MIME headers, and verification, read [references/netlify.md](references/netlify.md).</span></span>
+<span id="cb3-86"><a aria-label="86"></a></span>
+<span id="cb3-87"><a aria-label="87"></a><span class="st">## Validate before handoff</span></span>
+<span id="cb3-88"><a aria-label="88"></a></span>
+<span id="cb3-89"><a aria-label="89"></a><span class="st">Run the bundled validator:</span></span>
+<span id="cb3-90"><a aria-label="90"></a></span>
+<span id="cb3-91"><a aria-label="91"></a><span class="st">    python scripts/validate_pwa.py /path/to/pwa</span></span>
+<span id="cb3-92"><a aria-label="92"></a></span>
+<span id="cb3-93"><a aria-label="93"></a><span class="st">Then serve the app over HTTP; `file://` cannot validate service workers. Check at least one desktop and one narrow mobile viewport, exercise the app's primary interaction, and inspect the actual screenshots. Verify the manifest and every icon URL, service-worker registration and cache creation, reload behavior, and offline startup after an online load.</span></span>
+<span id="cb3-94"><a aria-label="94"></a></span>
+<span id="cb3-95"><a aria-label="95"></a><span class="st">For a live URL, check response status and MIME types rather than assuming the upload path is correct. Confirm that HTML is served as HTML, the service worker as JavaScript, the manifest as `application/manifest+json` or another browser-accepted JSON type, and icons with their declared image types.</span></span>
+<span id="cb3-96"><a aria-label="96"></a></span>
+<span id="cb3-97"><a aria-label="97"></a><span class="st">Report what was created, the public-path assumption, what was directly verified, and any remaining host-side action. Distinguish "prepared for deployment" from "deployed and live."</span></span>
+<span id="cb3-98"><a aria-label="98"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The reference file is the spec format from session 2, with placeholders the agent fills in when it drafts a spec for a new dataset:</p>
-<div id="f233b348" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>spec_template <span class="op">=</span> <span class="st">"""# Analysis spec: &lt;dataset name&gt;</span></span>
-<span id="cb4-2"><a aria-label="2"></a></span>
-<span id="cb4-3"><a aria-label="3"></a><span class="st">## Data</span></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="st">- File: &lt;path or URL&gt; (tab-separated, &lt;n&gt; rows)</span></span>
-<span id="cb4-5"><a aria-label="5"></a><span class="st">- Grouping variable(s): &lt;name&gt;: &lt;levels&gt;</span></span>
-<span id="cb4-6"><a aria-label="6"></a><span class="st">- Items: &lt;names and scale, e.g. 1-5&gt;</span></span>
-<span id="cb4-7"><a aria-label="7"></a><span class="st">- Indices = item means: &lt;index names&gt; (&lt;which one is the outcome&gt;)</span></span>
-<span id="cb4-8"><a aria-label="8"></a></span>
-<span id="cb4-9"><a aria-label="9"></a><span class="st">## Analyses</span></span>
-<span id="cb4-10"><a aria-label="10"></a><span class="st">1. Load: check rows, columns and missing values.</span></span>
-<span id="cb4-11"><a aria-label="11"></a><span class="st">2. Describe: descriptives for numeric variables; frequencies for categorical ones.</span></span>
-<span id="cb4-12"><a aria-label="12"></a><span class="st">3. Visualise: histograms; bar charts.</span></span>
-<span id="cb4-13"><a aria-label="13"></a><span class="st">4. Relate the outcome to each predictor.</span></span>
-<span id="cb4-14"><a aria-label="14"></a><span class="st">5. Test: group differences and correlations.</span></span>
-<span id="cb4-15"><a aria-label="15"></a></span>
-<span id="cb4-16"><a aria-label="16"></a><span class="st">## Output</span></span>
-<span id="cb4-17"><a aria-label="17"></a><span class="st">- Format: notebook or web page.</span></span>
-<span id="cb4-18"><a aria-label="18"></a><span class="st">- Check values (if known): &lt;e.g. Cohen's d = 0.58&gt;</span></span>
-<span id="cb4-19"><a aria-label="19"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Save both files into the folder layout that Antigravity looks for. The cell also packs the folder into <code>data-analysis-skill.zip</code>: in Colab, download that file from the Files panel and unzip it in your project folder (Colab hides folders whose names start with a dot).</p>
-<div id="9db27510" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb5-2"><a aria-label="2"></a></span>
-<span id="cb5-3"><a aria-label="3"></a>skill_dir <span class="op">=</span> Path(<span class="st">".agents/skills/data-analysis"</span>)</span>
-<span id="cb5-4"><a aria-label="4"></a>(skill_dir <span class="op">/</span> <span class="st">"references"</span>).mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-5"><a aria-label="5"></a>(skill_dir <span class="op">/</span> <span class="st">"SKILL.md"</span>).write_text(skill_md)</span>
-<span id="cb5-6"><a aria-label="6"></a>(skill_dir <span class="op">/</span> <span class="st">"references"</span> <span class="op">/</span> <span class="st">"spec-template.md"</span>).write_text(spec_template)</span>
-<span id="cb5-7"><a aria-label="7"></a><span class="bu">print</span>(<span class="op">*</span><span class="bu">sorted</span>(p.as_posix() <span class="cf">for</span> p <span class="kw">in</span> skill_dir.rglob(<span class="st">"*"</span>)), sep<span class="op">=</span><span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb5-8"><a aria-label="8"></a></span>
-<span id="cb5-9"><a aria-label="9"></a><span class="im">import</span> shutil</span>
-<span id="cb5-10"><a aria-label="10"></a>shutil.make_archive(<span class="st">"data-analysis-skill"</span>, <span class="st">"zip"</span>, root_dir<span class="op">=</span><span class="st">"."</span>, base_dir<span class="op">=</span><span class="st">".agents"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>What to notice:</p>
+<ul>
+<li>The <strong>description</strong> says what the skill does <em>and</em> when to use it (“Use when adapting a supplied HTML app …”), so the agent can pick it by itself.</li>
+<li>The <strong>body</strong> is a procedure with checks, not code: inspect first, keep what works, build the PWA files, make it work offline and on mobile, then validate.</li>
+<li>The <strong>Netlify details</strong> live in <code>references/netlify.md</code>, and the skill says to read that file only when the host is Netlify — progressive disclosure (section 1.3).</li>
+<li>A <strong>script</strong> checks what instructions alone cannot: <code>scripts/validate_pwa.py</code> tests the manifest, the icon sizes and the service worker.</li>
+<li>It asks for <strong>honest reporting</strong>: the agent must say whether the app is only <em>prepared</em> for deployment or actually <em>deployed and live</em>.</li>
+</ul>
 </section>
 <section id="use-the-skill" class="slide level2" data-number="1.6">
 <h2><span class="header-section-number">1.6</span> Use the skill</h2>
-<p>Open the project folder in Antigravity, check that the skill is listed with <code>/skills</code>, and try it both ways — by name and in your own words:</p>
-<div id="84672dc8" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb6-2"><a aria-label="2"></a><span class="st">/data-analysis https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
-<span id="cb6-3"><a aria-label="3"></a><span class="st">ANALYSIS-SPEC.md, as a notebook</span></span>
-<span id="cb6-4"><a aria-label="4"></a><span class="st">"""</span></span>
-<span id="cb6-5"><a aria-label="5"></a></span>
-<span id="cb6-6"><a aria-label="6"></a>own_words <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb6-7"><a aria-label="7"></a><span class="st">I have the TPB experiment data in komp014-tpb-exp-n100.tsv. Can you analyse whether</span></span>
-<span id="cb6-8"><a aria-label="8"></a><span class="st">the message condition affects intention, and make it a web page?</span></span>
-<span id="cb6-9"><a aria-label="9"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Download <a href="https://de-code-ai.netlify.app/agentic-ai/skill-html-pwa.zip">skill-html-pwa.zip</a> (or browse the files on <a href="https://github.com/nils-holmberg/de-code/tree/main/web/agentic-ai/skill-html-pwa">GitHub</a>), read <code>SKILL.md</code> and the script first (section 1.4), and unzip it into <code>.agents/skills/</code> in a project folder. Check that Antigravity lists it with <code>/skills</code>, then try it both ways — by name and in your own words — on the word-cloud app from sessions 3 and 4:</p>
+<div id="44f9def6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="st">/skill-html-pwa Turn wordcloud.html into an installable PWA that will be hosted</span></span>
+<span id="cb4-3"><a aria-label="3"></a><span class="st">at https://&lt;your-site&gt;.netlify.app/apps/wordcloud/</span></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="st">"""</span></span>
+<span id="cb4-5"><a aria-label="5"></a></span>
+<span id="cb4-6"><a aria-label="6"></a>own_words <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb4-7"><a aria-label="7"></a><span class="st">Make my word-cloud page installable on my phone, so it also opens without internet.</span></span>
+<span id="cb4-8"><a aria-label="8"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Check the first result against session 1: Cohen’s <em>d</em> ≈ 0.58 for the group difference and <em>r</em> ≈ .41 for both indices. For the second request there is no spec yet, so the skill should first draft one from the data and ask you to approve it — that is step “Inputs” doing its job.</p>
+<p>A good run ends with the validator’s output and a clear statement: is the app only <em>prepared</em> for deployment, or <em>deployed and live</em>? The word-cloud app loads its libraries from a CDN, so also check what the agent says about offline use — the skill tells it not to claim offline support it has not tested.</p>
 </section></section>
 <section>
 <section id="mcp-model-context-protocol" class="title-slide slide level1 center" data-number="2">
@@ -593,65 +620,65 @@ nils.holmberg@iko.lu.se
 <section id="build-a-minimal-mcp-server" class="slide level2" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> Build a minimal MCP server</h2>
 <p>A server in Python takes a few lines with the official <a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a>. Each tool is an ordinary function: its name, type hints and docstring tell the agent what it does and which inputs it takes. This server offers two of the session 1 analyses as tools, plus the dataset’s codebook as a resource:</p>
-<div id="9393c425" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
-<span id="cb7-2"><a aria-label="2"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
-<span id="cb7-3"><a aria-label="3"></a><span class="st">import pandas as pd</span></span>
-<span id="cb7-4"><a aria-label="4"></a><span class="st">from scipy import stats</span></span>
-<span id="cb7-5"><a aria-label="5"></a><span class="st">from mcp.server import MCPServer</span></span>
-<span id="cb7-6"><a aria-label="6"></a></span>
-<span id="cb7-7"><a aria-label="7"></a><span class="st">mcp = MCPServer("komp014")</span></span>
-<span id="cb7-8"><a aria-label="8"></a></span>
-<span id="cb7-9"><a aria-label="9"></a></span>
-<span id="cb7-10"><a aria-label="10"></a><span class="st">@mcp.tool()</span></span>
-<span id="cb7-11"><a aria-label="11"></a><span class="st">def describe_tsv(url: str) -&gt; dict:</span></span>
-<span id="cb7-12"><a aria-label="12"></a><span class="st">    """Rows, columns and the mean of every numeric column of a .tsv file."""</span></span>
-<span id="cb7-13"><a aria-label="13"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
-<span id="cb7-14"><a aria-label="14"></a><span class="st">    means = df.select_dtypes("number").mean().round(2)</span></span>
-<span id="cb7-15"><a aria-label="15"></a><span class="st">    return {"rows": len(df), "columns": list(df.columns), "means": means.to_dict()}</span></span>
-<span id="cb7-16"><a aria-label="16"></a></span>
-<span id="cb7-17"><a aria-label="17"></a></span>
-<span id="cb7-18"><a aria-label="18"></a><span class="st">@mcp.tool()</span></span>
-<span id="cb7-19"><a aria-label="19"></a><span class="st">def group_difference(url: str, group: str, outcome: str) -&gt; dict:</span></span>
-<span id="cb7-20"><a aria-label="20"></a><span class="st">    """Welch t-test and Cohen's d for the outcome between the two levels of group."""</span></span>
-<span id="cb7-21"><a aria-label="21"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
-<span id="cb7-22"><a aria-label="22"></a><span class="st">    a, b = [g[outcome] for _, g in df.groupby(group)]</span></span>
-<span id="cb7-23"><a aria-label="23"></a><span class="st">    t, p = stats.ttest_ind(a, b, equal_var=False)</span></span>
-<span id="cb7-24"><a aria-label="24"></a><span class="st">    sd = ((a.var() * (len(a) - 1) + b.var() * (len(b) - 1)) / (len(a) + len(b) - 2)) ** 0.5</span></span>
-<span id="cb7-25"><a aria-label="25"></a><span class="st">    d = (a.mean() - b.mean()) / sd</span></span>
-<span id="cb7-26"><a aria-label="26"></a><span class="st">    return {"t": round(float(t), 2), "p": round(float(p), 4), "d": round(float(d), 2)}</span></span>
-<span id="cb7-27"><a aria-label="27"></a></span>
-<span id="cb7-28"><a aria-label="28"></a></span>
-<span id="cb7-29"><a aria-label="29"></a><span class="st">@mcp.resource("komp014://codebook")</span></span>
-<span id="cb7-30"><a aria-label="30"></a><span class="st">def codebook() -&gt; str:</span></span>
-<span id="cb7-31"><a aria-label="31"></a><span class="st">    """What the columns of the komp014 toy dataset mean."""</span></span>
-<span id="cb7-32"><a aria-label="32"></a><span class="st">    return ("IV_CAT_GROUP: category1/category2. Items 1-5: IV1_ITEM1, IV1_ITEM2, "</span></span>
-<span id="cb7-33"><a aria-label="33"></a><span class="st">            "IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2. Indices are item means: "</span></span>
-<span id="cb7-34"><a aria-label="34"></a><span class="st">            "IV_INDEX1, IV_INDEX2, DV_INDEX (outcome).")</span></span>
-<span id="cb7-35"><a aria-label="35"></a></span>
-<span id="cb7-36"><a aria-label="36"></a></span>
-<span id="cb7-37"><a aria-label="37"></a><span class="st">if __name__ == "__main__":</span></span>
-<span id="cb7-38"><a aria-label="38"></a><span class="st">    mcp.run()  # local server: talks to the host over stdin/stdout</span></span>
-<span id="cb7-39"><a aria-label="39"></a><span class="st">'''</span></span>
-<span id="cb7-40"><a aria-label="40"></a></span>
-<span id="cb7-41"><a aria-label="41"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"komp014_server.py"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-42"><a aria-label="42"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="17fee4b4" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb5-2"><a aria-label="2"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
+<span id="cb5-3"><a aria-label="3"></a><span class="st">import pandas as pd</span></span>
+<span id="cb5-4"><a aria-label="4"></a><span class="st">from scipy import stats</span></span>
+<span id="cb5-5"><a aria-label="5"></a><span class="st">from mcp.server import MCPServer</span></span>
+<span id="cb5-6"><a aria-label="6"></a></span>
+<span id="cb5-7"><a aria-label="7"></a><span class="st">mcp = MCPServer("komp014")</span></span>
+<span id="cb5-8"><a aria-label="8"></a></span>
+<span id="cb5-9"><a aria-label="9"></a></span>
+<span id="cb5-10"><a aria-label="10"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb5-11"><a aria-label="11"></a><span class="st">def describe_tsv(url: str) -&gt; dict:</span></span>
+<span id="cb5-12"><a aria-label="12"></a><span class="st">    """Rows, columns and the mean of every numeric column of a .tsv file."""</span></span>
+<span id="cb5-13"><a aria-label="13"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
+<span id="cb5-14"><a aria-label="14"></a><span class="st">    means = df.select_dtypes("number").mean().round(2)</span></span>
+<span id="cb5-15"><a aria-label="15"></a><span class="st">    return {"rows": len(df), "columns": list(df.columns), "means": means.to_dict()}</span></span>
+<span id="cb5-16"><a aria-label="16"></a></span>
+<span id="cb5-17"><a aria-label="17"></a></span>
+<span id="cb5-18"><a aria-label="18"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb5-19"><a aria-label="19"></a><span class="st">def group_difference(url: str, group: str, outcome: str) -&gt; dict:</span></span>
+<span id="cb5-20"><a aria-label="20"></a><span class="st">    """Welch t-test and Cohen's d for the outcome between the two levels of group."""</span></span>
+<span id="cb5-21"><a aria-label="21"></a><span class="st">    df = pd.read_csv(url, sep="</span><span class="ch">\\</span><span class="st">t")</span></span>
+<span id="cb5-22"><a aria-label="22"></a><span class="st">    a, b = [g[outcome] for _, g in df.groupby(group)]</span></span>
+<span id="cb5-23"><a aria-label="23"></a><span class="st">    t, p = stats.ttest_ind(a, b, equal_var=False)</span></span>
+<span id="cb5-24"><a aria-label="24"></a><span class="st">    sd = ((a.var() * (len(a) - 1) + b.var() * (len(b) - 1)) / (len(a) + len(b) - 2)) ** 0.5</span></span>
+<span id="cb5-25"><a aria-label="25"></a><span class="st">    d = (a.mean() - b.mean()) / sd</span></span>
+<span id="cb5-26"><a aria-label="26"></a><span class="st">    return {"t": round(float(t), 2), "p": round(float(p), 4), "d": round(float(d), 2)}</span></span>
+<span id="cb5-27"><a aria-label="27"></a></span>
+<span id="cb5-28"><a aria-label="28"></a></span>
+<span id="cb5-29"><a aria-label="29"></a><span class="st">@mcp.resource("komp014://codebook")</span></span>
+<span id="cb5-30"><a aria-label="30"></a><span class="st">def codebook() -&gt; str:</span></span>
+<span id="cb5-31"><a aria-label="31"></a><span class="st">    """What the columns of the komp014 toy dataset mean."""</span></span>
+<span id="cb5-32"><a aria-label="32"></a><span class="st">    return ("IV_CAT_GROUP: category1/category2. Items 1-5: IV1_ITEM1, IV1_ITEM2, "</span></span>
+<span id="cb5-33"><a aria-label="33"></a><span class="st">            "IV2_ITEM1, IV2_ITEM2, DV_ITEM1, DV_ITEM2. Indices are item means: "</span></span>
+<span id="cb5-34"><a aria-label="34"></a><span class="st">            "IV_INDEX1, IV_INDEX2, DV_INDEX (outcome).")</span></span>
+<span id="cb5-35"><a aria-label="35"></a></span>
+<span id="cb5-36"><a aria-label="36"></a></span>
+<span id="cb5-37"><a aria-label="37"></a><span class="st">if __name__ == "__main__":</span></span>
+<span id="cb5-38"><a aria-label="38"></a><span class="st">    mcp.run()  # local server: talks to the host over stdin/stdout</span></span>
+<span id="cb5-39"><a aria-label="39"></a><span class="st">'''</span></span>
+<span id="cb5-40"><a aria-label="40"></a></span>
+<span id="cb5-41"><a aria-label="41"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"komp014_server.py"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb5-42"><a aria-label="42"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To use it, you need Python with the <code>mcp</code> package on your own computer (MCP servers run next to the agent, not in Colab). Try the server in the <strong>MCP Inspector</strong>, a web page where you can call its tools by hand, then add it to Antigravity and check that it is listed:</p>
-<div id="174f5bcd" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
-<span id="cb8-2"><a aria-label="2"></a><span class="op">!</span>mcp dev komp014_server.py</span>
-<span id="cb8-3"><a aria-label="3"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
-<span id="cb8-4"><a aria-label="4"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4c70d286" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
+<span id="cb6-2"><a aria-label="2"></a><span class="op">!</span>mcp dev komp014_server.py</span>
+<span id="cb6-3"><a aria-label="3"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
+<span id="cb6-4"><a aria-label="4"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then ask the agent something only the server can answer quickly:</p>
-<div id="d0aa5ff1" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb9-2"><a aria-label="2"></a><span class="st">Use the komp014 tools: describe</span></span>
-<span id="cb9-3"><a aria-label="3"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
-<span id="cb9-4"><a aria-label="4"></a><span class="st">and test whether DV_INDEX differs between the IV_CAT_GROUP levels.</span></span>
-<span id="cb9-5"><a aria-label="5"></a><span class="st">Explain the result in two sentences.</span></span>
-<span id="cb9-6"><a aria-label="6"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="30162dc7" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a aria-label="2"></a><span class="st">Use the komp014 tools: describe</span></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="st">and test whether DV_INDEX differs between the IV_CAT_GROUP levels.</span></span>
+<span id="cb7-5"><a aria-label="5"></a><span class="st">Explain the result in two sentences.</span></span>
+<span id="cb7-6"><a aria-label="6"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The answer should report a Cohen’s <em>d</em> of size 0.58 (its sign shows which group scores higher) — the same effect as in session 1, now computed by a tool the agent called.</p>
 </section>
@@ -728,13 +755,14 @@ nils.holmberg@iko.lu.se
 </section>
 <section id="a-skill-that-uses-mcp" class="slide level2" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> A skill that uses MCP</h2>
-<p>Skills and MCP combine naturally. Add one line to the data analysis skill’s steps, and the agent uses the komp014 server for a quick first look before it writes the full analysis:</p>
-<div id="39ba49c5" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a>skill_md <span class="op">=</span> skill_md.replace(</span>
-<span id="cb10-2"><a aria-label="2"></a>    <span class="st">"2. Inspect the data:"</span>,</span>
-<span id="cb10-3"><a aria-label="3"></a>    <span class="st">"2. If the komp014 MCP tools are available, call describe_tsv first.</span><span class="ch">\n</span><span class="st">"</span></span>
-<span id="cb10-4"><a aria-label="4"></a>    <span class="st">"   Inspect the data:"</span>,</span>
-<span id="cb10-5"><a aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Skills and MCP combine naturally. The PWA skill already asks the agent to “render the live URL at desktop and mobile sizes” — but an agent can only do that if it has a browser. A browser MCP server from section 2.5 gives it one. Add a short section to the skill, and the agent uses those tools when they are there:</p>
+<div id="139edfa9" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>skill_md <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a aria-label="2"></a><span class="st">## With browser tools</span></span>
+<span id="cb8-3"><a aria-label="3"></a><span class="st">If a Chrome DevTools or Playwright MCP server is available, open the live URL at</span></span>
+<span id="cb8-4"><a aria-label="4"></a><span class="st">390 px and 1280 px width, check the console for errors, and confirm that the</span></span>
+<span id="cb8-5"><a aria-label="5"></a><span class="st">service worker is registered.</span></span>
+<span id="cb8-6"><a aria-label="6"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The skill holds the <em>procedure</em>, the server provides the <em>tool</em>, and AGENTS.md still sets the <em>rules</em> — each part stays small and can be reused on its own. Antigravity can also bundle skills, rules and MCP servers into one installable <strong>plugin</strong> (<code>/plugin</code>), which is how teams share a complete setup.</p>
 </section>

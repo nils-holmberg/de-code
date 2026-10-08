@@ -45,13 +45,11 @@ Create physical, host-served files rather than Blob URLs:
 
 For an app hosted below the domain root, default to relative paths:
 
-```json
-{
-  "id": "./",
-  "start_url": "./",
-  "scope": "./"
-}
-```
+    {
+      "id": "./",
+      "start_url": "./",
+      "scope": "./"
+    }
 
 Link resources with `./...` and register `./sw.js` with scope `./`. Avoid root-relative paths such as `/icons/icon.png` unless the asset intentionally lives at the origin root. A service worker cannot be registered from a `blob:` URL.
 
@@ -62,6 +60,8 @@ The manifest should include the requested name, a short name that fits launcher 
 Cache the local application shell during service-worker installation and provide a cached navigation fallback. Use a site-specific cache namespace and increment its version when shell files change.
 
 When removing old caches, delete only caches owned by this app. Cache storage is origin-wide even though service-worker control is scoped; never delete every cache on a host that may contain sibling apps.
+
+Browser storage is origin-wide as well: `localStorage`, `sessionStorage` and IndexedDB are shared by every app on the host. Give new keys and database names an app-specific prefix, such as `regexcraft_pattern`, and never clear all storage. Keep the source app's existing keys unless you also migrate their values, so users do not lose saved state.
 
 Prefer local CSS, JavaScript, fonts, and icons for dependable offline startup. If the source relies on CDNs and retaining them is proportionate, explain that the first visit must be online and use runtime caching deliberately. Do not claim complete offline behavior until it has been tested with network access disabled.
 
@@ -88,9 +88,7 @@ For Netlify-specific placement, MIME headers, and verification, read [references
 
 Run the bundled validator:
 
-```bash
-python scripts/validate_pwa.py /path/to/pwa
-```
+    python scripts/validate_pwa.py /path/to/pwa
 
 Then serve the app over HTTP; `file://` cannot validate service workers. Check at least one desktop and one narrow mobile viewport, exercise the app's primary interaction, and inspect the actual screenshots. Verify the manifest and every icon URL, service-worker registration and cache creation, reload behavior, and offline startup after an online load.
 
