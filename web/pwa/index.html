@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-zinc-950 text-zinc-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>de-code regex — Live regex trainer</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#32cd32">
+  <meta name="description" content="de-code regex is an interactive regular expression trainer, tester, and challenge runner.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="de-code regex">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/avatar.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #18181b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3f3f46;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #52525b;
+    }
+
+    /* Live Highlight Text Overlay Alignment */
+    .editor-container {
+      position: relative;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .backdrop, .textarea-input {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      padding: 0.875rem;
+      border-radius: 0.75rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      box-sizing: border-box;
+    }
+
+    .backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      color: transparent;
+      overflow: auto;
+      pointer-events: none;
+      background-color: transparent;
+    }
+
+    .textarea-input {
+      position: relative;
+      z-index: 2;
+      background: transparent;
+      color: #f4f4f5;
+      caret-color: limegreen;
+      resize: vertical;
+      border: 1px solid #3f3f46;
+    }
+
+    .textarea-input:focus {
+      outline: none;
+      border-color: limegreen;
+      box-shadow: 0 0 0 2px rgba(50, 205, 50, 0.25);
+    }
+
+    /* Highlight Match Marks */
+    mark.highlight-even {
+      background-color: limegreen;
+      background-color: color-mix(in srgb, limegreen 38%, transparent);
+      color: transparent;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px rgba(50, 205, 50, 0.72);
+    }
+    
+    mark.highlight-odd {
+      background-color: limegreen;
+      background-color: color-mix(in srgb, limegreen 24%, transparent);
+      color: transparent;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px rgba(50, 205, 50, 0.5);
+    }
+
+    /* Hide horizontal scrollbar for symbol bar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* de-code brand: dark graphite surfaces with HTML limegreen highlights. */
+    :root { --accent: limegreen; }
+    ::selection { background: limegreen; color: #09090b; }
+    .brand-logo { width: 2.5rem; height: 2.5rem; border-radius: 0.75rem; }
+    .bg-indigo-600 { background-color: limegreen !important; color: #09090b !important; }
+    .bg-indigo-500\/20, .bg-indigo-950\/80, .from-indigo-900\/40 { background-color: rgba(50, 205, 50, 0.12) !important; }
+    .text-indigo-200, .text-indigo-300, .text-indigo-400,
+    .text-sky-300, .text-sky-400, .text-purple-300 { color: limegreen !important; }
+    .border-indigo-500\/30, .border-indigo-700\/50, .border-indigo-800\/40 { border-color: rgba(50, 205, 50, 0.38) !important; }
+    .focus\:border-indigo-500:focus { border-color: limegreen !important; }
+    .focus\:ring-indigo-500:focus { --tw-ring-color: rgba(50, 205, 50, 0.35) !important; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid limegreen;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col bg-zinc-950 text-zinc-100 font-sans antialiased overflow-hidden">
+
+  <!-- Header Bar -->
+  <header class="bg-zinc-800/90 backdrop-blur border-b border-zinc-700/60 px-4 py-3 flex items-center justify-between z-30 shrink-0">
+    <div class="flex items-center gap-2.5">
+      <img class="brand-logo" src="./icons/avatar.svg" alt="de-code logo" width="40" height="40">
+      <div>
+        <h1 class="font-bold text-base md:text-lg tracking-tight text-white flex items-center gap-2">
+          de-code regex
+        </h1>
+        <p class="text-xs text-zinc-400">Democratizing coding with AI</p>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <nav class="flex bg-zinc-900/80 p-1 rounded-xl border border-zinc-700/60 text-xs font-medium">
+      <button id="tab-sandbox" onclick="switchTab('sandbox')" class="px-3 py-1.5 rounded-lg transition-all text-white bg-indigo-600 font-semibold shadow-sm flex items-center gap-1.5">
+        <i class="fa-solid fa-code"></i> <span class="hidden sm:inline">Sandbox</span>
+      </button>
+      <button id="tab-challenges" onclick="switchTab('challenges')" class="px-3 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white flex items-center gap-1.5">
+        <i class="fa-solid fa-trophy"></i> <span class="hidden sm:inline">Challenges</span>
+      </button>
+      <button id="tab-cheatsheet" onclick="switchTab('cheatsheet')" class="px-3 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white flex items-center gap-1.5">
+        <i class="fa-solid fa-book"></i> <span class="hidden sm:inline">Cheat Sheet</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 relative overflow-hidden flex flex-col">
+    
+    <!-- ==================== VIEW 1: SANDBOX MODE ==================== -->
+    <section id="view-sandbox" class="flex-1 flex flex-col h-full overflow-hidden">
+      
+      <!-- Top Fixed Regex Control Panel -->
+      <div class="bg-zinc-800/40 border-b border-zinc-800 p-3 md:p-4 space-y-3 shrink-0">
+        
+        <!-- Regex Input Box -->
+        <div class="flex flex-col sm:flex-row gap-2">
+          <div class="relative flex-1">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500 font-mono text-lg">/</span>
+            <input type="text" id="regex-pattern" placeholder="Enter regex pattern e.g. ([a-zA-Z0-9._%+-]+)@[a-zA-Z0-9.-]+" 
+                   class="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl pl-7 pr-12 py-2.5 font-mono text-sm sm:text-base text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+            <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-500 font-mono text-lg">/</span>
+          </div>
+
+          <!-- Flags & Actions -->
+          <div class="flex items-center gap-2 justify-between sm:justify-start">
+            <div class="flex items-center bg-zinc-900 rounded-xl p-1 border border-zinc-700/80 text-xs font-mono">
+              <button onclick="toggleFlag('g')" id="flag-g" class="px-2.5 py-1.5 rounded-lg transition-all bg-indigo-600 text-white font-bold" title="Global match">g</button>
+              <button onclick="toggleFlag('i')" id="flag-i" class="px-2.5 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white" title="Case insensitive">i</button>
+              <button onclick="toggleFlag('m')" id="flag-m" class="px-2.5 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white" title="Multiline">m</button>
+              <button onclick="toggleFlag('s')" id="flag-s" class="px-2.5 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white" title="Dot matches all">s</button>
+            </div>
+
+            <div id="match-counter" class="px-3 py-2 bg-zinc-900 border border-zinc-700/80 rounded-xl text-xs font-medium text-zinc-300 flex items-center gap-1.5 shrink-0">
+              <span id="match-count-num" class="font-bold text-sky-400 text-sm">0</span> matches
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Quick Symbol Toolbar -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 text-xs font-mono">
+          <span class="text-zinc-500 text-[10px] uppercase tracking-wider font-sans font-semibold mr-1 shrink-0">Quick Insert:</span>
+          <button onclick="insertSymbol('\\d')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-sky-300 rounded-lg shrink-0">\d</button>
+          <button onclick="insertSymbol('\\w')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-sky-300 rounded-lg shrink-0">\w</button>
+          <button onclick="insertSymbol('\\s')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-sky-300 rounded-lg shrink-0">\s</button>
+          <button onclick="insertSymbol('+')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-indigo-300 rounded-lg shrink-0">+</button>
+          <button onclick="insertSymbol('*')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-indigo-300 rounded-lg shrink-0">*</button>
+          <button onclick="insertSymbol('?')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-indigo-300 rounded-lg shrink-0">?</button>
+          <button onclick="insertSymbol('^')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-emerald-300 rounded-lg shrink-0">^</button>
+          <button onclick="insertSymbol('$')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-emerald-300 rounded-lg shrink-0">$</button>
+          <button onclick="insertSymbol('()')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-purple-300 rounded-lg shrink-0">()</button>
+          <button onclick="insertSymbol('[]')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-purple-300 rounded-lg shrink-0">[]</button>
+          <button onclick="insertSymbol('{}')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-purple-300 rounded-lg shrink-0">{}</button>
+          <button onclick="insertSymbol('|')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-indigo-300 rounded-lg shrink-0">|</button>
+          <button onclick="insertSymbol('.')" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-indigo-300 rounded-lg shrink-0">.</button>
+        </div>
+
+        <!-- Error/Warning Banner -->
+        <div id="regex-error" class="hidden p-2.5 bg-rose-950/60 border border-rose-800/80 rounded-xl text-rose-300 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-rose-400 text-sm shrink-0"></i>
+          <span id="error-message" class="font-mono">Invalid Regular Expression syntax</span>
+        </div>
+      </div>
+
+      <!-- Bottom Split Editor and Details Area -->
+      <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 overflow-y-auto min-h-0">
+        
+        <!-- Editor Card -->
+        <div class="bg-zinc-800/60 rounded-2xl border border-zinc-800 p-4 flex flex-col min-h-[250px]">
+          <div class="flex justify-between items-center mb-2.5">
+            <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-align-left text-indigo-400"></i> Sample Test Text
+            </label>
+            <button onclick="resetSampleText()" class="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+
+          <!-- Synchronized Overlay Editor -->
+          <div class="editor-container flex-1">
+            <div id="backdrop" class="backdrop" aria-hidden="true"></div>
+            <textarea id="sample-text" class="textarea-input" spellcheck="false" placeholder="Enter text here to test against regex..."></textarea>
+          </div>
+        </div>
+
+        <!-- Match Breakdown Card -->
+        <div class="bg-zinc-800/60 rounded-2xl border border-zinc-800 p-4 flex flex-col h-full min-h-[250px] overflow-hidden">
+          <div class="flex justify-between items-center mb-2.5 shrink-0">
+            <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-sky-400"></i> Match & Group Breakdown
+            </label>
+            <span id="breakdown-subtitle" class="text-xs text-zinc-500">Real-time analysis</span>
+          </div>
+
+          <div id="breakdown-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1 font-mono text-xs">
+            <!-- Dynamic Match Cards inserted via JS -->
+            <div class="text-zinc-500 italic p-4 text-center">No matches found for current pattern.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: CHALLENGES MODE ==================== -->
+    <section id="view-challenges" class="hidden flex-1 p-4 md:p-6 overflow-y-auto">
+      <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- Challenge Header -->
+        <div class="bg-gradient-to-r from-indigo-900/40 to-zinc-800 p-5 rounded-2xl border border-indigo-800/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-flag-checkered text-indigo-400"></i> Interactive Regex Challenges
+            </h2>
+            <p class="text-sm text-zinc-400 mt-1">Practice solving real-world data extraction and validation problems.</p>
+          </div>
+          <div id="challenge-score" class="px-4 py-2 bg-indigo-950/80 border border-indigo-700/50 rounded-xl text-xs text-indigo-200 flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+            Progress: <span id="completed-count" class="font-bold text-white text-sm">0</span> / <span id="total-count">0</span> Solved
+          </div>
+        </div>
+
+        <!-- Active Challenge Sandbox Card -->
+        <div class="bg-zinc-800/70 border border-zinc-700/80 rounded-2xl p-5 space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <span id="ch-difficulty" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Easy</span>
+              <h3 id="ch-title" class="text-lg font-bold text-white mt-1">1. Match Email Addresses</h3>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="prevChallenge()" class="p-2 bg-zinc-700 hover:bg-zinc-600 rounded-xl text-zinc-200 transition-all"><i class="fa-solid fa-arrow-left"></i></button>
+              <button onclick="nextChallenge()" class="p-2 bg-zinc-700 hover:bg-zinc-600 rounded-xl text-zinc-200 transition-all"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <p id="ch-description" class="text-sm text-zinc-300 leading-relaxed">Write a pattern that captures standard email addresses from text.</p>
+
+          <!-- Input for Challenge -->
+          <div class="space-y-2 pt-2">
+            <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Your Regex Pattern</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500 font-mono">/</span>
+              <input type="text" id="ch-input" oninput="checkChallenge()" placeholder="Type your expression..." 
+                     class="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-7 pr-10 py-2.5 font-mono text-sm text-zinc-100 focus:outline-none focus:border-indigo-500">
+              <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-zinc-500 font-mono">/g</span>
+            </div>
+          </div>
+
+          <!-- Challenge Target Test Text -->
+          <div class="space-y-2">
+            <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Test Sample</label>
+            <div id="ch-sample" class="p-3 bg-zinc-900 border border-zinc-800 rounded-xl font-mono text-xs text-zinc-300 whitespace-pre-wrap leading-relaxed"></div>
+          </div>
+
+          <!-- Status Banner -->
+          <div id="ch-status" class="p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-zinc-900/80 border-zinc-800 text-zinc-400">
+            <i class="fa-solid fa-circle-info text-indigo-400"></i> Enter a pattern matching all expected targets.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: CHEAT SHEET MODE ==================== -->
+    <section id="view-cheatsheet" class="hidden flex-1 p-4 md:p-6 overflow-y-auto">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-book-open text-sky-400"></i> Regex Syntax Reference
+          </h2>
+          <p class="text-sm text-zinc-400 mt-1">Quick guide to regular expression character classes, quantifiers, and anchors.</p>
+        </div>
+
+        <!-- Cheat Sheet Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Character Classes -->
+          <div class="bg-zinc-800/60 border border-zinc-800 rounded-2xl p-4 space-y-3">
+            <h3 class="text-sm font-bold text-sky-300 flex items-center gap-2 border-b border-zinc-700/60 pb-2">
+              <i class="fa-solid fa-font"></i> Character Classes
+            </h3>
+            <ul class="space-y-2 text-xs font-mono">
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">.</span>
+                <span class="text-zinc-300 font-sans">Any character except newline</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">\d</span>
+                <span class="text-zinc-300 font-sans">Digit [0-9]</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">\w</span>
+                <span class="text-zinc-300 font-sans">Word character [a-zA-Z0-9_]</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">\s</span>
+                <span class="text-zinc-300 font-sans">Whitespace (space, tab, newline)</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">[abc]</span>
+                <span class="text-zinc-300 font-sans">Any single character in set</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">[^abc]</span>
+                <span class="text-zinc-300 font-sans">Any single character NOT in set</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Quantifiers -->
+          <div class="bg-zinc-800/60 border border-zinc-800 rounded-2xl p-4 space-y-3">
+            <h3 class="text-sm font-bold text-purple-300 flex items-center gap-2 border-b border-zinc-700/60 pb-2">
+              <i class="fa-solid fa-arrows-left-right"></i> Quantifiers
+            </h3>
+            <ul class="space-y-2 text-xs font-mono">
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">*</span>
+                <span class="text-zinc-300 font-sans">0 or more occurrences</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">+</span>
+                <span class="text-zinc-300 font-sans">1 or more occurrences</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">?</span>
+                <span class="text-zinc-300 font-sans">0 or 1 occurrence (optional)</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">{3}</span>
+                <span class="text-zinc-300 font-sans">Exactly 3 times</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">{2,5}</span>
+                <span class="text-zinc-300 font-sans">Between 2 and 5 times</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Anchors & Logic -->
+          <div class="bg-zinc-800/60 border border-zinc-800 rounded-2xl p-4 space-y-3">
+            <h3 class="text-sm font-bold text-emerald-300 flex items-center gap-2 border-b border-zinc-700/60 pb-2">
+              <i class="fa-solid fa-anchor"></i> Anchors & Logic
+            </h3>
+            <ul class="space-y-2 text-xs font-mono">
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">^</span>
+                <span class="text-zinc-300 font-sans">Start of string/line</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">$</span>
+                <span class="text-zinc-300 font-sans">End of string/line</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">\b</span>
+                <span class="text-zinc-300 font-sans">Word boundary position</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">a|b</span>
+                <span class="text-zinc-300 font-sans">Matches either 'a' or 'b'</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Groups & Lookarounds -->
+          <div class="bg-zinc-800/60 border border-zinc-800 rounded-2xl p-4 space-y-3">
+            <h3 class="text-sm font-bold text-amber-300 flex items-center gap-2 border-b border-zinc-700/60 pb-2">
+              <i class="fa-solid fa-object-group"></i> Groups & Lookarounds
+            </h3>
+            <ul class="space-y-2 text-xs font-mono">
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">(abc)</span>
+                <span class="text-zinc-300 font-sans">Capturing group</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">(?:abc)</span>
+                <span class="text-zinc-300 font-sans">Non-capturing group</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">(?=abc)</span>
+                <span class="text-zinc-300 font-sans">Positive lookahead</span>
+              </li>
+              <li class="flex justify-between p-1.5 rounded hover:bg-zinc-700/40">
+                <span class="text-indigo-400 font-bold">(?!abc)</span>
+                <span class="text-zinc-300 font-sans">Negative lookahead</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // App State Management
+    let flags = { g: true, i: false, m: false, s: false };
+    const defaultSample = `Welcome to de-code regex!
+Reach out to developer@de-code.ai or support@domain.org for questions.
+Server IPs: 192.168.1.1, 10.0.0.254, and 127.0.0.1.
+Dates to log: 2026-10-08 and 2025-12-31.
+Call us at +1 (555) 234-5678 or 555-987-6543.`;
+
+    // Built-in Interactive Challenges
+    const challenges = [
+      {
+        id: 1,
+        title: "1. Match Email Addresses",
+        difficulty: "Easy",
+        description: "Write a pattern to extract standard email addresses.",
+        sample: "Contact us at support@example.com or john.doe@company.org for assistance.",
+        targetMatches: ["support@example.com", "john.doe@company.org"]
+      },
+      {
+        id: 2,
+        title: "2. Extract IPv4 Addresses",
+        difficulty: "Medium",
+        description: "Match valid IPv4 addresses (4 numbers separated by dots).",
+        sample: "Active servers: 192.168.0.1 and 10.0.0.1. Invalid: 999.999.999.",
+        targetMatches: ["192.168.0.1", "10.0.0.1"]
+      },
+      {
+        id: 3,
+        title: "3. Capture ISO Dates (YYYY-MM-DD)",
+        difficulty: "Medium",
+        description: "Extract dates in ISO format YYYY-MM-DD.",
+        sample: "Events scheduled for 2026-10-08 and 2024-01-15.",
+        targetMatches: ["2026-10-08", "2024-01-15"]
+      }
+    ];
+
+    let currentChallengeIndex = 0;
+    let completedChallenges = new Set();
+
+    // DOM Elements
+    const regexInput = document.getElementById('regex-pattern');
+    const sampleInput = document.getElementById('sample-text');
+    const backdrop = document.getElementById('backdrop');
+    const matchCountEl = document.getElementById('match-count-num');
+    const breakdownList = document.getElementById('breakdown-list');
+    const regexErrorBox = document.getElementById('regex-error');
+    const errorMessage = document.getElementById('error-message');
+
+    // On Load Initializers
+    window.addEventListener('DOMContentLoaded', () => {
+      // Load stored state if available
+      const savedRegex = localStorage.getItem('regexcraft_pattern');
+      const savedSample = localStorage.getItem('regexcraft_sample');
+      const savedCompleted = localStorage.getItem('regexcraft_completed');
+
+      regexInput.value = savedRegex !== null ? savedRegex : '([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)';
+      sampleInput.value = savedSample !== null ? savedSample : defaultSample;
+      
+      if (savedCompleted) {
+        completedChallenges = new Set(JSON.parse(savedCompleted));
+      }
+
+      // Event Listeners for Sandbox Sync
+      regexInput.addEventListener('input', updateEvaluation);
+      sampleInput.addEventListener('input', updateEvaluation);
+      sampleInput.addEventListener('scroll', syncScroll);
+
+      // Initialize UI
+      updateEvaluation();
+      initChallenges();
+    });
+
+    // Synchronize Scrolling between Textarea & Highlights
+    function syncScroll() {
+      backdrop.scrollTop = sampleInput.scrollTop;
+      backdrop.scrollLeft = sampleInput.scrollLeft;
+    }
+
+    // Toggle Regex Flags
+    function toggleFlag(flag) {
+      flags[flag] = !flags[flag];
+      const btn = document.getElementById(`flag-${flag}`);
+      if (flags[flag]) {
+        btn.className = "px-2.5 py-1.5 rounded-lg transition-all bg-indigo-600 text-white font-bold";
+      } else {
+        btn.className = "px-2.5 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white";
+      }
+      updateEvaluation();
+    }
+
+    // Quick Insert Symbol Helper
+    function insertSymbol(symbol) {
+      const start = regexInput.selectionStart;
+      const end = regexInput.selectionEnd;
+      const text = regexInput.value;
+      regexInput.value = text.substring(0, start) + symbol + text.substring(end);
+      regexInput.focus();
+      
+      // Move cursor inside brackets if paired
+      if (symbol === '()' || symbol === '[]' || symbol === '{}') {
+        regexInput.setSelectionRange(start + 1, start + 1);
+      } else {
+        regexInput.setSelectionRange(start + symbol.length, start + symbol.length);
+      }
+      
+      updateEvaluation();
+    }
+
+    // Reset Sample Text
+    function resetSampleText() {
+      sampleInput.value = defaultSample;
+      updateEvaluation();
+    }
+
+    // Core Live Evaluation Engine
+    function updateEvaluation() {
+      const pattern = regexInput.value;
+      const text = sampleInput.value;
+
+      // Save to localStorage
+      localStorage.setItem('regexcraft_pattern', pattern);
+      localStorage.setItem('regexcraft_sample', text);
+
+      if (!pattern) {
+        backdrop.innerHTML = escapeHtml(text);
+        matchCountEl.textContent = '0';
+        breakdownList.innerHTML = `<div class="text-zinc-500 italic p-4 text-center">Type a pattern above to begin matching.</div>`;
+        regexErrorBox.classList.add('hidden');
+        return;
+      }
+
+      let activeFlags = '';
+      if (flags.g) activeFlags += 'g';
+      if (flags.i) activeFlags += 'i';
+      if (flags.m) activeFlags += 'm';
+      if (flags.s) activeFlags += 's';
+
+      try {
+        const regex = new RegExp(pattern, activeFlags);
+        regexErrorBox.classList.add('hidden');
+
+        // Collect Matches
+        const matches = [];
+        if (flags.g) {
+          let match;
+          let guard = 0;
+          while ((match = regex.exec(text)) !== null && guard < 1000) {
+            matches.push(match);
+            if (match.index === regex.lastIndex) {
+              regex.lastIndex++; // Prevent infinite loops on zero-width matches
+            }
+            guard++;
+          }
+        } else {
+          const match = regex.exec(text);
+          if (match) matches.push(match);
+        }
+
+        matchCountEl.textContent = matches.length;
+
+        // Render Highlights Backdrop
+        renderHighlights(text, matches);
+
+        // Render Group Breakdown
+        renderBreakdown(matches);
+
+      } catch (err) {
+        regexErrorBox.classList.remove('hidden');
+        errorMessage.textContent = err.message;
+        backdrop.innerHTML = escapeHtml(text);
+        matchCountEl.textContent = '0';
+        breakdownList.innerHTML = `<div class="text-rose-400 italic p-4 text-center">Invalid Regular Expression</div>`;
+      }
+    }
+
+    // Render Highlighting HTML
+    function renderHighlights(text, matches) {
+      if (matches.length === 0) {
+        backdrop.innerHTML = escapeHtml(text);
+        return;
+      }
+
+      let resultHTML = '';
+      let lastIndex = 0;
+
+      matches.forEach((match, idx) => {
+        const start = match.index;
+        const end = start + match[0].length;
+        const highlightClass = idx % 2 === 0 ? 'highlight-even' : 'highlight-odd';
+
+        resultHTML += escapeHtml(text.substring(lastIndex, start));
+        resultHTML += `<mark class="${highlightClass}">${escapeHtml(match[0])}</mark>`;
+        lastIndex = end;
+      });
+
+      resultHTML += escapeHtml(text.substring(lastIndex));
+      backdrop.innerHTML = resultHTML + '\n'; // Trailing newline sync
+    }
+
+    // Render Breakdown Drawer Cards
+    function renderBreakdown(matches) {
+      if (matches.length === 0) {
+        breakdownList.innerHTML = `<div class="text-zinc-500 italic p-4 text-center">No matches found.</div>`;
+        return;
+      }
+
+      let html = '';
+      matches.forEach((m, idx) => {
+        const matchStr = m[0];
+        const startIndex = m.index;
+        const endIndex = startIndex + matchStr.length;
+        const groups = m.slice(1);
+
+        html += `
+          <div class="bg-zinc-900/80 border border-zinc-700/60 rounded-xl p-3 space-y-2">
+            <div class="flex justify-between items-center text-xs border-b border-zinc-800 pb-1.5">
+              <span class="font-bold text-sky-400">Match #${idx + 1}</span>
+              <span class="text-zinc-500 text-[11px]">Index: ${startIndex}..${endIndex}</span>
+            </div>
+            <div class="bg-zinc-950 p-2 rounded-lg text-zinc-200 border border-zinc-800 break-all">
+              "${escapeHtml(matchStr)}"
+            </div>
+        `;
+
+        if (groups.length > 0) {
+          html += `<div class="pt-1 space-y-1">
+            <span class="text-[10px] uppercase font-sans font-bold text-zinc-500">Captured Groups:</span>`;
+          groups.forEach((g, gIdx) => {
+            html += `
+              <div class="flex justify-between items-center bg-zinc-800/50 px-2 py-1 rounded text-[11px]">
+                <span class="text-indigo-400">Group $${gIdx + 1}:</span>
+                <span class="text-zinc-300 font-mono">${g !== undefined ? `"${escapeHtml(g)}"` : '<span class="text-zinc-600">undefined</span>'}</span>
+              </div>
+            `;
+          });
+          html += `</div>`;
+        }
+
+        html += `</div>`;
+      });
+
+      breakdownList.innerHTML = html;
+    }
+
+    // Helper: Escape HTML Special Characters
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Navigation Tab Switcher
+    function switchTab(tab) {
+      document.getElementById('view-sandbox').classList.add('hidden');
+      document.getElementById('view-challenges').classList.add('hidden');
+      document.getElementById('view-cheatsheet').classList.add('hidden');
+
+      const tabs = ['sandbox', 'challenges', 'cheatsheet'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          btn.className = "px-3 py-1.5 rounded-lg transition-all text-white bg-indigo-600 font-semibold shadow-sm flex items-center gap-1.5";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg transition-all text-zinc-400 hover:text-white flex items-center gap-1.5";
+        }
+      });
+
+      document.getElementById(`view-${tab}`).classList.remove('hidden');
+    }
+
+    // Initialize Challenge Engine
+    function initChallenges() {
+      document.getElementById('total-count').textContent = challenges.length;
+      loadChallenge(currentChallengeIndex);
+      updateChallengeProgress();
+    }
+
+    function loadChallenge(index) {
+      const ch = challenges[index];
+      document.getElementById('ch-title').textContent = ch.title;
+      document.getElementById('ch-difficulty').textContent = ch.difficulty;
+      document.getElementById('ch-description').textContent = ch.description;
+      document.getElementById('ch-sample').textContent = ch.sample;
+      document.getElementById('ch-input').value = '';
+      
+      const statusBox = document.getElementById('ch-status');
+      statusBox.className = "p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-zinc-900/80 border-zinc-800 text-zinc-400";
+      statusBox.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-400"></i> Enter a pattern matching all expected targets.`;
+    }
+
+    function checkChallenge() {
+      const ch = challenges[currentChallengeIndex];
+      const val = document.getElementById('ch-input').value;
+      const statusBox = document.getElementById('ch-status');
+
+      if (!val) {
+        statusBox.className = "p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-zinc-900/80 border-zinc-800 text-zinc-400";
+        statusBox.innerHTML = `<i class="fa-solid fa-circle-info text-indigo-400"></i> Enter a pattern matching all expected targets.`;
+        return;
+      }
+
+      try {
+        const regex = new RegExp(val, 'g');
+        const matches = [];
+        let m;
+        while ((m = regex.exec(ch.sample)) !== null) {
+          matches.push(m[0]);
+          if (m.index === regex.lastIndex) regex.lastIndex++;
+        }
+
+        const isSuccess = JSON.stringify(matches) === JSON.stringify(ch.targetMatches);
+
+        if (isSuccess) {
+          statusBox.className = "p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-emerald-950/80 border-emerald-800 text-emerald-300";
+          statusBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> Success! Challenge completed!`;
+          completedChallenges.add(ch.id);
+          localStorage.setItem('regexcraft_completed', JSON.stringify(Array.from(completedChallenges)));
+          updateChallengeProgress();
+        } else {
+          statusBox.className = "p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-amber-950/80 border-amber-800 text-amber-300";
+          statusBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Matched (${matches.length}/${ch.targetMatches.length}). Keep trying!`;
+        }
+
+      } catch (err) {
+        statusBox.className = "p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 bg-rose-950/80 border-rose-800 text-rose-300";
+        statusBox.innerHTML = `<i class="fa-solid fa-xmark text-rose-400"></i> Invalid Regex syntax`;
+      }
+    }
+
+    function prevChallenge() {
+      if (currentChallengeIndex > 0) {
+        currentChallengeIndex--;
+        loadChallenge(currentChallengeIndex);
+      }
+    }
+
+    function nextChallenge() {
+      if (currentChallengeIndex < challenges.length - 1) {
+        currentChallengeIndex++;
+        loadChallenge(currentChallengeIndex);
+      }
+    }
+
+    function updateChallengeProgress() {
+      document.getElementById('completed-count').textContent = completedChallenges.size;
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' }).catch((error) => {
+          console.warn('Offline mode could not be enabled:', error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
