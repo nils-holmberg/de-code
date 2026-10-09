@@ -64,6 +64,14 @@ Adding again is safe in Antigravity and Codex (the entry is updated); Claude Cod
     claude mcp remove de-code-mcp
     codex mcp remove de-code-mcp
 
+## Updates
+
+Each time an agent starts the server, `uvx` asks GitHub for the newest commit. If the package
+changed, it downloads and builds the new version; otherwise it starts the cached copy. A
+pushed update therefore reaches users at their next agent start. To pin one version, add a
+commit or tag after the repository name, e.g.
+`git+https://github.com/nils-holmberg/de-code@fb37b6b#subdirectory=web/agentic-ai/mcps/de-code-mcp`.
+
 ChatGPT on the web only connects to remote MCP servers at a public HTTPS address, so it
 cannot start this local server. A hosted version would work there as a custom connector
 without authentication, since the server only reads public pages.
