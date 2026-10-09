@@ -44,3 +44,26 @@ or, with Python and this folder on your computer:
     agy mcp add de-code-mcp python /full/path/to/de_code_mcp.py
 
 Check with `agy mcp list`, or try the tools by hand in the MCP Inspector: `mcp dev de_code_mcp.py`.
+
+## Other agents
+
+The same command works in any MCP client; only the way to add it differs:
+
+    claude mcp add de-code-mcp -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
+    codex mcp add de-code-mcp -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
+
+The first start downloads the package and its dependencies. If an agent gives up waiting,
+run the `uvx` command once in a terminal (Ctrl+C to stop), then start the agent again.
+
+Adding again is safe in Antigravity and Codex (the entry is updated); Claude Code answers
+"already exists" and changes nothing, so remove the server first to replace it.
+
+## Remove it
+
+    agy mcp remove de-code-mcp
+    claude mcp remove de-code-mcp
+    codex mcp remove de-code-mcp
+
+ChatGPT on the web only connects to remote MCP servers at a public HTTPS address, so it
+cannot start this local server. A hosted version would work there as a custom connector
+without authentication, since the server only reads public pages.
