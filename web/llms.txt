@@ -3,6 +3,7 @@
 > Democratizing coding with AI: workshops, course material and small apps on data analysis, app building and agentic coding with AI.
 
 The full text of every page is in [https://de-code-ai.netlify.app/site/index.json](https://de-code-ai.netlify.app/site/index.json).
+Agents can search this site with the MCP server at https://de-code-ai.netlify.app/mcp (Streamable HTTP, no authentication).
 
 ## Home
 

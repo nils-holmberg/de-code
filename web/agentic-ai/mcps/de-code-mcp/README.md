@@ -19,7 +19,26 @@ The server reads the site's published content index,
 It is explained step by step in session 5 of the skill school,
 [section 2.5](https://de-code-ai.netlify.app/coding/skill-school/sessions/05-skills-mcp.html#an-mcp-server-for-this-website).
 
-## Run it
+## Use the hosted server (nothing to install)
+
+The same server runs online at `https://de-code-ai.netlify.app/mcp`, as a Netlify Function
+(a TypeScript port of `de_code_mcp.py`, in `netlify/functions/de-code-mcp.mts` of the
+repository). Add it to your agent:
+
+    agy mcp add de-code-mcp https://de-code-ai.netlify.app/mcp
+    claude mcp add --transport http de-code-mcp https://de-code-ai.netlify.app/mcp
+    codex mcp add de-code-mcp --url https://de-code-ai.netlify.app/mcp
+
+**ChatGPT on the web:** Settings → Apps & Connectors → Advanced settings → turn on
+Developer mode (paid plans). Then Apps & Connectors → Create: name `de-code-mcp`, MCP
+server URL `https://de-code-ai.netlify.app/mcp`, Authentication *No authentication*. Switch
+it on in a chat from the + menu.
+
+It needs no sign-in (it only reads public pages) and allows 60 requests a minute per visitor.
+
+## Run it locally
+
+Use the name `de-code-mcp-local`, so it does not clash with the hosted one.
 
 **With uv** (no Python setup and no download; [uv](https://docs.astral.sh/uv/) fetches what it needs):
 
@@ -33,24 +52,17 @@ It is explained step by step in session 5 of the skill school,
 **In Colab**, without installing anything locally: see the test cell in session 5, section 2.5.
 
 The server talks to its host over stdin/stdout, so starting it by hand just waits for input.
-Let the agent start it instead.
+Let the agent start it instead:
 
-## Add it to Antigravity
-
-    agy mcp add de-code-mcp uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
+    agy mcp add de-code-mcp-local uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
+    claude mcp add de-code-mcp-local -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
+    codex mcp add de-code-mcp-local -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
 
 or, with Python and this folder on your computer:
 
-    agy mcp add de-code-mcp python /full/path/to/de_code_mcp.py
+    agy mcp add de-code-mcp-local python /full/path/to/de_code_mcp.py
 
 Check with `agy mcp list`, or try the tools by hand in the MCP Inspector: `mcp dev de_code_mcp.py`.
-
-## Other agents
-
-The same command works in any MCP client; only the way to add it differs:
-
-    claude mcp add de-code-mcp -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
-    codex mcp add de-code-mcp -- uvx --from "git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp" de-code-mcp
 
 The first start downloads the package and its dependencies. If an agent gives up waiting,
 run the `uvx` command once in a terminal (Ctrl+C to stop), then start the agent again.
@@ -60,18 +72,19 @@ Adding again is safe in Antigravity and Codex (the entry is updated); Claude Cod
 
 ## Remove it
 
-    agy mcp remove de-code-mcp
+    agy mcp remove de-code-mcp            # or de-code-mcp-local
     claude mcp remove de-code-mcp
     codex mcp remove de-code-mcp
 
 ## Updates
 
-Each time an agent starts the server, `uvx` asks GitHub for the newest commit. If the package
-changed, it downloads and builds the new version; otherwise it starts the cached copy. A
-pushed update therefore reaches users at their next agent start. To pin one version, add a
+The hosted server updates whenever the site is deployed. For the local one, each time an
+agent starts it, `uvx` asks GitHub for the newest commit; if the package changed, it downloads
+and builds the new version, otherwise it starts the cached copy. To pin one version, add a
 commit or tag after the repository name, e.g.
 `git+https://github.com/nils-holmberg/de-code@fb37b6b#subdirectory=web/agentic-ai/mcps/de-code-mcp`.
 
-ChatGPT on the web only connects to remote MCP servers at a public HTTPS address, so it
-cannot start this local server. A hosted version would work there as a custom connector
-without authentication, since the server only reads public pages.
+## Two versions, one behaviour
+
+`src/mcp-contract-test.py` in the repository sends the same requests to this Python server and
+to the hosted one and checks that the answers agree. Run it after changing either version.
