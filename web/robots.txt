@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://de-code-ai.netlify.app/sitemap.xml

@@ -1,0 +1,52 @@
+# de-code
+
+> Democratizing coding with AI: workshops, course material and small apps on data analysis, app building and agentic coding with AI.
+
+The full text of every page is in [https://de-code-ai.netlify.app/site/index.json](https://de-code-ai.netlify.app/site/index.json).
+
+## Home
+
+- [Democratizing coding with AI](https://de-code-ai.netlify.app/): de-code helps people and organizations use natural language interfaces to analyze data, generate synthetic datasets, and build useful apps — without requiring traditional programming expertise.
+
+## Coding / skill school
+
+- [Democratizing Coding with AI (5–9 October)](https://de-code-ai.netlify.app/coding/skill-school/): Five-session workshop (5–9 October 2026): data analysis, data generation, app building, agentic coding, and skills and MCP with AI, with slides and Colab notebooks.
+- [Session 1 · de-code data analysis](https://de-code-ai.netlify.app/coding/skill-school/sessions/01-data-analysis.html): Parts: Loading data; Describing each variable; Relating the outcome to the predictors.
+- [Session 2 · de-code data generation](https://de-code-ai.netlify.app/coding/skill-school/sessions/02-data-generation.html): Parts: Generate a toy dataset from a prompt; Make it realistic: a TPB survey experiment; Persona engineering.
+- [Session 3 · de-code app building](https://de-code-ai.netlify.app/coding/skill-school/sessions/03-app-building.html): Parts: What is an app?; Spec for a Shiny data app; Spec for an NLP app: word clouds.
+- [Session 4 · de-code agentic coding](https://de-code-ai.netlify.app/coding/skill-school/sessions/04-agentic-coding.html): Parts: Safety first!; Specs and agentic AI; Agent basics.
+- [Session 5 · de-code skills and MCP](https://de-code-ai.netlify.app/coding/skill-school/sessions/05-skills-mcp.html): Parts: Skills; MCP: Model Context Protocol; Putting it together.
+
+## Data analysis
+
+- [Democratizing data analysis with AI](https://de-code-ai.netlify.app/data-analysis.html): de-code helps people and organizations use natural language interfaces to analyze data, generate synthetic datasets, and build useful apps — without requiring traditional programming expertise.
+- [Data analysis](https://de-code-ai.netlify.app/data-analysis/ailund.html): Democratizing data analysis with AI Lund: exploring the Quality of Government dataset with AI-assisted, natural language driven analysis. Run it yourself in the cloud, or read the full notebook below.
+
+## App building
+
+- [Democratizing app building with AI](https://de-code-ai.netlify.app/app-building.html): de-code helps people and organizations use natural language interfaces to analyze data, generate synthetic datasets, and build useful apps — without requiring traditional programming expertise.
+- [de-code regex — Live regex trainer](https://de-code-ai.netlify.app/app-building/pwas/de-code-regex/): Interactive regular expression trainer, tester and challenge runner. Install it on your phone or computer as an app (PWA); it also works offline.
+- [Shiny app (Shinylive)](https://de-code-ai.netlify.app/shiny/site/app1/): A Shiny for Python app that runs entirely in the browser with Shinylive.
+
+## Education
+
+- [Education for institutions and public organizations](https://de-code-ai.netlify.app/education.html): Educational services for institutions and public organizations, provided by resn.dev under the Democratizing coding with AI label (de-code-ai). Sessions are held on site in physical settings, or remotely over video …
+- [de-code education | Quarto markdown and notebooks](https://de-code-ai.netlify.app/education/quarto.html): One source file holds the text, the code, and the output it produced. Quarto renders it to a report, a slide deck, or a website, and runs Python and R side by side, so the analysis and the writing about it stay in step.
+- [Specifications as code](https://de-code-ai.netlify.app/education/specs.html): de-code education on specifications as code for academics and public organizations.
+
+## Workshop
+
+- [de-code Workshop | Democratizing Coding with AI](https://de-code-ai.netlify.app/workshop.html): Learn how to use AI and natural language interfaces to analyze data, generate datasets, and build useful applications without traditional coding barriers.
+
+## resn.dev
+
+- [resn.dev | Research and development by nilsh](https://de-code-ai.netlify.app/resn-dev/): resn.dev is the parent company behind de-code-ai: a growing set of AI-assisted coding practices that make computational work more open, practical, and approachable.
+
+## Optional
+
+- [skill-html-pwa (agent skill, zip)](https://de-code-ai.netlify.app/agentic-ai/skill-html-pwa.zip): Agent skill that turns a single-page HTML app into an installable PWA and prepares it for Netlify. Unzip into .agents/skills/.
+- [Session 1 · de-code data analysis (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/01-data-analysis-slides.html): Parts: Loading data; Describing each variable; Relating the outcome to the predictors.
+- [Session 2 · de-code data generation (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/02-data-generation-slides.html): Parts: Generate a toy dataset from a prompt; Make it realistic: a TPB survey experiment; Persona engineering.
+- [Session 3 · de-code app building (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/03-app-building-slides.html): Parts: What is an app?; Spec for a Shiny data app; Spec for an NLP app: word clouds.
+- [Session 4 · de-code agentic coding (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/04-agentic-coding-slides.html): Parts: Safety first!; Specs and agentic AI; Agent basics.
+- [Session 5 · de-code skills and MCP (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/05-skills-mcp-slides.html): Parts: Skills; MCP: Model Context Protocol; Putting it together.

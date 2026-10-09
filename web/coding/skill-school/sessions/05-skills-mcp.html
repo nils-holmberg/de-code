@@ -160,7 +160,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span class="menu-text">4 · Agents</span></a>
   </li>  
   <li class="nav-item">
-    <a aria-disabled="true" tabindex="-1" class="nav-link active disabled" aria-current="page"> 
+    <a class="nav-link active" href="../sessions/05-skills-mcp.html" aria-current="page"> 
 <span class="menu-text">5 · Skills &amp; MCP</span></a>
   </li>  
 </ul>
@@ -232,7 +232,8 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <li><a href="#anatomy-of-mcp">2.2 Anatomy of MCP</a></li>
 <li><a href="#skills-and-mcp">2.3 Skills and MCP</a></li>
 <li><a href="#build-a-minimal-mcp-server">2.4 Build a minimal MCP server</a></li>
-<li><a href="#existing-mcp-servers">2.5 Existing MCP servers</a></li>
+<li><a href="#an-mcp-server-for-this-website">2.5 An MCP server for this website</a></li>
+<li><a href="#existing-mcp-servers">2.6 Existing MCP servers</a></li>
 </ul></li>
 <li><a href="#putting-it-together">3 Putting it together</a>
 <ul>
@@ -244,7 +245,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-skills-mcp.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="0fd0862a" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="5b510e28" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -303,7 +304,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 </tr>
 </tbody>
 </table>
-<p>A <strong>skill</strong> is a reusable procedure: a folder with instructions, and optionally scripts and templates, that teaches an agent how to do one kind of task well — the way <em>you</em> want it done. Write it once, and every later task of that kind starts from your best practice instead of from scratch.</p>
+<p>A <strong>skill</strong> is a reusable procedure: a folder with instructions, and optionally scripts and templates, that teaches an agent how to do one kind of task well — the way <em>you</em> want it done. Write it once, and every later task of that kind starts from your best practice instead of from scratch. Like the specs and rules before it, a skill is <strong>context</strong>: text the agent reads into its context window, but only when a task needs it, so it adds know-how without crowding out the rest of the conversation.</p>
 </section>
 <section id="anatomy-of-a-skill" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="anatomy-of-a-skill"><span class="header-section-number">1.2</span> Anatomy of a skill</h2>
@@ -314,7 +315,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 ├── scripts/validate_pwa.py   optional: code the agent can run to check its work
 └── agents/openai.yaml        optional: extra settings for one agent (OpenAI Codex)</code></pre>
 <p>This is the real skill we look at in section 1.5. A skill can also have an <code>assets/</code> folder with templates and other files to copy. Here is a minimal <code>SKILL.md</code>:</p>
-<div id="c9fc711e" class="cell" data-execution_count="2">
+<div id="ed96986e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>minimal_skill <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: tsv-summary</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Summarise a tab-separated data file. Use when the user asks what is in</span></span>
@@ -386,7 +387,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <h2 data-number="1.5" class="anchored" data-anchor-id="a-real-skill-from-html-app-to-pwa"><span class="header-section-number">1.5</span> A real skill: from HTML app to PWA</h2>
 <p>A <strong>progressive web app</strong> (PWA) is a web page you can install like an app: it gets an icon on your phone or computer, opens in its own window, and keeps working offline after the first visit. The skill below turns an existing single-page HTML app — like the ones we built in sessions 3 and 4 — into a PWA, and prepares it for a static web host such as Netlify.</p>
 <p>An agent used this skill to turn a regex trainer page into the <a href="https://de-code-ai.netlify.app/app-building/pwas/de-code-regex/">de-code regex trainer</a> — open it on your phone and try <em>Add to home screen</em>. This is its <code>SKILL.md</code>, unchanged:</p>
-<div id="0218ef0e" class="cell" data-execution_count="3">
+<div id="81e2d84d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">name: skill-html-pwa</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">description: Convert an existing single-page HTML web app into a branded, installable, mobile-compatible PWA and prepare or verify it on a static live host such as Netlify. Use when adapting a supplied HTML app rather than building an unrelated site from scratch.</span></span>
@@ -498,7 +499,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="use-the-skill" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="use-the-skill"><span class="header-section-number">1.6</span> Use the skill</h2>
 <p>Download <a href="https://de-code-ai.netlify.app/agentic-ai/skill-html-pwa.zip">skill-html-pwa.zip</a> (or browse the files on <a href="https://github.com/nils-holmberg/de-code/tree/main/web/agentic-ai/skill-html-pwa">GitHub</a>), read <code>SKILL.md</code> and the script first (section 1.4), and unzip it into <code>.agents/skills/</code> in a project folder. Check that Antigravity lists it with <code>/skills</code>, then try it both ways — by name and in your own words — on the word-cloud app from sessions 3 and 4:</p>
-<div id="28f64feb" class="cell" data-execution_count="4">
+<div id="9ed817fd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">/skill-html-pwa Turn wordcloud.html into an installable PWA that will be hosted</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">at https://&lt;your-site&gt;.netlify.app/apps/wordcloud/</span></span>
@@ -614,7 +615,7 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <section id="build-a-minimal-mcp-server" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="build-a-minimal-mcp-server"><span class="header-section-number">2.4</span> Build a minimal MCP server</h2>
 <p>A server in Python takes a few lines with the official <a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a>. Each tool is an ordinary function: its name, type hints and docstring tell the agent what it does and which inputs it takes. This server offers two of the session 1 analyses as tools, plus the dataset’s codebook as a resource:</p>
-<div id="b1616b41" class="cell" data-execution_count="5">
+<div id="7434ece9" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">import pandas as pd</span></span>
@@ -659,14 +660,14 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To use it, you need Python with the <code>mcp</code> package on your own computer (MCP servers run next to the agent, not in Colab). Try the server in the <strong>MCP Inspector</strong>, a web page where you can call its tools by hand, then add it to Antigravity and check that it is listed:</p>
-<div id="2c952030" class="cell" data-execution_count="6">
+<div id="77733433" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mcp dev komp014_server.py</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then ask the agent something only the server can answer quickly:</p>
-<div id="c939520a" class="cell" data-execution_count="7">
+<div id="aae30891" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">Use the komp014 tools: describe</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
@@ -676,69 +677,280 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 </div>
 <p>The answer should report a Cohen’s <em>d</em> of size 0.58 (its sign shows which group scores higher) — the same effect as in session 1, now computed by a tool the agent called.</p>
 </section>
-<section id="existing-mcp-servers" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="existing-mcp-servers"><span class="header-section-number">2.5</span> Existing MCP servers</h2>
-<p>Many MCP servers are ready to use. Most are added with a single <code>agy mcp add</code> command (or in the Antigravity app’s MCP settings) — local ones as a command, remote ones as a URL:</p>
+<section id="an-mcp-server-for-this-website" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="an-mcp-server-for-this-website"><span class="header-section-number">2.5</span> An MCP server for this website</h2>
+<p>The de-code site has grown in many directions: workshop sessions with slides and notebooks, section pages, an installable app, a Shiny app and skill downloads — built with different tools, in different folders, and not all of them linked from the home page. Visitors rarely browse; they ask questions. As site managers, we can let an agent answer those questions from the site itself.</p>
+<p>The site already publishes two descriptions of everything on it: an <a href="https://de-code-ai.netlify.app/llms.txt">llms.txt</a>, a short table of contents written for AI agents, and a full <a href="https://de-code-ai.netlify.app/site/index.json">content index</a> with the text of every page. <code>llms.txt</code> is a list an agent can read; an MCP server adds <strong>search</strong>, so the agent asks for what it needs and gets back only the matching pages, with their links:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What</th>
+<th>Kind</th>
+<th>What the agent gets</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>list_sections()</code></td>
+<td>tool</td>
+<td>the site’s sections and their landing pages</td>
+</tr>
+<tr class="even">
+<td><code>search_site(query, section, limit)</code></td>
+<td>tool</td>
+<td>the best-matching pages: title, link, type and a short snippet</td>
+</tr>
+<tr class="odd">
+<td><code>get_page(url)</code></td>
+<td>tool</td>
+<td>one page’s headings and text, to answer from its content</td>
+</tr>
+<tr class="even">
+<td><code>site://llms.txt</code></td>
+<td>resource</td>
+<td>the overview of the whole site</td>
+</tr>
+</tbody>
+</table>
+<p>The server reads the content index once and keeps it in memory. Its search is deliberately simple — a match in a title counts more than one in the text, and a page that matches every word ranks first — and every tool returns a few short results instead of whole pages, which keeps the agent’s context window small (session 4).</p>
+<div id="599f2964" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>de_code_mcp_code <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">"""de-code-mcp: an MCP server for finding pages on the de-code website in plain language."""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">import json</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">import os</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">import re</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">from urllib.request import urlopen</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">from mcp.server import MCPServer</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">from mcp.server.mcpserver.exceptions import ToolError</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">SITE = "https://de-code-ai.netlify.app"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="st">INDEX_SOURCE = os.environ.get("SITE_INDEX", f"</span><span class="sc">{SITE}</span><span class="st">/site/index.json")</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="st">LLMS_SOURCE = os.environ.get("SITE_LLMS", f"</span><span class="sc">{SITE}</span><span class="st">/llms.txt")</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">WEIGHTS = {"title": 5, "headings": 3, "description": 2, "text": 1, "type": 2}</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">SKIP = {"the", "and", "for", "can", "how", "what", "where", "which", "find", "site", "page", "about"}</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="st">mcp = MCPServer("de-code-mcp")</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="st">def read(source: str) -&gt; str:</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="st">    """Read a URL or a local file as text."""</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="st">    if source.startswith("http"):</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="st">        with urlopen(source, timeout=20) as response:</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="st">            return response.read().decode("utf-8")</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="st">    with open(source, encoding="utf-8") as f:</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="st">        return f.read()</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="st">INDEX = json.loads(read(INDEX_SOURCE))       # loaded once, kept in memory</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="st">PAGES = {page["url"]: page for page in INDEX["pages"]}</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="st">def score(page: dict, words: list[str]) -&gt; float:</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="st">    fields = {"title": page["title"], "headings": " ".join(page["headings"]),</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="st">              "description": page["description"], "text": page["text"]}</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="st">    fields = {name: value.lower() for name, value in fields.items()}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="st">    total, matched = 0, 0</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="st">    for word in words:</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="st">        # a word anywhere in a long text counts once, so long pages do not win by length</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="st">        hits = {name: min(value.count(word), 1 if name == "text" else 3) for name, value in fields.items()}</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="st">        hits["type"] = 3 if word == page["type"] else 0     # "app", "slides", "download"</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="st">        if any(hits.values()):</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="st">            matched += 1</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="st">        total += sum(WEIGHTS[name] * n for name, n in hits.items())</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="st">    if page["type"] == "slides":</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="st">        total /= 2                                # prefer the web page over its slides</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="st">    return total * matched / len(words)           # pages that match every word rank first</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="st">def list_sections() -&gt; list[dict]:</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="st">    """List the sections of the de-code website, with their landing pages."""</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="st">    return [{"id": s["id"], "title": s["title"], "url": s["url"], "description": s["description"]}</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="st">            for s in INDEX["sections"]]</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="st">def search_site(query: str, section: str = "", limit: int = 5) -&gt; list[dict]:</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="st">    """Search all pages, slides, apps and downloads on the de-code website.</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="st">    Args:</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="st">        query: What to look for, in plain words, e.g. "welch t-test" or "install app".</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="st">        section: Optional section id to search in, e.g. "coding" (see list_sections).</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="st">        limit: How many results to return.</span></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="st">    words = [w for w in re.findall(r"[a-z0-9]+", query.lower()) if len(w) &gt; 2 and w not in SKIP]</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="st">    words = [w[:-1] if len(w) &gt; 3 and w.endswith("s") else w for w in words]   # apps -&gt; app</span></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="st">    if not words:</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="st">        return []</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="st">    ranked = sorted(((score(p, words), p) for p in INDEX["pages"]</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="st">                     if not section or p["section"] == section), key=lambda x: -x[0])</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="st">    results = []</span></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="st">    seen = set()</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="st">    for points, page in ranked:</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="st">        if points == 0 or len(results) == limit:</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="st">            break</span></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="st">        base = page["url"].replace("-slides.html", ".html")</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="st">        if base in seen:</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="st">            continue                                # slides of a page already listed</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="st">        seen.add(base)</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="st">        text = page["text"]</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="st">        at = min([i for i in (text.lower().find(w) for w in words) if i &gt;= 0], default=0)</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="st">        results.append({"title": page["title"], "url": page["url"], "type": page["type"],</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="st">                        "section": page["section"], "snippet": text[max(0, at - 80):at + 160]})</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="st">    return results</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.tool()</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="st">def get_page(url: str) -&gt; dict:</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="st">    """Get one page's description, headings and text, to answer from its content.</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="st">    Args:</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="st">        url: The page's full URL, as returned by search_site.</span></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="st">    """</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="st">    page = PAGES.get(url)</span></span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="st">    if page is None:</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="st">        # a ToolError is a deliberate error, and the agent sees its message</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="st">        raise ToolError(f"No page with that URL in the site index: </span><span class="sc">{url}</span><span class="st">. Use search_site first.")</span></span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="st">    return {key: page[key] for key in ("title", "url", "description", "headings", "text")}</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="st">@mcp.resource("site://llms.txt")</span></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="st">def overview() -&gt; str:</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="st">    """The site's llms.txt: every section and page, with one-line descriptions."""</span></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="st">    return read(LLMS_SOURCE)</span></span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="st">if __name__ == "__main__":</span></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="st">    mcp.run()  # local server: talks to the host over stdin/stdout</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"de_code_mcp.py"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>    f.write(de_code_mcp_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Try it in Colab first.</strong> You can test the server without installing anything on your own computer: run the cell above in Colab to save <code>de_code_mcp.py</code>, install the MCP package, and connect a client to the server inside the notebook. It is a real MCP conversation — list the tools, call them, read the resource — only without Antigravity in between.</p>
+<div id="584a237b" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>q <span class="st">"mcp[cli]&gt;=2.3"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7f1984c0" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mcp <span class="im">import</span> Client</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> de_code_mcp          <span class="co"># the file saved above; it loads the site index once</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">async</span> <span class="cf">with</span> Client(de_code_mcp.mcp) <span class="im">as</span> client:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    tools <span class="op">=</span> <span class="cf">await</span> client.list_tools()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Tools:"</span>, [tool.name <span class="cf">for</span> tool <span class="kw">in</span> tools.tools])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    found <span class="op">=</span> <span class="cf">await</span> client.call_tool(<span class="st">"search_site"</span>, {<span class="st">"query"</span>: <span class="st">"welch t-test"</span>, <span class="st">"limit"</span>: <span class="dv">3</span>})</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> hit <span class="kw">in</span> found.structured_content[<span class="st">"result"</span>]:</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- </span><span class="sc">{</span>hit[<span class="st">'title'</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>hit[<span class="st">'type'</span>]<span class="sc">}</span><span class="ss">): </span><span class="sc">{</span>hit[<span class="st">'url'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    page <span class="op">=</span> <span class="cf">await</span> client.call_tool(<span class="st">"get_page"</span>, {<span class="st">"url"</span>: hit[<span class="st">"url"</span>]})</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Headings of the last hit:"</span>, json.loads(page.content[<span class="dv">0</span>].text)[<span class="st">"headings"</span>][:<span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Change the query and run the cell again: try “install app”, “shiny” or “skill download”. This is what an agent sees when it calls the tools. To use the server from Antigravity, install it on your own computer, try it in the MCP Inspector, and add it:</p>
+<div id="ad05fabf" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>mcp dev de_code_mcp.py</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp add de<span class="op">-</span>code<span class="op">-</span>mcp python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>de_code_mcp.py</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now ask about the site in plain language:</p>
+<div id="d451e80f" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>site_prompts <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">Where on de-code can I learn about Welch's t-test? Give me the page and the section.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">Which apps on the de-code site can I install on my phone, and how?</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">Find the agent skill download on de-code and explain how to install it.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A good answer comes from the tools, not from memory: the agent calls <code>search_site</code>, often <code>get_page</code> for the best hit, and replies with real links instead of guessed ones. Antigravity shows every tool call, so you can see which pages an answer came from.</p>
+<p>As site managers, a few things follow:</p>
+<ul>
+<li><strong>One index, three audiences:</strong> the same generated index gives people <code>llms.txt</code> and the pages, search engines the sitemap, and agents this MCP server.</li>
+<li><strong>Keep it current:</strong> the index is rebuilt from the published pages before each update of the site, and sessions that are not released yet stay out of it.</li>
+<li><strong>Next step:</strong> run the same server online, for example as a small cloud function at one HTTPS address, so visitors add it with a single <code>agy mcp add de-code-mcp https://…</code> and need no Python at all.</li>
+</ul>
+</section>
+<section id="existing-mcp-servers" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="existing-mcp-servers"><span class="header-section-number">2.6</span> Existing MCP servers</h2>
+<p>Many MCP servers are ready to use, and they come in two kinds. <strong>Remote</strong> servers run at the provider: you add a web address, and nothing is installed on your computer — the easiest way to try MCP. <strong>Local</strong> servers run on your computer and need the tool that starts them: <a href="https://nodejs.org/">Node.js</a> for <code>npx</code>, or <a href="https://docs.astral.sh/uv/">uv</a> for <code>uvx</code> (uv brings its own Python). All are added with one <code>agy mcp add</code> command, or in the Antigravity app’s MCP settings:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Server</th>
 <th>What the agent can do</th>
+<th>You need</th>
 <th>Add it</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="https://github.com/modelcontextprotocol/servers">Filesystem</a></td>
-<td>Read and write files in folders you choose</td>
-<td><code>agy mcp add fs npx -y @modelcontextprotocol/server-filesystem ~/projects</code></td>
+<td><a href="https://github.com/github/github-mcp-server">GitHub</a></td>
+<td>Issues, pull requests and code on GitHub</td>
+<td>nothing (a GitHub token)</td>
+<td><code>agy mcp add --header "Authorization: Bearer &lt;token&gt;" github https://api.githubcopilot.com/mcp/</code></td>
 </tr>
 <tr class="even">
-<td><a href="https://github.com/modelcontextprotocol/servers">Fetch</a></td>
-<td>Download a web page as text</td>
-<td><code>agy mcp add fetch uvx mcp-server-fetch</code></td>
+<td><a href="https://github.com/upstash/context7">Context7</a></td>
+<td>Up-to-date documentation for code libraries</td>
+<td>nothing (an API key)</td>
+<td><code>agy mcp add --header "Authorization: Bearer &lt;key&gt;" context7 https://mcp.context7.com/mcp</code></td>
 </tr>
 <tr class="odd">
-<td><a href="https://github.com/modelcontextprotocol/servers">Git</a></td>
-<td>Read history, diffs and branches of a repository</td>
-<td><code>agy mcp add git uvx mcp-server-git</code></td>
+<td><a href="https://github.com/modelcontextprotocol/servers">Filesystem</a></td>
+<td>Read and write files in folders you choose</td>
+<td>Node.js</td>
+<td><code>agy mcp add fs npx -y @modelcontextprotocol/server-filesystem ~/projects</code></td>
 </tr>
 <tr class="even">
 <td><a href="https://github.com/modelcontextprotocol/servers">Memory</a></td>
 <td>Remember facts between conversations</td>
+<td>Node.js</td>
 <td><code>agy mcp add memory npx -y @modelcontextprotocol/server-memory</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/microsoft/playwright-mcp">Playwright</a></td>
+<td>Open and click through web pages in a browser</td>
+<td>Node.js</td>
+<td><code>agy mcp add playwright npx -y @playwright/mcp@latest</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">Chrome DevTools</a></td>
+<td>Inspect a page in Chrome: console errors, layout, speed</td>
+<td>Node.js</td>
+<td><code>agy mcp add devtools npx -y chrome-devtools-mcp@latest</code></td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/modelcontextprotocol/servers">Fetch</a></td>
+<td>Download a web page as text</td>
+<td>uv</td>
+<td><code>agy mcp add fetch uvx mcp-server-fetch</code></td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/modelcontextprotocol/servers">Git</a></td>
+<td>Read history, diffs and branches of a repository</td>
+<td>uv</td>
+<td><code>agy mcp add git uvx mcp-server-git</code></td>
 </tr>
 <tr class="odd">
 <td><a href="https://github.com/modelcontextprotocol/servers">Time</a></td>
 <td>Current time and time zone conversion</td>
+<td>uv</td>
 <td><code>agy mcp add time uvx mcp-server-time</code></td>
-</tr>
-<tr class="even">
-<td><a href="https://github.com/microsoft/playwright-mcp">Playwright</a></td>
-<td>Open and click through web pages in a browser</td>
-<td><code>agy mcp add playwright npx -y @playwright/mcp@latest</code></td>
-</tr>
-<tr class="odd">
-<td><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">Chrome DevTools</a></td>
-<td>Inspect a page in Chrome: console errors, layout, speed</td>
-<td><code>agy mcp add devtools npx -y chrome-devtools-mcp@latest</code></td>
-</tr>
-<tr class="even">
-<td><a href="https://github.com/github/github-mcp-server">GitHub</a></td>
-<td>Issues, pull requests and code on GitHub (needs a token)</td>
-<td><code>agy mcp add --header "Authorization: Bearer &lt;token&gt;" github https://api.githubcopilot.com/mcp/</code></td>
-</tr>
-<tr class="odd">
-<td><a href="https://github.com/upstash/context7">Context7</a></td>
-<td>Up-to-date documentation for code libraries (needs a key)</td>
-<td><code>agy mcp add --header "Authorization: Bearer &lt;key&gt;" context7 https://mcp.context7.com/mcp</code></td>
 </tr>
 </tbody>
 </table>
-<p><code>npx</code> needs <a href="https://nodejs.org/">Node.js</a> and <code>uvx</code> needs <a href="https://docs.astral.sh/uv/">uv</a> on your computer. The same safety rules as in session 4 apply, with one more: an MCP server is a program that runs with <em>your</em> permissions.</p>
+<p>Our own servers from sections 2.4 and 2.5 are local Python servers: try them in Colab without installing anything (as with the test cell in section 2.5), or install Python on your computer to use them from Antigravity. Hosted online, they would work like the remote rows above. The same safety rules as in session 4 apply, with one more: an MCP server is a program that runs with <em>your</em> permissions.</p>
 <ul>
 <li>Prefer servers from the service itself or the MCP project, and read what each tool does.</li>
-<li>Give tokens and folders the smallest access that works (read-only if you can).</li>
+<li>Give tokens and folders the smallest access that works (read-only if you can). A token or key is a password: keep it out of the project folder (session 4).</li>
 <li>Keep tool approval on, and turn servers off (<code>agy mcp disable &lt;name&gt;</code>) when you do not need them — their tool lists also take up context.</li>
 </ul>
 </section>
@@ -747,14 +959,14 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <h1 data-number="3"><span class="header-section-number">3</span> Putting it together</h1>
 <section id="a-skill-that-uses-mcp" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="a-skill-that-uses-mcp"><span class="header-section-number">3.1</span> A skill that uses MCP</h2>
-<p>Skills and MCP combine naturally. The PWA skill already asks the agent to “render the live URL at desktop and mobile sizes” — but an agent can only do that if it has a browser. A browser MCP server from section 2.5 gives it one. Add a short section to the skill, and the agent uses those tools when they are there:</p>
-<div id="1e8ef28d" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">+=</span> <span class="st">"""</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">## With browser tools</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">If a Chrome DevTools or Playwright MCP server is available, open the live URL at</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">390 px and 1280 px width, check the console for errors, and confirm that the</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">service worker is registered.</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Skills and MCP combine naturally. The PWA skill already asks the agent to “render the live URL at desktop and mobile sizes” — but an agent can only do that if it has a browser. A browser MCP server from section 2.6 gives it one. Add a short section to the skill, and the agent uses those tools when they are there:</p>
+<div id="869f0429" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>skill_md <span class="op">+=</span> <span class="st">"""</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">## With browser tools</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">If a Chrome DevTools or Playwright MCP server is available, open the live URL at</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">390 px and 1280 px width, check the console for errors, and confirm that the</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">service worker is registered.</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The skill holds the <em>procedure</em>, the server provides the <em>tool</em>, and AGENTS.md still sets the <em>rules</em> — each part stays small and can be reused on its own. Antigravity can also bundle skills, rules and MCP servers into one installable <strong>plugin</strong> (<code>/plugin</code>), which is how teams share a complete setup.</p>
 </section>
@@ -809,7 +1021,8 @@ a.link-disabled { color: var(--bs-secondary-color); cursor: not-allowed; text-de
 <li>Pick a task you repeat in your own work — a report, a data check, a type of analysis.</li>
 <li>Write it as a skill: a <code>SKILL.md</code> with a clear <em>“Use when …”</em> description and five to ten steps, saved in <code>.agents/skills/&lt;name&gt;/</code> in a project folder.</li>
 <li>Use it twice in Antigravity, once by name and once in your own words, and improve the description until the agent picks it up by itself.</li>
-<li>Pick one MCP server from the table, add it, and use it in a small task — then turn it off again if you do not need it.</li>
+<li>Pick one MCP server from the table — a remote one if you have nothing installed — add it, and use it in a small task — then turn it off again if you do not need it.</li>
+<li>Ask the de-code-mcp server a question about this week’s material, and check that the links it gives you are real.</li>
 </ol>
 
 
