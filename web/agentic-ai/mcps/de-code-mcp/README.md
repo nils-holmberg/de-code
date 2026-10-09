@@ -34,7 +34,7 @@ Developer mode (paid plans). Then Apps & Connectors → Create: name `de-code-mc
 server URL `https://de-code-ai.netlify.app/mcp`, Authentication *No authentication*. Switch
 it on in a chat from the + menu.
 
-It needs no sign-in (it only reads public pages) and allows 60 requests a minute per visitor.
+It needs no sign-in (it only reads public pages) and allows 600 requests a minute per visitor.
 
 ## Run it locally
 

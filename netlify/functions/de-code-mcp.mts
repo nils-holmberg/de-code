@@ -138,6 +138,7 @@ export default async (req: Request) => {
 
 export const config = {
   path: "/mcp",
-  // 60 requests a minute per visitor, then 429: plenty for an agent, and it protects the site's credits
-  rateLimit: { windowLimit: 60, windowSize: 60, aggregateBy: ["ip", "domain"] },
+  // 600 requests a minute per visitor (IP), then 429: a classroom often shares one IP, and
+  // each agent question takes several requests; still a cap against runaway use
+  rateLimit: { windowLimit: 600, windowSize: 60, aggregateBy: ["ip", "domain"] },
 };

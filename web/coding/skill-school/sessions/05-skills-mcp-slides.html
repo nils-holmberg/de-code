@@ -247,7 +247,7 @@ nils.holmberg@iko.lu.se
 <li><a href="https://colab.research.google.com/github/nils-holmberg/de-code/blob/main/jnb/skill-school/05-skills-mcp.ipynb" target="_blank">Notebook</a></li>
 </ul>
 </div><div class="column" style="width:58%;">
-<div id="8c59f3c9" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
+<div id="3d244ffd" class="cell" data-fig-height="3.8" data-fig-width="5.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -319,7 +319,7 @@ nils.holmberg@iko.lu.se
 <span id="cb1-4"><a aria-label="4"></a>├── scripts/validate_pwa.py   optional: code the agent can run to check its work</span>
 <span id="cb1-5"><a aria-label="5"></a>└── agents/openai.yaml        optional: extra settings for one agent (OpenAI Codex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is the real skill we look at in section 1.5. A skill can also have an <code>assets/</code> folder with templates and other files to copy. Here is a minimal <code>SKILL.md</code>:</p>
-<div id="77681675" class="cell" data-execution_count="2">
+<div id="039734fd" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a aria-label="1"></a>minimal_skill <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb2-2"><a aria-label="2"></a><span class="st">name: tsv-summary</span></span>
 <span id="cb2-3"><a aria-label="3"></a><span class="st">description: Summarise a tab-separated data file. Use when the user asks what is in</span></span>
@@ -391,7 +391,7 @@ nils.holmberg@iko.lu.se
 <h2><span class="header-section-number">1.5</span> A real skill: from HTML app to PWA</h2>
 <p>A <strong>progressive web app</strong> (PWA) is a web page you can install like an app: it gets an icon on your phone or computer, opens in its own window, and keeps working offline after the first visit. The skill below turns an existing single-page HTML app — like the ones we built in sessions 3 and 4 — into a PWA, and prepares it for a static web host such as Netlify.</p>
 <p>An agent used this skill to turn a regex trainer page into the <a href="https://de-code-ai.netlify.app/app-building/pwas/de-code-regex/">de-code regex trainer</a> — open it on your phone and try <em>Add to home screen</em>. This is its <code>SKILL.md</code>, unchanged:</p>
-<div id="601117c1" class="cell" data-execution_count="3">
+<div id="8f41797a" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a aria-label="1"></a>skill_md <span class="op">=</span> <span class="st">"""---</span></span>
 <span id="cb3-2"><a aria-label="2"></a><span class="st">name: skill-html-pwa</span></span>
 <span id="cb3-3"><a aria-label="3"></a><span class="st">description: Convert an existing single-page HTML web app into a branded, installable, mobile-compatible PWA and prepare or verify it on a static live host such as Netlify. Use when adapting a supplied HTML app rather than building an unrelated site from scratch.</span></span>
@@ -503,7 +503,7 @@ nils.holmberg@iko.lu.se
 <section id="use-the-skill" class="slide level2" data-number="1.6">
 <h2><span class="header-section-number">1.6</span> Use the skill</h2>
 <p>Download <a href="https://de-code-ai.netlify.app/agentic-ai/skill-html-pwa.zip">skill-html-pwa.zip</a> (or browse the files on <a href="https://github.com/nils-holmberg/de-code/tree/main/web/agentic-ai/skill-html-pwa">GitHub</a>), read <code>SKILL.md</code> and the script first (section 1.4), and unzip it into <code>.agents/skills/</code> in a project folder. Check that Antigravity lists it with <code>/skills</code>, then try it both ways — by name and in your own words — on the word-cloud app from sessions 3 and 4:</p>
-<div id="c02c9ac1" class="cell" data-execution_count="4">
+<div id="4d2c0c96" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a aria-label="1"></a>by_name <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb4-2"><a aria-label="2"></a><span class="st">/skill-html-pwa Turn wordcloud.html into an installable PWA that will be hosted</span></span>
 <span id="cb4-3"><a aria-label="3"></a><span class="st">at https://&lt;your-site&gt;.netlify.app/apps/wordcloud/</span></span>
@@ -621,7 +621,7 @@ nils.holmberg@iko.lu.se
 <section id="build-a-minimal-mcp-server" class="slide level2" data-number="2.4">
 <h2><span class="header-section-number">2.4</span> Build a minimal MCP server</h2>
 <p>A server in Python takes a few lines with the official <a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a>. Each tool is an ordinary function: its name, type hints and docstring tell the agent what it does and which inputs it takes. This server offers two of the session 1 analyses as tools, plus the dataset’s codebook as a resource:</p>
-<div id="f8ace928" class="cell" data-execution_count="5">
+<div id="e9197292" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a aria-label="1"></a>server_code <span class="op">=</span> <span class="st">'''</span></span>
 <span id="cb5-2"><a aria-label="2"></a><span class="st">"""komp014 MCP server: quick analyses of a tab-separated data file."""</span></span>
 <span id="cb5-3"><a aria-label="3"></a><span class="st">import pandas as pd</span></span>
@@ -666,14 +666,14 @@ nils.holmberg@iko.lu.se
 <span id="cb5-42"><a aria-label="42"></a>    f.write(server_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To use it, you need Python with the <code>mcp</code> package on your own computer (MCP servers run next to the agent, not in Colab). Try the server in the <strong>MCP Inspector</strong>, a web page where you can call its tools by hand, then add it to Antigravity and check that it is listed:</p>
-<div id="9c97a06e" class="cell" data-execution_count="6">
+<div id="45bf0f34" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a aria-label="1"></a><span class="op">!</span>pip install <span class="st">"mcp[cli]"</span> pandas scipy</span>
 <span id="cb6-2"><a aria-label="2"></a><span class="op">!</span>mcp dev komp014_server.py</span>
 <span id="cb6-3"><a aria-label="3"></a><span class="op">!</span>agy mcp add komp014 python <span class="op">/</span>full<span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>komp014_server.py</span>
 <span id="cb6-4"><a aria-label="4"></a><span class="op">!</span>agy mcp <span class="bu">list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then ask the agent something only the server can answer quickly:</p>
-<div id="90499d1e" class="cell" data-execution_count="7">
+<div id="73988bd1" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a aria-label="1"></a>mcp_prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a aria-label="2"></a><span class="st">Use the komp014 tools: describe</span></span>
 <span id="cb7-3"><a aria-label="3"></a><span class="st">https://raw.githubusercontent.com/nils-holmberg/de-code/main/csv/komp014-simulated-data-n100.tsv</span></span>
@@ -724,7 +724,7 @@ nils.holmberg@iko.lu.se
 </tbody>
 </table>
 <p>The server reads the content index once and keeps it in memory. Its search is deliberately simple — a match in a title counts more than one in the text, and a page that matches every word ranks first — and every tool returns a few short results instead of whole pages, which keeps the agent’s context window small (session 4).</p>
-<div id="1e922a04" class="cell" data-execution_count="8">
+<div id="9af58818" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a aria-label="1"></a>de_code_mcp_code <span class="op">=</span> <span class="st">'''</span></span>
 <span id="cb8-2"><a aria-label="2"></a><span class="st">"""de-code-mcp: an MCP server for finding pages on the de-code website in plain language."""</span></span>
 <span id="cb8-3"><a aria-label="3"></a><span class="st">import json</span></span>
@@ -845,10 +845,10 @@ nils.holmberg@iko.lu.se
 </div>
 <p>The same server is also a small package: download <a href="https://de-code-ai.netlify.app/agentic-ai/mcps/de-code-mcp.zip">de-code-mcp.zip</a>, or browse it on <a href="https://github.com/nils-holmberg/de-code/tree/main/web/agentic-ai/mcps/de-code-mcp">GitHub</a> with a README, a <code>pyproject.toml</code> and a <code>requirements.txt</code>. With <a href="https://docs.astral.sh/uv/">uv</a> on your computer you need neither Python nor the download: <code>uvx</code> fetches the package from GitHub and runs it.</p>
 <p><strong>Try it in Colab first.</strong> You can test the server without installing anything on your own computer: run the cell above in Colab to save <code>de_code_mcp.py</code>, install the MCP package, and connect a client to the server inside the notebook. It is a real MCP conversation — list the tools, call them, read the resource — only without Antigravity in between.</p>
-<div id="d099b1ec" class="cell" data-execution_count="9">
+<div id="e8e52c3c" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a aria-label="1"></a><span class="op">%</span>pip install <span class="op">-</span>q <span class="st">"mcp[cli]&gt;=2.3"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="c0e682e8" class="cell" data-execution_count="10">
+<div id="7189425d" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a aria-label="1"></a><span class="im">import</span> json</span>
 <span id="cb10-2"><a aria-label="2"></a><span class="im">from</span> mcp <span class="im">import</span> Client</span>
 <span id="cb10-3"><a aria-label="3"></a><span class="im">import</span> de_code_mcp          <span class="co"># the file saved above; it loads the site index once</span></span>
@@ -878,7 +878,7 @@ nils.holmberg@iko.lu.se
 <p>How to read the output: step 1 is the server’s menu of tools, which an agent reads to decide what to call. In step 2 the server scored every page on the site — a match in a title counts more than one in the text, and pages that contain every word come first — and returned the three best, each with its link; slides are left out when their web page is already listed. Step 3 is the moment an agent reads the page itself, so its answer can come from the content and point to a real link.</p>
 <p>Change the query and run the cell again: try “install app”, “shiny” or “skill download”.</p>
 <p><strong>Use it from your agent — hosted, nothing to install.</strong> The same server also runs online, at <code>https://de-code-ai.netlify.app/mcp</code>. Every agent that speaks MCP can use it with one line, without Python, Node.js or uv:</p>
-<div id="4b3f1e64" class="cell" data-execution_count="11">
+<div id="4f94a89c" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a aria-label="1"></a><span class="op">!</span>agy mcp add de<span class="op">-</span>code<span class="op">-</span>mcp https:<span class="op">//</span>de<span class="op">-</span>code<span class="op">-</span>ai.netlify.app<span class="op">/</span>mcp                        <span class="co"># Antigravity</span></span>
 <span id="cb11-2"><a aria-label="2"></a><span class="op">!</span>claude mcp add <span class="op">--</span>transport http de<span class="op">-</span>code<span class="op">-</span>mcp https:<span class="op">//</span>de<span class="op">-</span>code<span class="op">-</span>ai.netlify.app<span class="op">/</span>mcp    <span class="co"># Claude Code</span></span>
 <span id="cb11-3"><a aria-label="3"></a><span class="op">!</span>codex mcp add de<span class="op">-</span>code<span class="op">-</span>mcp <span class="op">--</span>url https:<span class="op">//</span>de<span class="op">-</span>code<span class="op">-</span>ai.netlify.app<span class="op">/</span>mcp                <span class="co"># Codex CLI</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -891,7 +891,7 @@ nils.holmberg@iko.lu.se
 </ol>
 <p>ChatGPT’s menus move from time to time; if a name differs, look for <em>Developer mode</em> and <em>Create connector</em>.</p>
 <p><strong>Or run it locally.</strong> The Python server from the cells above can also run on your own computer — useful to learn how a local (stdio) server works, or to change it. To keep it apart from the hosted one, add it under the name <code>de-code-mcp-local</code>. With <a href="https://docs.astral.sh/uv/">uv</a> installed, <code>uvx</code> fetches the package from GitHub and runs it, with no Python setup:</p>
-<div id="1ace7322" class="cell" data-execution_count="12">
+<div id="17370928" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a aria-label="1"></a><span class="co"># With uv: the agent starts the server straight from GitHub</span></span>
 <span id="cb12-2"><a aria-label="2"></a><span class="op">!</span>agy mcp add de<span class="op">-</span>code<span class="op">-</span>mcp<span class="op">-</span>local uvx <span class="op">--</span><span class="im">from</span> <span class="st">"git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp"</span> de<span class="op">-</span>code<span class="op">-</span>mcp</span>
 <span id="cb12-3"><a aria-label="3"></a><span class="op">!</span>claude mcp add de<span class="op">-</span>code<span class="op">-</span>mcp<span class="op">-</span>local <span class="op">--</span> uvx <span class="op">--</span><span class="im">from</span> <span class="st">"git+https://github.com/nils-holmberg/de-code#subdirectory=web/agentic-ai/mcps/de-code-mcp"</span> de<span class="op">-</span>code<span class="op">-</span>mcp</span>
@@ -904,13 +904,13 @@ nils.holmberg@iko.lu.se
 </div>
 <p>The first local start downloads the package and its dependencies, which can take longer than an agent waits for a server to start. If the server does not show up, run the <code>uvx</code> command once in a terminal (stop it with Ctrl+C), then start the agent again. After that, <strong>updates arrive by themselves</strong>: each time an agent starts the server, <code>uvx</code> asks GitHub for the newest commit and rebuilds only if the package changed. To keep everyone on one fixed version, add a commit after the repository name: <code>…/de-code@fb37b6b#subdirectory=…</code>.</p>
 <p>Running an add command again is safe in Antigravity and Codex: it updates the existing entry. Claude Code refuses with “already exists” and changes nothing — remove the server first if you want to replace it. To remove either version (use <code>de-code-mcp-local</code> for the local one):</p>
-<div id="44e81097" class="cell" data-execution_count="13">
+<div id="3b9c25f2" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a aria-label="1"></a><span class="op">!</span>agy mcp remove de<span class="op">-</span>code<span class="op">-</span>mcp</span>
 <span id="cb13-2"><a aria-label="2"></a><span class="op">!</span>claude mcp remove de<span class="op">-</span>code<span class="op">-</span>mcp</span>
 <span id="cb13-3"><a aria-label="3"></a><span class="op">!</span>codex mcp remove de<span class="op">-</span>code<span class="op">-</span>mcp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now ask about the site in plain language:</p>
-<div id="df19d29a" class="cell" data-execution_count="14">
+<div id="bdfc687e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a aria-label="1"></a>site_prompts <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb14-2"><a aria-label="2"></a><span class="st">Where on de-code can I learn about Welch's t-test? Give me the page and the section.</span></span>
 <span id="cb14-3"><a aria-label="3"></a></span>
@@ -924,7 +924,7 @@ nils.holmberg@iko.lu.se
 <ul>
 <li><strong>One index, three audiences:</strong> the same generated index gives people <code>llms.txt</code> and the pages, search engines the sitemap, and agents this MCP server.</li>
 <li><strong>Keep it current:</strong> the index is rebuilt from the published pages before each update of the site, and sessions that are not released yet stay out of it.</li>
-<li><strong>Hosting:</strong> the online version is the same server ported to TypeScript, because the site’s host (Netlify) runs small functions in JavaScript but not Python. It runs next to the site, keeps nothing between requests, needs no sign-in because it only reads public pages, and allows 60 requests a minute per visitor. A small test checks that the online and the Python version give the same answers.</li>
+<li><strong>Hosting:</strong> the online version is the same server ported to TypeScript, because the site’s host (Netlify) runs small functions in JavaScript but not Python. It runs next to the site, keeps nothing between requests, needs no sign-in because it only reads public pages, and allows 600 requests a minute per visitor. A small test checks that the online and the Python version give the same answers.</li>
 </ul>
 </section>
 <section id="existing-mcp-servers" class="slide level2" data-number="2.6">
@@ -1017,7 +1017,7 @@ nils.holmberg@iko.lu.se
 <section id="a-skill-that-uses-mcp" class="slide level2" data-number="3.1">
 <h2><span class="header-section-number">3.1</span> A skill that uses MCP</h2>
 <p>Skills and MCP combine naturally. The PWA skill already asks the agent to “render the live URL at desktop and mobile sizes” — but an agent can only do that if it has a browser. A browser MCP server from section 2.6 gives it one. Add a short section to the skill, and the agent uses those tools when they are there:</p>
-<div id="508ffdbe" class="cell" data-execution_count="15">
+<div id="df838ec9" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a aria-label="1"></a>skill_md <span class="op">+=</span> <span class="st">"""</span></span>
 <span id="cb15-2"><a aria-label="2"></a><span class="st">## With browser tools</span></span>
 <span id="cb15-3"><a aria-label="3"></a><span class="st">If a Chrome DevTools or Playwright MCP server is available, open the live URL at</span></span>
