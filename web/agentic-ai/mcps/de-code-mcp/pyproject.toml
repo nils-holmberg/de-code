@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "de-code-mcp"
+version = "0.1.0"
+description = "MCP server for finding pages on the de-code website in plain language"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["mcp[cli]>=2.3,<3"]
+
+[project.urls]
+Homepage = "https://de-code-ai.netlify.app/"
+Source = "https://github.com/nils-holmberg/de-code/tree/main/web/agentic-ai/mcps/de-code-mcp"
+
+[project.scripts]
+de-code-mcp = "de_code_mcp:main"
+
+[tool.setuptools]
+py-modules = ["de_code_mcp"]

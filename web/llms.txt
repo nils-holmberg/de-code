@@ -44,6 +44,7 @@ The full text of every page is in [https://de-code-ai.netlify.app/site/index.jso
 
 ## Optional
 
+- [de-code-mcp (MCP server, zip)](https://de-code-ai.netlify.app/agentic-ai/mcps/de-code-mcp.zip): MCP server that lets an AI agent search this website in plain language. Runs with uvx straight from GitHub, or with Python; see its README.
 - [skill-html-pwa (agent skill, zip)](https://de-code-ai.netlify.app/agentic-ai/skill-html-pwa.zip): Agent skill that turns a single-page HTML app into an installable PWA and prepares it for Netlify. Unzip into .agents/skills/.
 - [Session 1 · de-code data analysis (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/01-data-analysis-slides.html): Parts: Loading data; Describing each variable; Relating the outcome to the predictors.
 - [Session 2 · de-code data generation (slides)](https://de-code-ai.netlify.app/coding/skill-school/sessions/02-data-generation-slides.html): Parts: Generate a toy dataset from a prompt; Make it realistic: a TPB survey experiment; Persona engineering.
