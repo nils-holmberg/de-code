@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /mcp
 
 Sitemap: https://de-code-ai.netlify.app/sitemap.xml
